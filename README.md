@@ -1,2 +1,1 @@
-# Computer-Graphics
-[CG] - Computer Graphics
+# Computer Graphics in C++ with OpenGL

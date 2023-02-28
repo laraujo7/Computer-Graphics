@@ -2,31 +2,25 @@
 
 int main(int argc, char **argv) {
 
-
-  if (argc<2) {
-    cout << "Incorrect number of arguments. \n";
+  if (argc < 2) {
+    cout << UNSUFFICIENT_ARGUMENT;
   }
 
-  switch(strcmp(argv[1])) {
-    case "box":
-   
-    break;
+  if(!strcmp(argv[1], "box")) {
 
-    case "cone":
-    break;
+  }
+  else if(!strcmp(argv[1], "cone")) {
 
-    case "plane":
+  }
+  else if(!strcmp(argv[1], "plane")) {
     if (argc == 5) {
 
     } else {
-      cout << "Object choosen correctly, but the number of arguments is insufficient. \n\n"
+      cout << OBJECT_FOUND_INSUFFICIENT_ARGUMENTS ;
     }
-    break;
+  }
+  else if(!strcmp(argv[1], "sphere")) {
 
-    case "sphere":
-    break;
-
-    default:
   }
 
   return 0;
