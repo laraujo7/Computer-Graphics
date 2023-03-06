@@ -6,29 +6,18 @@
 #include "includes.h"
 using namespace std;
 
+#include <bits/stdc++.h>
+
 class Model3D{
 private:
     string modelFilePath;
     string textureFilePath;
 
     // default color attributes
-    int diffuseR= 200;
-    int diffuseG=200;
-    int diffuseB=200;
-
-    int ambientR=50;
-    int ambientG=50;
-    int ambientB=50;
-
-    int specularR=0;
-    int specularG=0;
-    int specularB=0;
-    
-    int emissiveR=0;
-    int emissiveG=0;
-    int emissiveB=0;
-    
-    int shininessValue=0;
+    tuple<int, int, int> diffuse = make_tuple(50, 50, 50);
+    tuple<int, int, int> ambient = make_tuple(200, 200, 200);
+    tuple<int, int, int> specular = make_tuple(0, 0, 0);
+    tuple<int, int, int> emissive = make_tuple(0, 0, 0);
 
     GLuint vertices, indices, verticeCount;
     unsigned int indexCount;
@@ -36,149 +25,208 @@ private:
     vector <unsigned int> indexes;
     vector <float> coords;
 
+    int shininess = 0;
   public:
+    Model3D() {}
+
+    Model3D(Model3D model) {
+        this->modelFilePath = model->modelFilePath;
+        this->textureFilePath = model->textureFilePath;
+        this->diffuse = model->diffuse;
+        this->ambient = model->ambient;
+        this->specular = model->specular;
+        this->emissive = model->emissive;
+        this->shininess = model->shininess;
+    }
+
+    Model3D(string modelFilePath, string textureFilePath, tuple<int, int, int> diffuse, tuple<int, int, int> ambient, tuple<int, int, int> specular, tuple<int, int, int> emissive, int shininess) {
+        this->modelFilePath = modelFilePath;
+        this->textureFilePath = textureFilePath;
+        this->diffuse = diffuse;
+        this->ambient = ambient;
+        this->specular = specular;
+        this->emissive = emissive;
+        this->shininess = shininess;
+    }
+
     Model3D(string modelFilePath) {
         this->modelFilePath = modelFilePath;
+        // read3dFile(modelFilePath);
+    }
 
-        read3dFile(modelFilePath);
+    string getModelFilePath(){
+        return this->modelFilePath;
+    }
+
+    string getTextureFilePath(){
+        return this->textureFilePath;
+    }
+
+    tuple<int, int, int> getDiffuse(){
+        return this->diffuse;
+    }
+
+    tuple<int, int, int> getAmbient(){
+        return this->ambient;
+    }
+
+    tuple<int, int, int> getSpecular(){
+        return this->specular;
+    }
+
+    tuple<int, int, int> getEmissive(){
+        return this->emissive;
+    }
+
+    int getShininess(){
+        return this->shininess;
+    }
+
+    void setModelFilePath(string path){
+        this->modelFilePath = path;
     }
 
     void setTextureFilePath(string path){
         this->textureFilePath = path;
     }
 
+    void setDiffuse(tuple<int, int, int> diffuse){
+        this->diffuse = diffuse;
+    }
+
     void setDiffuse(int r, int g, int b){
-        this->diffuseR = r;
-        this->diffuseG = g;
-        this->diffuseB = b;
+        this->diffuse = make_tuple(r, g, b);
+    }
+
+    void setAmbient(tuple<int, int, int> ambient){
+        this->ambient = ambient;
     }
 
     void setAmbient(int r, int g, int b){
-        this->ambientR = r;
-        this->ambientG = g;
-        this->ambientB = b;
+        this->ambient = make_tuple(r, g, b);
+    }
+
+    void setSpecular(tuple<int, int, int> specular){
+        this->specular = specular;
     }
 
     void setSpecular(int r, int g, int b){
-        this->specularR = r;
-        this->specularG = g;
-        this->specularB = b;
+        this->specular = make_tuple(r, g, b);
+    }
+
+    void setEmissive(tuple<int, int, int> emissive){
+        this->emissive = emissive;
     }
 
     void setEmissive(int r, int g, int b){
-        this->emissiveR = r;
-        this->emissiveG = g;
-        this->emissiveB = b;
+        this->emissive = make_tuple(r, g, b);
     }
 
     void setShininess(int shininess){
-        this->shininessValue = shininess;
+        this->shininess = shininess;
     }
 
     string toString(){
-        stringstream str;
-            str << "MODEL: " << this->modelFilePath << "\n" <<
-            "DIFFUSE: " << this->diffuseR << " " << this->diffuseG << " " << this->diffuseB << " " << "\n" <<
-            "AMBIENT: " << this->ambientR << " " << this->ambientG << " " << this->ambientB << " " << "\n" <<
-            "SPECULAR: " << this->specularR << " " << this->specularG << " " << this->specularB << " " << "\n" <<
-            "EMISSIVE: " << this->emissiveR << " " << this->emissiveG<< " " << this->emissiveB << " " << "\n" <<
-            "SHININESS: " << this->shininessValue << "\n";
-
-        string ret;
-        str >> ret;
-
-        return ret;
+        return
+            "MODEL: " + this->modelFilePath + "\n" +
+            "TEXTURE: " + this->textureFilePath + "\n" +
+            "DIFFUSE: " + to_string(get<0>(this->diffuse)) + " " + to_string(get<1>(this->diffuse)) + to_string(get<2>(this->diffuse)) + "\n" +
+            "AMBIENT: " + to_string(get<0>(this->ambient)) + " " + to_string(get<1>(this->ambient)) + to_string(get<2>(this->ambient)) + "\n" +
+            "SPECULAR: " + to_string(get<0>(this->specular)) + " " + to_string(get<1>(this->specular)) + to_string(get<2>(this->specular)) + "\n" +
+            "EMISSIVE: " + to_string(get<0>(this->emissive)) + " " + to_string(get<1>(this->emissive)) + to_string(get<2>(this->emissive)) + "\n" +
+            "SHININESS: " + to_string(this->shininess);
     }
 
-    void insertPoint(vector <float> &points, int x, int y, int z){
-        points.push_back(x);
-        points.push_back(y);
-        points.push_back(z);
+    // void insertPoint(vector <float> &points, int x, int y, int z){
+    //     points.push_back(x);
+    //     points.push_back(y);
+    //     points.push_back(z);
 
-    }
+    // }
 
-    void insertIndex(vector <unsigned int> &points, int x, int y, int z){
-        points.push_back(x);
-        points.push_back(y);
-        points.push_back(z);
+    // void insertIndex(vector <unsigned int> &points, int x, int y, int z){
+    //     points.push_back(x);
+    //     points.push_back(y);
+    //     points.push_back(z);
 
-    }
+    // }
 
-    void cylinderPoints(float radius, float height, int slices, vector <float> &points){
-        float interval = (2*M_PI) / slices;
-        float h = 0;
+    // void cylinderPoints(float radius, float height, int slices, vector <float> &points){
+    //     float interval = (2*M_PI) / slices;
+    //     float h = 0;
 
-        // base point
-        insertPoint(points, 0, 0, 0);
-        
-        // top point
-        insertPoint(points, 0, height, 0);
-        
-        // side points
-        for(int i=0; i < 2; i++){
-            
-            for(int j=0; j<slices; j++){
-                float angle = j * interval;
-                insertPoint(points, radius*sin(angle), h, radius*cos(angle));
-                
-            }
+    //     // base point
+    //     insertPoint(points, 0, 0, 0);
 
-            h = height;
-	    }
-    }
+    //     // top point
+    //     insertPoint(points, 0, height, 0);
 
-    void indexPoints(int slices, vector <unsigned int> &indexes){
-	for(int i = 0; i < slices; i++){
-		// base points
-		insertIndex(indexes, 0, 2+i, 2+i+1);
+    //     // side points
+    //     for(int i=0; i < 2; i++){
+    //         for(int j=0; j<slices; j++){
+    //             float angle = j * interval;
+    //             insertPoint(points, radius*sin(angle), h, radius*cos(angle));
+    //         }
 
-		// side points
-		insertIndex(indexes, 2+i, 2+i+1,2+slices+i+1);
-		insertIndex(indexes, 2+i, 2+slices+i+1, 2+slices+i);
+    //         h = height;
+	//     }
+    // }
 
-		// top points
-		insertIndex(indexes, 1, 2+slices+i, 2+slices+i+1);
-	    }
-    }
+    // void indexPoints(int slices, vector <unsigned int> &indexes){
+	// for(int i = 0; i < slices; i++){
+	// 	// base points
+	// 	insertIndex(indexes, 0, 2+i, 2+i+1);
 
-    void writeCylinder(float radius, float height, int slices) {
+	// 	// side points
+	// 	insertIndex(indexes, 2+i, 2+i+1,2+slices+i+1);
+	// 	insertIndex(indexes, 2+i, 2+slices+i+1, 2+slices+i);
+
+	// 	// top points
+	// 	insertIndex(indexes, 1, 2+slices+i, 2+slices+i+1);
+	//     }
+    // }
+
+    // void writeCylinder(float radius, float height, int slices) {
 	
-        vector <unsigned int> indexes;
-        vector <float> coords;
+    //     vector <unsigned int> indexes;
+    //     vector <float> coords;
 
-        cylinderPoints(radius, height, slices, coords);
-        indexPoints(slices, indexes);
+    //     cylinderPoints(radius, height, slices, coords);
+    //     indexPoints(slices, indexes);
 
-        verticeCount = coords.size() / 3;
-        indexCount = indexes.size();
+    //     verticeCount = coords.size() / 3;
+    //     indexCount = indexes.size();
         
-        glGenBuffers(1, &vertices);
-        glBindBuffer(GL_ARRAY_BUFFER, vertices);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float)*coords.size(), coords.data(), GL_STATIC_DRAW);
+    //     glGenBuffers(1, &vertices);
+    //     glBindBuffer(GL_ARRAY_BUFFER, vertices);
+    //     glBufferData(GL_ARRAY_BUFFER, sizeof(float)*coords.size(), coords.data(), GL_STATIC_DRAW);
 
-        glGenBuffers(1, &indices);
-        glBindBuffer(GL_ARRAY_BUFFER, indices);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(unsigned int)*indexes.size(), indexes.data(), GL_STATIC_DRAW);
+    //     glGenBuffers(1, &indices);
+    //     glBindBuffer(GL_ARRAY_BUFFER, indices);
+    //     glBufferData(GL_ARRAY_BUFFER, sizeof(unsigned int)*indexes.size(), indexes.data(), GL_STATIC_DRAW);
 
+    // }
+
+    string getLine(ifstream file) {
+        println(getline(file));
     }
-    
 
     void read3dFile(string filePath){
 
         ifstream file(filePath);
         if (file.is_open()) {
-            string nomeModelo;
-            getline(file, nomeModelo);
-            cout << nomeModelo << endl;
+            string newModel;
+            getline(file, newModel);
+            println(newModel);
 
-            string numPontosStr;
-            getline(file, numPontosStr);
-            int numPontos = stoi(numPontosStr);
-            cout << numPontosStr << endl;
+            // string numPontosStr;
+            getLine(file);
+            // int numPontos = stoi(numPontosStr);
+            // cout << numPontosStr << endl;
 
             string coordsStr;
             float x,y,z;
-            
+
             for(int i = 0; i < numPontos; i++){
                 getline(file, coordsStr);
                 if (sscanf(coordsStr.c_str(), "%f %f %f", &x, &y, &z) == 3) {
@@ -224,15 +272,15 @@ private:
     }
 
     void draw(){
-        
+
         glBindBuffer(GL_ARRAY_BUFFER,vertices);
         glVertexPointer(3,GL_FLOAT,0,0);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);   
-        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
+
         // with fill
         glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
-        
+
         // wireframe
         //glDrawElements(GL_LINES, indexCount, GL_UNSIGNED_INT, NULL);
 

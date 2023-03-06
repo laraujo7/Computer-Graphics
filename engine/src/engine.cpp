@@ -21,7 +21,7 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	// Load Identity Matrix
 	glLoadIdentity();
-	
+
 	// Set the viewport to be the entire window
     glViewport(0, 0, w, h);
 
@@ -124,13 +124,15 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(800,800);
 	glutCreateWindow("Teste");
 	glewInit();
-// Required callback registry 
+
+// Required callback registry
 	glutDisplayFunc(renderScene);
 	glutIdleFunc(renderScene);
 	glutReshapeFunc(changeSize);
 	timebase = glutGet(GLUT_ELAPSED_TIME);
-	
-// put here the registration of the keyboard callbacks
+
+
+	// put here the registration of the keyboard callbacks
 	//glutKeyboardFunc(keyboardCtrl);
 	//glutMouseFunc(mouseCtrl);
 

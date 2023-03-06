@@ -1,4 +1,3 @@
-#include "includes.h"
 #include "camera.hpp"
 #include "model3d.cpp"
 #include "../lib/tinyxml2/tinyxml2.h"
@@ -133,7 +132,6 @@ class World{
 
 			// para cada nodo tiro o seu valor (<camera>, <position>, ...)
 			string param = e->Value();
-			
 			if(param == "window"){
 				int width = atoi(e->Attribute("width"));
 				int height = atoi(e->Attribute("height"));
@@ -159,7 +157,6 @@ class World{
 				}
 				/*
 				for(XMLElement *item = e->FirstChildElement(); item != NULL; item = item->NextSiblingElement()){
-				//while(item != NULL){
 					string groupElemName = item->Value();
 					//cout << item->FirstChildElement()->Value() << endl;
 					

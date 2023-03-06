@@ -1,17 +1,22 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "includes.h"
+#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 
 class Camera {
 private:
-    float posX;
-    float posY;
-    float posZ;
+    tuple<float, float, float> position;
+    tuple<float, float, float> lookAt;
 
-    float lookAtX;
-    float lookAtY;
-    float lookAtZ;
+    // float posX;
+    // float posY;
+    // float posZ;
+
+    // float lookAtX;
+    // float lookAtY;
+    // float lookAtZ;
 
     float radius;
     float alpha;
@@ -20,8 +25,8 @@ private:
 public:
     Camera() {}
 
-    Camera(float raio, float alpha, float beta) {
-        this->radius = raio;
+    Camera(float radius, float alpha, float beta) {
+        this->radius = radius;
         this->alpha = alpha;
         this->beta = beta;
         float pos[3];
@@ -38,10 +43,53 @@ public:
         // uses default alpha and beta
     }
 
-    void getPosition(float arr[3]){
-        arr[0] = this->posX;
-        arr[1] = this->posY;
-        arr[2] = this->posZ;
+    void getPosition(float *arr){
+        for(int i=0; i < 3; i++){
+            arr[i] = get<i>(this->position);
+        }
+    }
+
+    void getPosition(vector<float> &arr){
+        for(int i=0; i < 3; i++){
+            arr.push_back(get<i>(this->position));
+        }
+    }
+
+    vector<float> getPosition(){
+        vector<float> arr;
+        for(int i=0; i < 3; i++){
+            arr.push_back(get<i>(this->position));
+        }
+
+        return arr;
+    }
+
+    float* getPosition(){
+        return [get<0>(this->position), get<1>(this->position), get<2>(this->position)];
+    }
+
+    void getLookAt(float *arr){
+        for(int i=0; i < 3; i++){
+            arr[i] = get<i>(this->lookAt);
+        }
+    }
+
+    void getLookAt(vector<float> &arr){
+        for(int i=0; i < 3; i++){
+            arr.push_back(get<i>(this->lookAt));
+        }
+    }
+
+    vector<float> getLookAt(){
+        return make_tuple(get<0>(this->lookAt), get<1>(this->lookAt), get<2>(this->lookAt))
+    }
+
+    float* getLookAt(){
+        float *arr;
+        for(int i=0; i < 3; i++){
+            arr[i] = get<i>(this->lookAt);
+        }
+        return arr;
     }
 
     void getLookAt(float arr[3]){
