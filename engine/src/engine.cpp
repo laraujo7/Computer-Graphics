@@ -14,10 +14,20 @@ void changeSize(int w, int h) {
   // compute window's aspect ratio
   float ratio = w * 1.0 / h;
 
+<<<<<<< HEAD
   // Set the projection matrix as current
   glMatrixMode(GL_PROJECTION);
   // Load Identity Matrix
   glLoadIdentity();
+=======
+	// Set the projection matrix as current
+	glMatrixMode(GL_PROJECTION);
+	// Load Identity Matrix
+	glLoadIdentity();
+
+	// Set the viewport to be the entire window
+    glViewport(0, 0, w, h);
+>>>>>>> 952eb18 (Add rapidxml)
 
   // Set the viewport to be the entire window
   glViewport(0, 0, w, h);
