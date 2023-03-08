@@ -1,7 +1,7 @@
 <world> <!-- a world can have a window definition, camera, a set of lights, and a single group -->
 
     <!-- defines the width and height of the window -->
-    <window width="512" height="512"/>
+    <window width="1000" height="1000"/>
 
     <!-- camera definition -->
     <camera> 
