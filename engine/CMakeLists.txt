@@ -1,65 +1,40 @@
 cmake_minimum_required(VERSION 3.5)
+project(engine)
 
-# Project Name
-PROJECT(engine)
-
+set(CMAKE_CXX_STANDARD 11)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_executable(${PROJECT_NAME}
-								src/engine.cpp
-								src/tinyxml2/tinyxml2.h
-							)
+    src/engine.cpp
+    src/tinyxml2/tinyxml2.h
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE src/tinyxml2)
 
 find_package(OpenGL REQUIRED)
-include_directories(${OpenGL_INCLUDE_DIRS})
-link_directories(${OpenGL_LIBRARY_DIRS})
-add_definitions(${OpenGL_DEFINITIONS})
+if(OPENGL_FOUND)
+    target_include_directories(${PROJECT_NAME} PRIVATE ${OpenGL_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${OPENGL_LIBRARIES})
+else()
+    message(FATAL_ERROR "OPENGL not found!")
+endif()
+
+find_package(GLUT REQUIRED)
+if(GLUT_FOUND)
+    target_include_directories(${PROJECT_NAME} PRIVATE ${GLUT_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${GLUT_LIBRARIES})
+else()
+    message(FATAL_ERROR "GLUT not found!")
+endif()
 
 find_package(docopt COMPONENTS CXX REQUIRED)
-include_directories(${DOCOPT_INCLUDE_DIRS})
+target_include_directories(${PROJECT_NAME} PRIVATE ${DOCOPT_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE docopt)
 
-if(NOT OPENGL_FOUND)
-    message(ERROR " OPENGL not found!")
-endif(NOT OPENGL_FOUND)
+if(WIN32)
+    set(TOOLKITS_FOLDER "" CACHE PATH "Path to Toolkits folder")
 
-if  (WIN32)
-
-	message(STATUS "Toolkits_DIR set to: " ${TOOLKITS_FOLDER})
-	set(TOOLKITS_FOLDER "" CACHE PATH "Path to Toolkits folder")
-
-	if (NOT EXISTS "${TOOLKITS_FOLDER}/glut/GL/glut.h" OR NOT EXISTS "${TOOLKITS_FOLDER}/glut/glut32.lib")
-		message(ERROR ": GLUT not found")
-	endif (NOT EXISTS "${TOOLKITS_FOLDER}/glut/GL/glut.h" OR NOT EXISTS "${TOOLKITS_FOLDER}/glut/glut32.lib")
-
-	include_directories(${TOOLKITS_FOLDER}/glut )
-	target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES}
-										  ${TOOLKITS_FOLDER}/glut/glut32.lib docopt)
-
-	if (EXISTS "${TOOLKITS_FOLDER}/glut/glut32.dll" )
-		file(COPY ${TOOLKITS_FOLDER}/glut/glut32.dll DESTINATION ${CMAKE_BINARY_DIR})
-	endif(EXISTS "${TOOLKITS_FOLDER}/glut/glut32.dll" )
-
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
-
-else (WIN32) #Linux and Mac
-
-	set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} Wno-deprecated")
-	find_package(GLUT REQUIRED)
-	include_directories(${GLUT_INCLUDE_DIR})
-	link_directories(${GLUT_LIBRARY_DIRS})
-	add_definitions(${GLUT_DEFINITIONS})
-
-	target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} docopt)
-	if(NOT GLUT_FOUND)
-	   message(ERROR ": GLUT not found!")
-	endif(NOT GLUT_FOUND)
-
+    if(NOT EXISTS "${TOOLKITS_FOLDER}/glut/GL/glut.h" OR NOT EXISTS "${TOOLKITS_FOLDER}/glut/glut32.lib")
+        message(FATAL_ERROR "GLUT not found")
+    endif()
 endif(WIN32)
-
-
-
-
-
-
-
-

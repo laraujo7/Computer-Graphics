@@ -239,7 +239,7 @@ int main(int argc, char **argv) {
 	if (loadOk == XML_SUCCESS) {
         setupWorld(worldElement);
     } else {
-        cout << "Erro ao ler ficheiro XML->" << path;
+        cout << "Erro ao ler ficheiro de configuração XML->" << path;
     }
 	
 // enter GLUT's main cycle
