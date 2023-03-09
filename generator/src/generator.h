@@ -11,6 +11,7 @@
 
 #include "config/global.h"
 #include "docopt.h"
+#include "models/box/box.h"
 #include "models/plane/plane.h"
 #include "models/sphere/sphere.h"
 #include "utils/generic_functions/generic_functions.h"
