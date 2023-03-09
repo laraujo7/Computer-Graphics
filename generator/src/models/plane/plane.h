@@ -7,8 +7,9 @@
 
 #include "../../utils/model/model.h"
 #include "../../utils/point/point.h"
+#include "../../utils/triangle_index/triangle_index.h"
 
-void create_plane(float length, int divisions, string file_name);
+int create_plane(float length, int divisions, string file_name);
 
 using namespace std;
 

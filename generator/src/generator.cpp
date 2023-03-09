@@ -24,7 +24,9 @@ int main(int argc, char **argv) {
                      "Generator 1.0"); // version string
 
   if (args["sphere"].asBool()) {
-    println("sphere");
+    create_sphere(stof(args["<radius>"].asString()),
+                  stoi(args["<slices>"].asString()),
+                  stoi(args["<stacks>"].asString()), args["<file>"].asString());
   } else if (args["box"].asBool()) {
     println("box");
   } else if (args["cone"].asBool()) {

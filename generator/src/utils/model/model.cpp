@@ -13,9 +13,8 @@ void Model ::writeToFile(string filename, char const *tag) {
   }
 
   file << to_string(this->triangules_indexs.size()) + "\n";
-  for (tuple<int, int, int> triangule_indexs : this->triangules_indexs) {
-    file << get<0>(triangule_indexs) << " " << get<1>(triangule_indexs) << " "
-         << get<2>(triangule_indexs) << "\n";
+  for (TriangleIndex triangule_indexs : this->triangules_indexs) {
+    file << triangule_indexs.triangle_indexs_to_string() + "\n";
   }
 
   file.close();

@@ -12,6 +12,7 @@
 #include "config/global.h"
 #include "docopt.h"
 #include "models/plane/plane.h"
+#include "models/sphere/sphere.h"
 #include "utils/generic_functions/generic_functions.h"
 
 using namespace std;
