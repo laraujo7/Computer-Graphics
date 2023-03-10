@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include "../point/point.h"
+#include "../triangle_index/triangle_index.h"
 #include <bits/stdc++.h>
 #include <fstream>
 #include <iosfwd>
@@ -13,12 +14,12 @@ using namespace std;
 class Model {
 private:
   vector<Point> points;
-  vector<tuple<int, int, int>> triangules_indexs;
+  vector<TriangleIndex> triangules_indexs;
 
 public:
   Model() {}
 
-  Model(vector<Point> points, vector<tuple<int, int, int>> triangules_indexs) {
+  Model(vector<Point> points, vector<TriangleIndex> triangules_indexs) {
     this->points = points;
     this->triangules_indexs = triangules_indexs;
   }
