@@ -1,47 +1,51 @@
 #include "box.h"
+int face = static_cast<int>(6);
 
-void bget_points(float length, int divisions, vector<Point> &points) {
+void get_box_points(float length, int divisions, vector<Point> &points) {
+
+  float half_length = static_cast<float>(length / 2);
+  float length_step = static_cast<float>(length / divisions);
 
   for (int face = 0; face < 6; face++) {
     for (int i = 0; i <= divisions; i++) {
       for (int j = 0; j <= divisions; j++) {
-        float pj = (length / 2) - ((j * length) / divisions);
-        float pi = (length / 2) - ((i * length) / divisions);
+        float pj = (half_length) - (j * length_step);
+        float pi = (half_length) - (i * length_step);
 
         Point point;
         switch (face) {
         case 0:
           // Top
-          point = Point(pj, length / 2, pi);
+          point = Point(pj, half_length, pi);
           points.push_back(point);
           break;
         case 1:
           // Front
-          point = Point(pj, pi, length / 2);
+          point = Point(pj, pi, half_length);
           points.push_back(point);
           break;
 
         case 2:
           // Left
-          point = Point(length / 2, pj, pi);
+          point = Point(half_length, pj, pi);
           points.push_back(point);
           break;
 
         case 3:
           // Bottom
-          point = Point(pj, -length / 2, pi);
+          point = Point(pj, -half_length, pi);
           points.push_back(point);
           break;
 
         case 4:
           // Back
-          point = Point(pj, pi, -length / 2);
+          point = Point(pj, pi, -half_length);
           points.push_back(point);
           break;
 
         case 5:
           // Right
-          point = Point(-length / 2, pj, pi);
+          point = Point(-half_length, pj, pi);
           points.push_back(point);
           break;
 
@@ -53,8 +57,8 @@ void bget_points(float length, int divisions, vector<Point> &points) {
   }
 }
 
-void bget_indexs(float length, int divisions,
-                 vector<TriangleIndex> &triangules_indexs) {
+void get_box_indexs(float length, int divisions,
+                    vector<TriangleIndex> &triangules_indexs) {
 
   for (int face = 0; face < 6; face++) {
     for (int i = 0; i < divisions * divisions; i += divisions + 1) {
@@ -80,9 +84,9 @@ int create_box(float length, int divisions, string file_name) {
   vector<Point> points;
   vector<TriangleIndex> triangules_indexs;
 
-  bget_points(length, divisions, points);
+  get_box_points(length, divisions, points);
 
-  bget_indexs(length, divisions, triangules_indexs);
+  get_box_indexs(length, divisions, triangules_indexs);
 
   Model model(points, triangules_indexs);
   model.writeToFile(file_name, "box");
