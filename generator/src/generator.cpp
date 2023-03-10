@@ -28,7 +28,8 @@ int main(int argc, char **argv) {
                   stoi(args["<slices>"].asString()),
                   stoi(args["<stacks>"].asString()), args["<file>"].asString());
   } else if (args["box"].asBool()) {
-    println("box");
+    create_box(stof(args["<length>"].asString()),
+               stoi(args["<grid>"].asString()), args["<file>"].asString());
   } else if (args["cone"].asBool()) {
     println("cone");
   } else if (args["plane"].asBool()) {
