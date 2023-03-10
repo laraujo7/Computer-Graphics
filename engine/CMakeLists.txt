@@ -6,7 +6,13 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_executable(${PROJECT_NAME}
     src/engine.cpp
+    src/world.cpp
+    src/camera.hpp
+    src/model3d.cpp
+    src/includes.h
     src/tinyxml2/tinyxml2.h
+    src/tinyxml2/tinyxml2.cpp
+
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src/tinyxml2)

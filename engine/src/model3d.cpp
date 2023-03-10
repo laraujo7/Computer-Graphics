@@ -29,43 +29,50 @@ class Model3D{
     
     int shininessValue=0;
 
+    Model3D(string modelFilePath) {
+        this->modelFilePath = modelFilePath;
+    }
+
+    void setTextureFilePath(string path){
+        this->textureFilePath = path;
+    }
+
     void setDiffuse(int r, int g, int b){
-        diffuseR = r;
-        diffuseG = g;
-        diffuseB = b;
+        this->diffuseR = r;
+        this->diffuseG = g;
+        this->diffuseB = b;
     }
 
     void setAmbient(int r, int g, int b){
-        ambientR = r;
-        ambientG = g;
-        ambientB = b;
+        this->ambientR = r;
+        this->ambientG = g;
+        this->ambientB = b;
     }
 
     void setSpecular(int r, int g, int b){
-        specularR = r;
-        specularG = g;
-        specularB = b;
+        this->specularR = r;
+        this->specularG = g;
+        this->specularB = b;
     }
 
     void setEmissive(int r, int g, int b){
-        emissiveR = r;
-        emissiveG = g;
-        emissiveB = b;
+        this->emissiveR = r;
+        this->emissiveG = g;
+        this->emissiveB = b;
     }
 
     void setShininess(int shininess){
-        shininessValue = shininess;
+        this->shininessValue = shininess;
     }
 
     string toString(){
         stringstream str;
-            str << "MODEL: " << modelFilePath << "\n" <<
-            "TEXTURE PATH: " << textureFilePath << "\n" <<
-            "DIFFUSE: " << diffuseR << " " << diffuseG << " " << diffuseB << " " << "\n" <<
-            "AMBIENT: " << ambientR << " " << ambientG << " " << ambientB << " " << "\n" <<
-            "SPECULAR: " << specularR << " " << specularG << " " << specularB << " " << "\n" <<
-            "EMISSIVE: " << emissiveR << " " << emissiveG<< " " << emissiveB << " " << "\n" <<
-            "SHININESS: " << shininessValue << "\n";
+            str << "MODEL: " << this->modelFilePath << "\n" <<
+            "DIFFUSE: " << this->diffuseR << " " << this->diffuseG << " " << this->diffuseB << " " << "\n" <<
+            "AMBIENT: " << this->ambientR << " " << this->ambientG << " " << this->ambientB << " " << "\n" <<
+            "SPECULAR: " << this->specularR << " " << this->specularG << " " << this->specularB << " " << "\n" <<
+            "EMISSIVE: " << this->emissiveR << " " << this->emissiveG<< " " << this->emissiveB << " " << "\n" <<
+            "SHININESS: " << this->shininessValue << "\n";
 
         string ret;
         str >> ret;

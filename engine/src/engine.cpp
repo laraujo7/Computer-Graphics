@@ -1,31 +1,8 @@
-#include <GL/freeglut_std.h>
-#include <GL/gl.h>
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
+#include "camera.hpp"
+#include "includes.h"
+#include "world.cpp"
 
-
-#include "tinyxml2/tinyxml2.cpp"
-#include "tinyxml2/tinyxml2.h"
-#include <iostream>
-#include <iomanip>
-
-using namespace tinyxml2;
-using namespace std;
-
-#include <math.h>
-
-//TODO: make camera an object
-
-float camX = 1.0;
-float camY = 1.0;
-float camZ = 1.0;
-float angle = 0;
-
-int w;
-int h;
+World *world = new World();
 
 void changeSize(int w, int h) {
 
@@ -52,7 +29,6 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-
 void renderScene(void) {
 
 	// clear buffers
@@ -60,9 +36,12 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(5.0,5.0,5.0, 
-		      0.0,0.0,0.0,
-			  0.0f,1.0f,0.0f);
+	float pos[3], lookAt[3];
+	world->getCamPosition(pos);
+	world->getCamLookAt(lookAt);
+	gluLookAt(pos[0],pos[1],pos[2], 
+		      lookAt[0],lookAt[1],lookAt[2],
+			  0,1,0);
 
 	glBegin(GL_LINES);
 		// X axis in red
@@ -80,7 +59,7 @@ void renderScene(void) {
 
 	glEnd();
 
-	glRotatef(angle, camX, camY, camZ);
+	//glRotatef(angleAlpha, posX, posY, posZ);
 
 	glutWireTeapot(1);
 
@@ -97,117 +76,46 @@ void renderScene(void) {
 }
 
 
-
+/*
 // write function to process keyboard events
 void keyboardCtrl(unsigned char key, int x, int y){
 
-	switch(key){
-		case 'd': // direita
-			camX -= 50.0;
-			break;
-		case 'a': // esquerda
-			camX += 50.0;
-			break;
-		case 'w': // cima
-			camZ += 50.0;
-			break;
-		case 's': // baixo
-			camZ -= 50.0;
-			break;
-	}
-
+	switch(key) {
+        case 'w':
+			posZ += -10;
+        case 's':
+			posZ += 10;
+        case 'a':
+			posX += -10;
+        case 'd':
+			posX += 10;
+        case 'q':
+			angleAlpha += -50;
+        case 'e':
+			angleAlpha += 50;
+    }
 	glutPostRedisplay();
 }
 
 void mouseCtrl(int button, int state, int x, int y){
 	if(state == GLUT_DOWN){
-		angle += (x + y);
-		camX = x;
-		camY = y;
+		angleAlpha += (x + y);
+		posX = x;
+		posY = y;
 	}
 	glutPostRedisplay();
 }
-
-void setupCamera(XMLElement* camera){
-	int x, y, z;
-
-	for(; camera != NULL; camera = camera->NextSiblingElement()){
-		
-		string camAttribute = camera->Name();
-		
-		if(camAttribute != "projection"){
-			x = atoi(camera->Attribute("x"));
-			y = atoi(camera->Attribute("y"));
-			z = atoi(camera->Attribute("z"));
-			printf("debug x: %d, y: %d, z: %d \n", x,y,z);
-
-			if(camAttribute == "position"){
-				//setCameraPosition(x,y,z);
-				camX = x;
-				camY = y;
-				camZ = z;
-			}
-			else if(camAttribute == "lookAt"){
-				//setCameraLookAt(x,y,z);
-			}
-			else if(camAttribute == "up"){
-				//setCameraUp(x,y,z);
-			}
-		}
-		else {
-			int fov = atoi(camera->Attribute("fov"));
-			int near = atoi(camera->Attribute("near"));
-			int far = atoi(camera->Attribute("far"));
-			printf("debug fov: %d, near: %d, far: %d \n", fov,near,far);
-			float ratio = w * 1.0 / h;
-			gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
-
-		}
-
-	}
-}
-
-void setupWorld(XMLElement* worldElement){
-	
-	// obtenho o primeiro elemento (no caso <window>)
-	XMLElement *e = worldElement->FirstChildElement();
-
-	// percorrer os "nodos" do ficheiro XML
-    while (e != NULL){
-	
-		// para cada nodo tiro o seu valor (<camera>, <position>, ...)
-        string param = e->Value();
-
-		if(param == "window"){
-			int width = atoi(e->Attribute("width"));
-			int height = atoi(e->Attribute("height"));
-
-			if (width > 0 && height > 0){
-				w = width; h = height;
-				glutReshapeWindow(width,height);
-			}
-		}
-		else if (param == "camera"){
-			
-			XMLElement *camera = e->FirstChildElement();
-			setupCamera(camera);
-			
-		}
-		else if (param == "lights"){
-			// percorrer luzes
-		}
-		else if (param == "group"){
-			// transform
-			// models
-
-		}
-		e = e->NextSiblingElement();
-	}
-
-
-}
+*/
 int main(int argc, char **argv) {
 
+//  Reading XML config file and setting up
+	if(argc != 2){
+		cout<< "Path de ficheiro de configuração desconhecido";
+		return 0;
+	}
+
+	world->loadXML(argv[1]);
+	
 // init GLUT and the window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
@@ -221,27 +129,15 @@ int main(int argc, char **argv) {
 
 	
 // put here the registration of the keyboard callbacks
-	glutKeyboardFunc(keyboardCtrl);
-	glutMouseFunc(mouseCtrl);
+	//glutKeyboardFunc(keyboardCtrl);
+	//glutMouseFunc(mouseCtrl);
 
 
 //  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
-//  Reading XML config file and setting up
 
-    XMLDocument doc;
-    const char * path = "xml_teste.xml";
-    bool loadOk = doc.LoadFile(path);
-    XMLElement * worldElement = doc.RootElement();
-    
-	if (loadOk == XML_SUCCESS) {
-        setupWorld(worldElement);
-    } else {
-        cout << "Erro ao ler ficheiro de configuração XML->" << path;
-    }
-	
 // enter GLUT's main cycle
 	glutMainLoop();
 
