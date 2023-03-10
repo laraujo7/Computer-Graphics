@@ -11,6 +11,8 @@ class World{
 	int w;
 	int h;
 
+
+
 	Camera *camera = new Camera();
 
 	public:
@@ -58,48 +60,16 @@ class World{
 
 	}
 
-	void load3DModel(XMLElement* modelElem, Model3D *newModel){
+	void load3DModel(XMLElement* modelElem){
 
-		for(XMLElement *model = modelElem->FirstChildElement(); model != NULL; model = model->NextSiblingElement()){
+		string filePath = modelElem->Attribute("file");
+		Model3D *newModel = new Model3D(filePath);
 
-			string modelAttribute = model->Name();
-
-			if(modelAttribute == "texture"){
-				newModel->setTextureFilePath(model->Attribute("file"));
-			}
-			else if(modelAttribute == "color"){
-				int R,G,B;
-				XMLElement* colorElem = model->FirstChildElement();
-
-				for(;colorElem != NULL; colorElem = colorElem->NextSiblingElement()){
-
-					string colorAttributeName = colorElem->Name();
-
-					if(colorAttributeName != "shininess"){
-						R = atoi(colorElem->Attribute("R"));
-						G = atoi(colorElem->Attribute("G"));
-						B = atoi(colorElem->Attribute("B"));
-
-						if(colorAttributeName == "diffuse"){
-							newModel->setDiffuse(R,G,B);
-						}
-						if(colorAttributeName == "ambient"){
-							newModel->setDiffuse(R,G,B);
-						}
-						if(colorAttributeName == "specular"){
-							newModel->setAmbient(R,G,B);
-						}
-						if(colorAttributeName == "emissive"){
-							newModel->setEmissive(R,G,B);
-						}
-					}
-					else if(colorAttributeName == "shininess"){
-						int value = atoi(colorElem->Attribute("value"));
-						newModel->setShininess(value);
-					}
-				}
-			}
-		}
+		//TODO in the next phase
+		//string textureFilePath =modelElem->FirstChildElement("texture")->Attribute("file");
+		//newModel->setTextureFilePath(textureFilePath);
+		
+		//XMLElement* colorElem = modelElem->FirstChildElement("color");
 
 	}
 
@@ -120,14 +90,11 @@ class World{
 	}
 
 	void loadModels(XMLElement* modelsElem){
-		for(XMLElement *model = modelsElem->FirstChildElement(); model != NULL; model = model->NextSiblingElement()){
-			//cout << model->Attribute("file") << endl;
-			Model3D *newModel = new Model3D(model->Attribute("file"));
+		//cout << modelsElem->Attribute("file") << endl;
 
-			load3DModel(model->FirstChildElement(), newModel);
-			
+		//for(XMLElement *model = modelsElem->FirstChildElement("model"); model == NULL; model = model->NextSiblingElement("model"))
+			load3DModel(modelsElem->FirstChildElement("model"));
 
-		}
 		/*
 		for(;modelsElem != NULL; modelsElem = modelsElem->NextSiblingElement()){
 			
@@ -172,21 +139,27 @@ class World{
 			}
 			else if (param == "group"){
 				
-				
+				if(e->FirstChildElement("transform")){
+					cout << "[transform] only required from phase 2\n";
+				}
+				if(e->FirstChildElement("models") != NULL){
+					loadModels(e->FirstChildElement("models"));
+				}
+				/*
 				for(XMLElement *item = e->FirstChildElement(); item != NULL; item = item->NextSiblingElement()){
 				//while(item != NULL){
 					string groupElemName = item->Value();
-					cout << groupElemName << endl;
+					//cout << item->FirstChildElement()->Value() << endl;
 					
 					if(groupElemName == "transform"){
 						//loadTransformations(item->FirstChildElement());
-						cout << "[transform] only required from phase 2\n";
+						
 					}
 					else if(groupElemName == "models"){
 						loadModels(item);
 					}
 				}
-
+				*/
 			}
 			e = e->NextSiblingElement();
 		}
