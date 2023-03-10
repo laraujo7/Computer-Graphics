@@ -1,12 +1,12 @@
 #include "box.h"
-int face = static_cast<int>(6);
+int nFace = static_cast<int>(6);
 
 void get_box_points(float length, int divisions, vector<Point> &points) {
 
   float half_length = static_cast<float>(length / 2);
   float length_step = static_cast<float>(length / divisions);
 
-  for (int face = 0; face < 6; face++) {
+  for (int face = 0; face < nFace; face++) {
     for (int i = 0; i <= divisions; i++) {
       for (int j = 0; j <= divisions; j++) {
         float pj = (half_length) - (j * length_step);
@@ -60,13 +60,15 @@ void get_box_points(float length, int divisions, vector<Point> &points) {
 void get_box_indexs(float length, int divisions,
                     vector<TriangleIndex> &triangules_indexs) {
 
-  for (int face = 0; face < 6; face++) {
+  int face_points = pow(divisions + 1, 2);
+
+  for (int face = 0; face < nFace; face++) {
     for (int i = 0; i < divisions * divisions; i += divisions + 1) {
       for (int j = 0; j < divisions; j++) {
-        int index1 = j + i;
-        int index2 = j + i + divisions + 1;
-        int index3 = j + i + divisions + 2;
-        int index4 = j + i + 1;
+        int index1 = j + i + (face * face_points);
+        int index2 = j + i + divisions + 1 + (face * face_points);
+        int index3 = j + i + divisions + 2 + (face * face_points);
+        int index4 = j + i + 1 + (face * face_points);
 
         if (face < 3) {
           triangules_indexs.push_back(TriangleIndex(index1, index2, index3));
