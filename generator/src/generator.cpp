@@ -30,7 +30,9 @@ int main(int argc, char **argv) {
   } else if (args["cone"].asBool()) {
     println("cone");
   } else if (args["plane"].asBool()) {
-    println("plane");
+    create_plane(stof(args["<length>"].asString()),
+                 stoi(args["<divisions>"].asString()),
+                 args["<file>"].asString());
   }
   return 0;
 }
