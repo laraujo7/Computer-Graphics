@@ -11,7 +11,7 @@ class World{
 	int w;
 	int h;
 
-	Camera *camera = new Camera(45.0f);
+	Camera *camera = new Camera();
 
 	public:
 
@@ -35,35 +35,34 @@ class World{
 	void setupCamera(XMLElement* cameraElem){
 		
 		float x, y, z;
-		cameraElem = cameraElem->FirstChildElement();
-		
+
 		for(;cameraElem != NULL; cameraElem = cameraElem->NextSiblingElement()){
-			
+		
 			string camAttribute = cameraElem->Name();
+			
+			x = stof(cameraElem->Attribute("x"));
+			y = stof(cameraElem->Attribute("y"));
+			z = stof(cameraElem->Attribute("z"));
+			float arr[3] = {x,y,z};
 
-			if(camAttribute != "projection"){
+			if(camAttribute == "position"){
+				camera->setPosition(arr);
 
-				x = stof(cameraElem->Attribute("x"));
-				y = stof(cameraElem->Attribute("y"));
-				z = stof(cameraElem->Attribute("z"));
-				float arr[3] = {x,y,z};
-
-				if(camAttribute == "position"){
-					camera->setPosition(arr);
-				}
-				else if(camAttribute == "lookAt"){
-					camera->setLookAt(arr);
-				}
+			}
+			else if(camAttribute == "lookAt"){
+				camera->setLookAt(arr);
+			}
+			else{
+				break;
 			}
 		}
 
 	}
 
-	void load3DModel(XMLElement* model){
+	void load3DModel(XMLElement* modelElem, Model3D *newModel){
+		cout << "hum";
 
-		Model3D *newModel = new Model3D(model->Attribute("file"));
-
-		for(model = model->FirstChildElement();model != NULL; model = model->NextSiblingElement()){
+		for(XMLElement *model = modelElem->FirstChildElement(); model != NULL; model = model->NextSiblingElement()){
 			
 			string modelAttribute = model->Name();
 
@@ -86,7 +85,7 @@ class World{
 						if(colorAttributeName == "diffuse"){
 							newModel->setDiffuse(R,G,B);
 						}
-						else if(colorAttributeName == "ambient"){
+						if(colorAttributeName == "ambient"){
 							newModel->setDiffuse(R,G,B);
 						}
 						if(colorAttributeName == "specular"){
@@ -102,23 +101,41 @@ class World{
 					}
 				}
 			}
+
+			
 		}
 
 	}
 
 	void getCamPosition(float arr[3]){
-		camera->getPosition(arr);
+		float aux[3];
+		camera->getPosition(aux);
+		arr[0] = aux[0];
+		arr[1] = aux[1];
+		arr[2] = aux[2];
 	}
 
 	void getCamLookAt(float arr[3]){
-		camera->getLookAt(arr);
+		float aux[3];
+		camera->getLookAt(aux);
+		arr[0] = aux[0];
+		arr[1] = aux[1];
+		arr[2] = aux[2];
 	}
 
 	void loadModels(XMLElement* modelsElem){
+		for(XMLElement *model = modelsElem->FirstChildElement(); model != NULL; model = model->NextSiblingElement()){
+			//cout << model->Attribute("file") << endl;
+			Model3D *newModel = new Model3D(model->Attribute("file"));
+			load3DModel(model->FirstChildElement(), newModel);
+			cout << newModel->toString();
 
+		}
+		/*
 		for(;modelsElem != NULL; modelsElem = modelsElem->NextSiblingElement()){
 			
 			string modelsAttribute = modelsElem->Name();
+			cout << modelsAttribute;
 
 			if(modelsAttribute == "model"){
 				load3DModel(modelsElem);
@@ -127,6 +144,7 @@ class World{
 				cout << "invalid attribute: " << modelsAttribute << "\n";
 			}
 		}
+		*/
 	}
 
 	void setupWorld(XMLElement* worldElement){
@@ -139,39 +157,37 @@ class World{
 
 			// para cada nodo tiro o seu valor (<camera>, <position>, ...)
 			string param = e->Value();
-
+			
 			if(param == "window"){
 				int width = atoi(e->Attribute("width"));
 				int height = atoi(e->Attribute("height"));
 
 				if (width > 0 && height > 0){
 					w = width; h = height;
+					glutReshapeWindow(width,height);
 				}
 			}
 			else if (param == "camera"){
 				setupCamera(e->FirstChildElement());
-				
 			}
 			else if (param == "lights"){
 				// percorrer luzes
 			}
 			else if (param == "group"){
 				
-				XMLElement *item = e->FirstChildElement();
 				
-				while(item != NULL){
+				for(XMLElement *item = e->FirstChildElement(); item != NULL; item = item->NextSiblingElement()){
+				//while(item != NULL){
 					string groupElemName = item->Value();
+					cout << groupElemName << endl;
 					
 					if(groupElemName == "transform"){
 						//loadTransformations(item->FirstChildElement());
-						printf("[transform] only required from phase 2\n");
+						cout << "[transform] only required from phase 2\n";
 					}
 					else if(groupElemName == "models"){
-						loadModels(item->FirstChildElement());
+						loadModels(item);
 					}
-					else{ break; }
-
-					item = item->NextSiblingElement();
 				}
 
 			}

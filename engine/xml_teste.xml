@@ -41,6 +41,7 @@
                     <shininess value="0"/>
                 </color>
             </model>
+
  		</models>
  	</group>
  </world>

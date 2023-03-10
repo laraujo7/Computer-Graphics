@@ -4,9 +4,7 @@
 using namespace std;
 
 class Model3D{
-
-  public:
-
+private:
     string modelFilePath;
     string textureFilePath;
 
@@ -28,9 +26,10 @@ class Model3D{
     int emissiveB=0;
     
     int shininessValue=0;
-
+  public:
     Model3D(string modelFilePath) {
         this->modelFilePath = modelFilePath;
+        printf("heyo");
     }
 
     void setTextureFilePath(string path){

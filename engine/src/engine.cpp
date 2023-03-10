@@ -39,10 +39,12 @@ void renderScene(void) {
 	float pos[3], lookAt[3];
 	world->getCamPosition(pos);
 	world->getCamLookAt(lookAt);
+
 	gluLookAt(pos[0],pos[1],pos[2], 
 		      lookAt[0],lookAt[1],lookAt[2],
-			  0,1,0);
-
+			  0.0f,1.0f,0.0f);
+	
+	
 	glBegin(GL_LINES);
 		// X axis in red
 		glColor3f(1.0f, 0.0f, 0.0f);
@@ -58,11 +60,11 @@ void renderScene(void) {
 		glVertex3f(0.0f, 0.0f, 100.0f);
 
 	glEnd();
+	
+	glRotatef(0, pos[0], pos[1], pos[2]);
 
-	//glRotatef(angleAlpha, posX, posY, posZ);
-
-	glutWireTeapot(1);
-
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glutWireTeapot(5);
 	
 
 // put the geometric transformations here
@@ -109,12 +111,7 @@ void mouseCtrl(int button, int state, int x, int y){
 int main(int argc, char **argv) {
 
 //  Reading XML config file and setting up
-	if(argc != 2){
-		cout<< "Path de ficheiro de configuração desconhecido";
-		return 0;
-	}
-
-	world->loadXML(argv[1]);
+	
 	
 // init GLUT and the window
 	glutInit(&argc, argv);
@@ -122,9 +119,10 @@ int main(int argc, char **argv) {
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,800);
 	glutCreateWindow("Teste");
-		
+	//glewInit();
 // Required callback registry 
 	glutDisplayFunc(renderScene);
+	glutIdleFunc(renderScene);
 	glutReshapeFunc(changeSize);
 
 	
@@ -137,7 +135,12 @@ int main(int argc, char **argv) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
+	if(argc != 2){
+		cout<< "Path de ficheiro de configuração desconhecido";
+		return 0;
+	}
 
+	world->loadXML(argv[1]);
 // enter GLUT's main cycle
 	glutMainLoop();
 

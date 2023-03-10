@@ -25,6 +25,10 @@ else()
     message(FATAL_ERROR "OPENGL not found!")
 endif()
 
+find_package(GLEW REQUIRED)
+include_directories(${GLEW_INCLUDE_DIRS})
+link_libraries(${GLEW_LIBRARIES})
+
 find_package(GLUT REQUIRED)
 if(GLUT_FOUND)
     target_include_directories(${PROJECT_NAME} PRIVATE ${GLUT_INCLUDE_DIRS})
