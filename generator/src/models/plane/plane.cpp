@@ -1,6 +1,6 @@
 #include "plane.h"
 
-void get_points(float length, int divisions, vector<Point> &points) {
+void get_plane_points(float length, int divisions, vector<Point> &points) {
 
   for (int i = 0; i <= divisions; i++) {
     for (int j = 0; j <= divisions; j++) {
@@ -12,20 +12,18 @@ void get_points(float length, int divisions, vector<Point> &points) {
   }
 }
 
-void get_indexs(float length, int divisions,
-                vector<TriangleIndex> &triangules_indexs) {
+void get_plane_indexs(float length, int divisions,
+                      vector<TriangleIndex> &triangules_indexs) {
 
   for (int i = 0; i < divisions * divisions; i += divisions + 1) {
     for (int j = 0; j < divisions; j++) {
-      int index1 = j + i;
-      int index2 = j + i + divisions + 1;
-      int index3 = j + i + divisions + 2;
+      int p1_X = j + i;
+      int p1_Y = j + i + divisions + 1;
+      int p1_Z = j + i + divisions + 2;
+      triangules_indexs.push_back(TriangleIndex(p1_X, p1_Y, p1_Z));
 
-      triangules_indexs.push_back(TriangleIndex(index1, index2, index3));
-
-      int index4 = j + i + 1;
-
-      triangules_indexs.push_back(TriangleIndex(index1, index3, index4));
+      int p2_Z = j + i + 1;
+      triangules_indexs.push_back(TriangleIndex(p1_X, p1_Z, p2_Z));
     }
   }
 }
@@ -34,8 +32,8 @@ int create_plane(float length, int divisions, string file_name) {
   vector<Point> points;
   vector<TriangleIndex> triangules_indexs;
 
-  get_points(length, divisions, points);
-  get_indexs(length, divisions, triangules_indexs);
+  get_plane_points(length, divisions, points);
+  get_plane_indexs(length, divisions, triangules_indexs);
 
   Model model(points, triangules_indexs);
   model.writeToFile(file_name, "plane");

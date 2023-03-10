@@ -31,7 +31,10 @@ int main(int argc, char **argv) {
     create_box(stof(args["<length>"].asString()),
                stoi(args["<grid>"].asString()), args["<file>"].asString());
   } else if (args["cone"].asBool()) {
-    println("cone");
+    create_cone(stof(args["<radius>"].asString()),
+                stof(args["<height>"].asString()),
+                stoi(args["<slices>"].asString()),
+                stoi(args["<stacks>"].asString()), args["<file>"].asString());
   } else if (args["plane"].asBool()) {
     create_plane(stof(args["<length>"].asString()),
                  stoi(args["<divisions>"].asString()),

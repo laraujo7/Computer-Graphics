@@ -10,8 +10,10 @@ float calcZ(float radius, float alpha, float beta) {
   return radius * cos(alpha) * cos(beta);
 }
 
-void get_points(float radius, int stacks, int slices, float stackAng,
-                float sliceAng, vector<Point> &points) {
+void get_sphere_points(float radius, int stacks, int slices,
+                       vector<Point> &points) {
+  float stackAng = static_cast<float>((M_PI) / stacks);
+  float sliceAng = static_cast<float>((2 * M_PI) / slices);
 
   points.push_back(Point(0, -radius, 0));
 
@@ -31,32 +33,30 @@ void get_points(float radius, int stacks, int slices, float stackAng,
   points.push_back(Point(0, radius, 0));
 }
 
-void get_indexs(int slices, int stacks, int nPoints,
-                vector<TriangleIndex> &triangules_indexs) {
+void get_sphere_indexs(int slices, int stacks, int nPoints,
+                       vector<TriangleIndex> &triangules_indexs) {
   for (int i = 1; i <= slices; i++) {
-    int index2 = (i % slices) + 1;
-    triangules_indexs.push_back(TriangleIndex(0, index2, i));
+    int y = (i % slices) + 1;
+    triangules_indexs.push_back(TriangleIndex(0, y, i));
   }
 
   for (int i = 1; i < nPoints - slices; i += slices) {
     for (int j = 0; j < slices; j++) {
-      int index1 = i + j;
-      int index2 = ((j + 1) % slices) + i + slices;
-      int index3 = index1 + slices;
-      triangules_indexs.push_back(TriangleIndex(index1, index2, index3));
+      int p1_X = i + j;
+      int p1_Y = ((j + 1) % slices) + i + slices;
+      int p1_Z = p1_X + slices;
+      triangules_indexs.push_back(TriangleIndex(p1_X, p1_Y, p1_Z));
 
-      int index4 = index1;
-      int index5 = ((j + 1) % slices) + i;
-      int index6 = index2;
-      triangules_indexs.push_back(TriangleIndex(index4, index5, index6));
+      int p2_Y = ((j + 1) % slices) + i;
+      triangules_indexs.push_back(TriangleIndex(p1_X, p2_Y, p1_Y));
     }
   }
 
   for (int i = 1; i <= slices; i++) {
-    int index1 = nPoints;
-    int index2 = index1 - i;
-    int index3 = index1 - (i % slices) - 1;
-    triangules_indexs.push_back(TriangleIndex(index1, index2, index3));
+    int x = nPoints;
+    int y = x - i;
+    int z = x - (i % slices) - 1;
+    triangules_indexs.push_back(TriangleIndex(x, y, z));
   }
 }
 
@@ -66,10 +66,9 @@ int create_sphere(float radius, int slices, int stacks, string file_name) {
 
   vector<Point> points;
   vector<TriangleIndex> triangules_indexs;
-  float stackAng = static_cast<float>((M_PI) / stacks);
-  float sliceAng = static_cast<float>((2 * M_PI) / slices);
-  get_points(radius, stacks, slices, stackAng, sliceAng, points);
-  get_indexs(slices, stacks, points.size() - 1, triangules_indexs);
+
+  get_sphere_points(radius, stacks, slices, points);
+  get_sphere_indexs(slices, stacks, points.size() - 1, triangules_indexs);
 
   Model model(points, triangules_indexs);
   model.writeToFile(file_name, "sphere");
