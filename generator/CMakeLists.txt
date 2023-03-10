@@ -16,11 +16,11 @@ add_executable(${PROJECT_NAME}
 								src/models/sphere/sphere.h
 								src/models/plane/plane.cpp
 								src/models/plane/plane.h
-								src/utils/model/model.cpp
-								src/utils/model/model.h
-								src/utils/point/point.h
-								src/utils/triangle_index/triangle_index.h
-								src/utils/generic_functions/generic_functions.h
+								src/classes/model/model.cpp
+								src/classes/model/model.h
+								src/classes/point/point.h
+								src/classes/triangle_index/triangle_index.h
+								../utils/generic_functions/generic_functions.h
 								src/config/global.h
 							)
 

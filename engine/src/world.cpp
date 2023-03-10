@@ -1,12 +1,12 @@
 #include "includes.h"
 #include "camera.hpp"
 #include "model3d.cpp"
-#include "tinyxml2/tinyxml2.h"
+#include "../lib/tinyxml2/tinyxml2.h"
 using namespace tinyxml2;
 
 class World{
 	private:
-	
+
 	// window
 	int w;
 	int h;
@@ -33,13 +33,12 @@ class World{
 
 
 	void setupCamera(XMLElement* cameraElem){
-		
+
 		float x, y, z;
 
 		for(;cameraElem != NULL; cameraElem = cameraElem->NextSiblingElement()){
-		
 			string camAttribute = cameraElem->Name();
-			
+
 			x = stof(cameraElem->Attribute("x"));
 			y = stof(cameraElem->Attribute("y"));
 			z = stof(cameraElem->Attribute("z"));
@@ -60,10 +59,9 @@ class World{
 	}
 
 	void load3DModel(XMLElement* modelElem, Model3D *newModel){
-		cout << "hum";
 
 		for(XMLElement *model = modelElem->FirstChildElement(); model != NULL; model = model->NextSiblingElement()){
-			
+
 			string modelAttribute = model->Name();
 
 			if(modelAttribute == "texture"){
@@ -72,16 +70,16 @@ class World{
 			else if(modelAttribute == "color"){
 				int R,G,B;
 				XMLElement* colorElem = model->FirstChildElement();
-				
+
 				for(;colorElem != NULL; colorElem = colorElem->NextSiblingElement()){
-					
+
 					string colorAttributeName = colorElem->Name();
 
 					if(colorAttributeName != "shininess"){
 						R = atoi(colorElem->Attribute("R"));
 						G = atoi(colorElem->Attribute("G"));
 						B = atoi(colorElem->Attribute("B"));
-						
+
 						if(colorAttributeName == "diffuse"){
 							newModel->setDiffuse(R,G,B);
 						}
@@ -101,8 +99,6 @@ class World{
 					}
 				}
 			}
-
-			
 		}
 
 	}
@@ -127,8 +123,9 @@ class World{
 		for(XMLElement *model = modelsElem->FirstChildElement(); model != NULL; model = model->NextSiblingElement()){
 			//cout << model->Attribute("file") << endl;
 			Model3D *newModel = new Model3D(model->Attribute("file"));
+
 			load3DModel(model->FirstChildElement(), newModel);
-			cout << newModel->toString();
+			
 
 		}
 		/*

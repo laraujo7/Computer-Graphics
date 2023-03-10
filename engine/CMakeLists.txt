@@ -10,9 +10,10 @@ add_executable(${PROJECT_NAME}
     src/camera.hpp
     src/model3d.cpp
     src/includes.h
-    src/tinyxml2/tinyxml2.h
-    src/tinyxml2/tinyxml2.cpp
-
+    lib/tinyxml2/tinyxml2.h
+    lib/tinyxml2/tinyxml2.cpp
+    lib/glew/glew.c
+    lib/glew/glew.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src/tinyxml2)

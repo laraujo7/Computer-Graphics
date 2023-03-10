@@ -3,11 +3,8 @@
 #define INCLUDES_H
 
 #ifdef __APPLE__
-#include <GLUT/glut.h>
+  #include <GLUT/glut.h>
 #else
-#include <GL/glew.h>
-#include <GL/glut.h>
-#endif
 
 #include <iostream>
 #include <cstdio>
@@ -23,9 +20,11 @@
 #include <stdio.h>
 #include <unordered_map>
 #include <set>
-
+#include "../lib/glew/glew.h"
+#include <GL/glut.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#endif
 
 using namespace std;
 

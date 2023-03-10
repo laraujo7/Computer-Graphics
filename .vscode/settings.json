@@ -1,4 +1,14 @@
 {
-    "cmake.sourceDirectory": "${workspaceFolder}/generator",
-    "cmake.configureOnOpen": true
+  "cmake.sourceDirectory": "${workspaceFolder}/generator",
+  "cmake.configureOnOpen": true,
+  "files.associations": {
+    ".sequelizerc": "javascript",
+    ".stylelintrc": "json",
+    ".prettierrc": "json",
+    "cstdio": "cpp",
+    "iostream": "cpp",
+    "set": "cpp",
+    "unordered_map": "cpp",
+    "vector": "cpp"
+  }
 }
