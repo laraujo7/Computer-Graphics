@@ -12,7 +12,6 @@ private:
 public:
   Point() {}
 
-  // make sure if this needs to be cloned
   Point(tuple<float, float, float> point) { this->point = point; }
 
   Point(float pointX, float pointY, float pointZ) {
