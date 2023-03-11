@@ -63,3 +63,5 @@ generator/.vscode
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+generator/cmake-build-debug/*
