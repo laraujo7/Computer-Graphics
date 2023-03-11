@@ -1,8 +1,0 @@
-# ninja log v5
-1	378	1678276348963266851	CMakeFiles/CGengine.dir/src/engine.cpp.o	c192178397a1326d
-378	433	1678276349019933516	CGengine	725848fdc9b60419
-1	513	1678473381259975973	CMakeFiles/engine.dir/src/engine.cpp.o	2a5130088f46a0b4
-1	388	1678473381133309309	CMakeFiles/engine.dir/src/world.cpp.o	3dd84a3125d85adf
-419	482	1678276610523261223	engine	5a70dee193e6b980
-1	158	1678466425156499374	CMakeFiles/engine.dir/src/model3d.cpp.o	56e94d60cc6dc2c9
-1	310	1678473381056642644	CMakeFiles/engine.dir/src/tinyxml2/tinyxml2.cpp.o	4acec1c5b9f1fe5f

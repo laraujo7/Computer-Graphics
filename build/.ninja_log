@@ -1,7 +1,0 @@
-# ninja log v5
-1	24	1678239858939941535	CMakeFiles/generator.dir/src/models/box/box.cpp.o	f0f89379bd513632
-1	32	1678239858946608202	CMakeFiles/generator.dir/src/models/cone/cone.cpp.o	a4308f3b52001d59
-1	33	1678239858946608202	CMakeFiles/generator.dir/src/models/sphere/sphere.cpp.o	4f058a5521682fc8
-0	304	1678274844139965630	CMakeFiles/generator.dir/src/generator.cpp.o	e5e7148b999f1d53
-0	50	1678274843886632302	CMakeFiles/generator.dir/src/models/plane/plane.cpp.o	40cf28655c996cdd
-304	413	1678274844246632295	generator	e23f4a8908c15310
