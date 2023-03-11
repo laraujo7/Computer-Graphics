@@ -218,18 +218,23 @@ private:
             glGenBuffers(1, &indices);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int)*indexes.size(), indexes.data(), GL_STATIC_DRAW);
-                
+
+
         }
     }
 
     void draw(){
-
+        
         glBindBuffer(GL_ARRAY_BUFFER,vertices);
         glVertexPointer(3,GL_FLOAT,0,0);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
-        //glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
-        glDrawElements(GL_LINES, indexCount, GL_UNSIGNED_INT, NULL);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);   
         
+        // with fill
+        glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
+        
+        // wireframe
+        //glDrawElements(GL_LINES, indexCount, GL_UNSIGNED_INT, NULL);
+
     }
 };

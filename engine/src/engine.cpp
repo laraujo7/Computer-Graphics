@@ -53,9 +53,8 @@ void renderScene(void) {
         model->draw();
     }
 	*/
-	world->getModelo()->draw();
 	
-	
+	/*
 	glBegin(GL_LINES);
 		// X axis in red
 		glColor3f(1.0f, 0.0f, 0.0f);
@@ -71,25 +70,13 @@ void renderScene(void) {
 		glVertex3f(0.0f, 0.0f, 100.0f);
 
 	glEnd();
-	
+	*/
 	
 	glRotatef(0, pos[0], pos[1], pos[2]);
 
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glutWireTeapot(5);
-	
-	frames++;
-	timecount = glutGet(GLUT_ELAPSED_TIME);
-	
-	if (timecount - timebase > 1000) {
-		fps = frames*(1000.0/(timecount-timebase));
-		timebase = timecount;
-		frames = 0;
-	}
+	//glutWireTeapot(5);
 
-	char* fpsStr;
-	sprintf(fpsStr, "FPS: %d", fps);
-	glutSetWindowTitle(fpsStr);
+	world->getModelo()->draw();
 	
 	// End of frame
 	glutSwapBuffers();

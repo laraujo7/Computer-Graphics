@@ -1,11 +1,11 @@
 <world> <!-- a world can have a window definition, camera, a set of lights, and a single group -->
 
     <!-- defines the width and height of the window -->
-    <window width="1000" height="1000"/>
+    <window width="800" height="800"/>
 
     <!-- camera definition -->
     <camera> 
-	    <position x="10" y="10" z="10"/>
+	    <position x="70" y="70" z="70"/>
 	    <lookAt x="0" y="0" z="0"/>
 	    <up x="0" y="1" z="0"/> <!-- optional, use these values as default-->
         <projection fov="60" near="1" far="1000"/> <!-- optional, use these values as default-->
@@ -29,7 +29,7 @@
         </transform>
   		<models> <!-- can contain multiple 'model' items. 
                     Each model requires a file. Texture and color are optional -->
-			<model file="sphere.3d">
+			<model file="bigOne.3d">
                 <!-- if texture is not specified then the model is rendered with color only-->
                 <texture file="earth.jpg"/>
                 <!-- if color is not specified, use the values below as default -->
