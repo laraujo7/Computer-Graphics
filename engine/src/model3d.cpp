@@ -33,6 +33,9 @@ private:
     GLuint vertices, indices, verticeCount;
     unsigned int indexCount;
 
+    vector <unsigned int> indexes;
+    vector <float> coords;
+
   public:
     Model3D(string modelFilePath) {
         this->modelFilePath = modelFilePath;
@@ -161,7 +164,7 @@ private:
     
 
     void read3dFile(string filePath){
-        cout << "esferovite\n";
+
         ifstream file(filePath);
         if (file.is_open()) {
             string nomeModelo;
@@ -173,15 +176,16 @@ private:
             int numPontos = stoi(numPontosStr);
             cout << numPontosStr << endl;
 
-            string coords;
+            string coordsStr;
             float x,y,z;
             
             for(int i = 0; i < numPontos; i++){
-                getline(file, coords);
-                if (std::sscanf(coords.c_str(), "%f %f %f", &x, &y, &z) == 3) {
-                    std::cout << "Parsed: " << x << ", " << y << ", " << z << "\n";
+                getline(file, coordsStr);
+                if (sscanf(coordsStr.c_str(), "%f %f %f", &x, &y, &z) == 3) {
+                    //cout << "Parsed: " << x << ", " << y << ", " << z << "\n";
+                    insertPoint(coords, x, y, z);
                     } else {
-                        std::cerr << "Invalid input: " << coords << "\n";
+                        cerr << "Invalid input: " << coordsStr << "\n";
                 }
             }
 
@@ -190,77 +194,42 @@ private:
             int numTriangulos = stoi(numTriangulosStr);
             cout << numTriangulosStr << endl;
 
-            string indexes;
+            string indexesStr;
             int i1,i2,i3;
 
             for(int i = 0; i < numTriangulos; i++){
-                getline(file, indexes);
-                if (std::sscanf(indexes.c_str(), "%d %d %d", &i1, &i2, &i3) == 3) {
-                std::cout << "Parsed: " << i1 << ", " << i2 << ", " << i3 << "\n";
+                getline(file, indexesStr);
+                if (sscanf(indexesStr.c_str(), "%d %d %d", &i1, &i2, &i3) == 3) {
+                //cout << "Parsed: " << i1 << ", " << i2 << ", " << i3 << "\n";
+                    insertIndex(indexes, i1, i2, i3);
                 } else {
-                    std::cerr << "Invalid input: " << indexes << "\n";
+                    cerr << "Invalid input: " << indexesStr << "\n";
                 }
             }
-
-            
-            
             file.close();
+
+            verticeCount = coords.size() / 3;
+            indexCount = indexes.size();
+
+            glGenBuffers(1, &vertices);
+            glBindBuffer(GL_ARRAY_BUFFER, vertices);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float)*coords.size(), coords.data(), GL_STATIC_DRAW);
+
+            glGenBuffers(1, &indices);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int)*indexes.size(), indexes.data(), GL_STATIC_DRAW);
+                
         }
     }
 
+    void draw(){
+
+        glBindBuffer(GL_ARRAY_BUFFER,vertices);
+        glVertexPointer(3,GL_FLOAT,0,0);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
+        //glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
+        glDrawElements(GL_LINES, indexCount, GL_UNSIGNED_INT, NULL);
+        
+    }
 };
-/*
-    void read3dFile(string filePath){
-        cout << "esferovite\n";
-        ifstream file(filePath);
-        if (file.is_open()) {
-            string nomeModelo;
-            getline(file, nomeModelo);
-            cout << nomeModelo << endl;
-
-            string numPontosStr;
-            getline(file, numPontosStr);
-            int numPontos = stoi(numPontosStr);
-            cout << numPontosStr << endl;
-
-            string coords;
-            float x,y,z;
-            
-            for(int i = 0; i < numPontos; i++){
-                getline(file, coords);
-                if (std::sscanf(coords.c_str(), "%f %f %f", &x, &y, &z) == 3) {
-                    std::cout << "Parsed: " << x << ", " << y << ", " << z << "\n";
-                    } else {
-                        std::cerr << "Invalid input: " << coords << "\n";
-                }
-            }
-
-            string numTriangulosStr;
-            getline(file, numTriangulosStr);
-            int numTriangulos = stoi(numTriangulosStr);
-            cout << numTriangulosStr << endl;
-
-            string indexes;
-            int i1,i2,i3;
-
-            for(int i = 0; i < numTriangulos; i++){
-                getline(file, indexes);
-                if (std::sscanf(indexes.c_str(), "%d %d %d", &i1, &i2, &i3) == 3) {
-                std::cout << "Parsed: " << i1 << ", " << i2 << ", " << i3 << "\n";
-                } else {
-                    std::cerr << "Invalid input: " << indexes << "\n";
-                }
-            }
-
-            
-            
-            file.close();
-        }
-    }
-
-int main(int argc, char **argv) {
-    read3dFile(argv[1]);
-
-    return 1;
-}
-*/

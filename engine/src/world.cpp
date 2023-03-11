@@ -2,6 +2,7 @@
 #include "camera.hpp"
 #include "model3d.cpp"
 #include "../lib/tinyxml2/tinyxml2.h"
+#include <list>
 using namespace tinyxml2;
 
 class World{
@@ -11,8 +12,8 @@ class World{
 	int w;
 	int h;
 
-
-
+	list<Model3D*> models;
+	Model3D *modelo;
 	Camera *camera = new Camera();
 
 	public:
@@ -63,8 +64,11 @@ class World{
 	void load3DModel(XMLElement* modelElem){
 
 		string filePath = modelElem->Attribute("file");
-		Model3D *newModel = new Model3D(filePath);
-
+		//Model3D *newModel = new Model3D(filePath);
+		//this->models.assign(1,newModel);
+		this->modelo = new Model3D(filePath);
+		
+		
 		//TODO in the next phase
 		//string textureFilePath =modelElem->FirstChildElement("texture")->Attribute("file");
 		//newModel->setTextureFilePath(textureFilePath);
@@ -89,11 +93,19 @@ class World{
 		arr[2] = aux[2];
 	}
 
+	list<Model3D*> getModels(){
+		return this->models;
+	}
+
+	Model3D* getModelo(){
+		return this->modelo;
+	}
+
 	void loadModels(XMLElement* modelsElem){
 		//cout << modelsElem->Attribute("file") << endl;
 
 		//for(XMLElement *model = modelsElem->FirstChildElement("model"); model == NULL; model = model->NextSiblingElement("model"))
-			load3DModel(modelsElem->FirstChildElement("model"));
+		load3DModel(modelsElem->FirstChildElement("model"));
 
 		/*
 		for(;modelsElem != NULL; modelsElem = modelsElem->NextSiblingElement()){

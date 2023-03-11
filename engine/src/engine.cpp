@@ -1,8 +1,11 @@
 #include "camera.hpp"
 #include "includes.h"
 #include "world.cpp"
+#include <cstdio>
 
 World *world = new World();
+int timebase, timecount, fps;
+float frames;
 
 void changeSize(int w, int h) {
 
@@ -43,6 +46,14 @@ void renderScene(void) {
 	gluLookAt(pos[0],pos[1],pos[2], 
 		      lookAt[0],lookAt[1],lookAt[2],
 			  0.0f,1.0f,0.0f);
+	/*
+	list<Model3D*> :: iterator it;
+    for(it = world->getModels().begin(); it != world->getModels().end(); ++it) {
+		Model3D* model = *it;
+        model->draw();
+    }
+	*/
+	world->getModelo()->draw();
 	
 	
 	glBegin(GL_LINES);
@@ -61,18 +72,25 @@ void renderScene(void) {
 
 	glEnd();
 	
+	
 	glRotatef(0, pos[0], pos[1], pos[2]);
 
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glutWireTeapot(5);
 	
+	frames++;
+	timecount = glutGet(GLUT_ELAPSED_TIME);
+	
+	if (timecount - timebase > 1000) {
+		fps = frames*(1000.0/(timecount-timebase));
+		timebase = timecount;
+		frames = 0;
+	}
 
-// put the geometric transformations here
-
-
-// put pyramid drawing instructions here
-
-
+	char* fpsStr;
+	sprintf(fpsStr, "FPS: %d", fps);
+	glutSetWindowTitle(fpsStr);
+	
 	// End of frame
 	glutSwapBuffers();
 }
@@ -123,7 +141,7 @@ int main(int argc, char **argv) {
 	glutDisplayFunc(renderScene);
 	glutIdleFunc(renderScene);
 	glutReshapeFunc(changeSize);
-
+	timebase = glutGet(GLUT_ELAPSED_TIME);
 	
 // put here the registration of the keyboard callbacks
 	//glutKeyboardFunc(keyboardCtrl);
@@ -131,6 +149,7 @@ int main(int argc, char **argv) {
 
 
 //  OpenGL settings
+	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
