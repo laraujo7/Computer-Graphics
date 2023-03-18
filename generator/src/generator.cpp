@@ -1,4 +1,4 @@
-#include "generator.h"
+#include "generator.hpp"
 
 static const char USAGE[] =
     R"(Generator.

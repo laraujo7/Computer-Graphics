@@ -5,9 +5,9 @@
 #include <iostream>
 #include <vector>
 
-#include "../../classes/model/model.h"
-#include "../../classes/point/point.h"
-#include "../../classes/triangle_index/triangle_index.h"
+#include "../../classes/model/model.hpp"
+#include "../../classes/point/point.hpp"
+#include "../../classes/triangle_index/triangle_index.hpp"
 
 int create_plane(float length, int divisions, string file_name);
 

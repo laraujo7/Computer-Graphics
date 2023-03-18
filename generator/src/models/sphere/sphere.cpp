@@ -1,4 +1,4 @@
-#include "sphere.h"
+#include "sphere.hpp"
 
 float calcX(float radius, float alpha, float beta) {
   return radius * cos(alpha) * sin(beta);
@@ -36,27 +36,27 @@ void get_sphere_points(float radius, int stacks, int slices,
 void get_sphere_indexs(int slices, int stacks, int nPoints,
                        vector<TriangleIndex> &triangules_indexs) {
   for (int i = 1; i <= slices; i++) {
-    int y = (i % slices) + 1;
-    triangules_indexs.push_back(TriangleIndex(0, y, i));
+    int index2 = (i % slices) + 1;
+    triangules_indexs.push_back(TriangleIndex(0, index2, i));
   }
 
   for (int i = 1; i < nPoints - slices; i += slices) {
     for (int j = 0; j < slices; j++) {
-      int p1_X = i + j;
-      int p1_Y = ((j + 1) % slices) + i + slices;
-      int p1_Z = p1_X + slices;
-      triangules_indexs.push_back(TriangleIndex(p1_X, p1_Y, p1_Z));
+      int t1_i1 = i + j;
+      int t1_i2 = ((j + 1) % slices) + i + slices;
+      int t1_i3 = t1_i1 + slices;
+      triangules_indexs.push_back(TriangleIndex(t1_i1, t1_i2, t1_i3));
 
-      int p2_Y = ((j + 1) % slices) + i;
-      triangules_indexs.push_back(TriangleIndex(p1_X, p2_Y, p1_Y));
+      int t2_i2 = ((j + 1) % slices) + i;
+      triangules_indexs.push_back(TriangleIndex(t1_i1, t2_i2, t1_i2));
     }
   }
 
   for (int i = 1; i <= slices; i++) {
-    int x = nPoints;
-    int y = x - i;
-    int z = x - (i % slices) - 1;
-    triangules_indexs.push_back(TriangleIndex(x, y, z));
+    int index1 = nPoints;
+    int index2 = index1 - (i % slices) - 1;
+    int index3 = index1 - i;
+    triangules_indexs.push_back(TriangleIndex(index1, index2, index3));
   }
 }
 
@@ -71,7 +71,7 @@ int create_sphere(float radius, int slices, int stacks, string file_name) {
   get_sphere_indexs(slices, stacks, points.size() - 1, triangules_indexs);
 
   Model model(points, triangules_indexs);
-  model.writeToFile(file_name, "sphere");
+  model.write_to_file(file_name, "sphere");
 
   return 0;
 }
