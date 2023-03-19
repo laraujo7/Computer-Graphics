@@ -30,7 +30,6 @@
 *.exe
 *.out
 *.app
-*.3d
 
 # CMake
 CMakeLists.txt.user

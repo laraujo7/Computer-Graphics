@@ -45,10 +45,10 @@ void get_cone_indexs(int slices, int stacks, int nPoints,
   }
 
   for (int i = 1; i <= slices; i++) {
-    int index1 = nPoints - i;
-    int index2 = nPoints - (i % slices) - 1;
+    int index2 = nPoints - i;
+    int index3 = nPoints - (i % slices) - 1;
 
-    triangules_indexs.push_back(TriangleIndex(index1, index2, nPoints));
+    triangules_indexs.push_back(TriangleIndex(nPoints, index2, index3));
   }
 }
 

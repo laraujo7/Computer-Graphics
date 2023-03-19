@@ -76,5 +76,15 @@ public:
   // coordinates from radius, alpha and beta into array
   tuple<float, float, float> get_camera_position(float radius, float alpha,
                                                  float beta);
+
+  string camera_to_string();
+
+  string camera_position_to_string();
+
+  string camera_look_at_to_string();
+
+  string camera_projection_to_string();
+
+  string camera_up_to_string();
 };
 #endif
