@@ -6,9 +6,8 @@
 #include <math.h>
 #include <vector>
 
-#include "../../../../utils/generic_functions/generic_functions.h"
-#include "../../classes/model/model.h"
-#include "../../classes/point/point.h"
+#include "../../classes/model/model.hpp"
+#include "../../classes/point/point.hpp"
 
 int create_sphere(float radius, int slices, int stacks, string file_name);
 

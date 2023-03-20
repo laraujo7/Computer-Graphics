@@ -4,7 +4,7 @@
     <window width="800" height="800"/>
 
     <!-- camera definition -->
-    <camera> 
+    <camera>
 	    <position x="70" y="70" z="70"/>
 	    <lookAt x="0" y="0" z="0"/>
 	    <up x="0" y="1" z="0"/> <!-- optional, use these values as default-->
@@ -29,7 +29,7 @@
         </transform>
   		<models> <!-- can contain multiple 'model' items. 
                     Each model requires a file. Texture and color are optional -->
-			<model file="bigOne.3d">
+			<model file="models/box.3d">
                 <!-- if texture is not specified then the model is rendered with color only-->
                 <texture file="earth.jpg"/>
                 <!-- if color is not specified, use the values below as default -->

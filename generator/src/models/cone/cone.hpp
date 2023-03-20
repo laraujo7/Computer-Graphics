@@ -6,9 +6,8 @@
 #include <math.h>
 #include <vector>
 
-#include "../../utils/generic_functions/generic_functions.h"
-#include "../../utils/model/model.h"
-#include "../../utils/point/point.h"
+#include "../../classes/model/model.hpp"
+#include "../../classes/point/point.hpp"
 
 int create_cone(float radius, float height, int slices, int stacks,
                 string file_name);

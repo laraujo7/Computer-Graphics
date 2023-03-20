@@ -1,4 +1,4 @@
-#include "cone.h"
+#include "cone.hpp"
 
 void get_cone_points(float radius, float height, int slices, int stacks,
                      vector<Point> &points) {
@@ -27,28 +27,28 @@ void get_cone_points(float radius, float height, int slices, int stacks,
 void get_cone_indexs(int slices, int stacks, int nPoints,
                      vector<TriangleIndex> &triangules_indexs) {
   for (int i = 1; i <= slices; i++) {
-    int z = (i % slices) + 1;
+    int index3 = (i % slices) + 1;
 
-    triangules_indexs.push_back(TriangleIndex(0, i, z));
+    triangules_indexs.push_back(TriangleIndex(0, i, index3));
   }
 
   for (int i = 1; i < nPoints - slices; i += slices) {
     for (int j = 0; j < slices; j++) {
-      int p1_X = i + j;
-      int p1_Y = p1_X + slices;
-      int p1_Z = ((j + 1) % slices) + slices + i;
-      triangules_indexs.push_back(TriangleIndex(p1_X, p1_Y, p1_Z));
+      int t1_i1 = i + j;
+      int t1_i2 = t1_i1 + slices;
+      int t1_i3 = ((j + 1) % slices) + slices + i;
+      triangules_indexs.push_back(TriangleIndex(t1_i1, t1_i2, t1_i3));
 
-      int p2_Z = ((j + 1) % slices) + i;
-      triangules_indexs.push_back(TriangleIndex(p1_X, p1_Z, p2_Z));
+      int t2_i3 = ((j + 1) % slices) + i;
+      triangules_indexs.push_back(TriangleIndex(t1_i1, t1_i3, t2_i3));
     }
   }
 
   for (int i = 1; i <= slices; i++) {
-    int x = nPoints - i;
-    int z = nPoints - (i % slices) - 1;
+    int index1 = nPoints - i;
+    int index2 = nPoints - (i % slices) - 1;
 
-    triangules_indexs.push_back(TriangleIndex(x, nPoints, z));
+    triangules_indexs.push_back(TriangleIndex(index1, index2, nPoints));
   }
 }
 
@@ -64,7 +64,7 @@ int create_cone(float radius, float height, int slices, int stacks,
   get_cone_indexs(slices, stacks, points.size() - 1, triangules_indexs);
 
   Model model(points, triangules_indexs);
-  model.writeToFile(file_name, "cone");
+  model.write_to_file(file_name, "cone");
 
   return 0;
 }

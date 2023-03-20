@@ -6,14 +6,23 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_executable(${PROJECT_NAME}
     src/engine.cpp
-    src/world.cpp
-    src/camera.hpp
-    src/model3d.cpp
-    src/includes.h
+    src/engine.hpp
+    src/classes/world/world.cpp
+    src/classes/world/world.hpp
+    src/classes/camera/camera.cpp
+    src/classes/camera/camera.hpp
+    src/classes/model3d/model3d.cpp
+    src/classes/model3d/model3d.hpp
+    utils/file_helpers/file_helpers.cpp
+    utils/file_helpers/file_helpers.hpp
+    utils/xml_parser_helpers/xml_parser_helpers.hpp
+    utils/xml_parser_helpers/xml_parser_helpers.cpp
     lib/tinyxml2/tinyxml2.h
     lib/tinyxml2/tinyxml2.cpp
     lib/glew/glew.c
     lib/glew/glew.h
+    ../config/global.hpp
+    ../utils/generic_functions.hpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src/tinyxml2)

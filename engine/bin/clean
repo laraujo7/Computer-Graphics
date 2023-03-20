@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+. scripts/config.sh
+
+rm -rf "$debug_dir" "$release_dir"

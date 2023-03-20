@@ -1,4 +1,4 @@
-#include "box.h"
+#include "box.hpp"
 int nFace = static_cast<int>(6);
 
 void get_box_points(float length, int divisions, vector<Point> &points) {
@@ -15,10 +15,11 @@ void get_box_points(float length, int divisions, vector<Point> &points) {
         Point point;
         switch (face) {
         case 0:
-          // Top
-          point = Point(pj, half_length, pi);
+          // Bottom
+          point = Point(pj, -half_length, pi);
           points.push_back(point);
           break;
+
         case 1:
           // Front
           point = Point(pj, pi, half_length);
@@ -32,8 +33,8 @@ void get_box_points(float length, int divisions, vector<Point> &points) {
           break;
 
         case 3:
-          // Bottom
-          point = Point(pj, -half_length, pi);
+          // Top
+          point = Point(pj, half_length, pi);
           points.push_back(point);
           break;
 
@@ -71,11 +72,11 @@ void get_box_indexs(float length, int divisions,
         int index4 = j + i + 1 + (face * face_points);
 
         if (face < 3) {
-          triangules_indexs.push_back(TriangleIndex(index1, index2, index3));
-          triangules_indexs.push_back(TriangleIndex(index1, index3, index4));
-        } else {
           triangules_indexs.push_back(TriangleIndex(index1, index3, index2));
           triangules_indexs.push_back(TriangleIndex(index1, index4, index3));
+        } else {
+          triangules_indexs.push_back(TriangleIndex(index1, index2, index3));
+          triangules_indexs.push_back(TriangleIndex(index1, index3, index4));
         }
       }
     }
@@ -91,7 +92,7 @@ int create_box(float length, int divisions, string file_name) {
   get_box_indexs(length, divisions, triangules_indexs);
 
   Model model(points, triangules_indexs);
-  model.writeToFile(file_name, "box");
+  model.write_to_file(file_name, "box");
 
   return 0;
 }

@@ -1,4 +1,4 @@
-#include "plane.h"
+#include "plane.hpp"
 
 void get_plane_points(float length, int divisions, vector<Point> &points) {
 
@@ -36,7 +36,7 @@ int create_plane(float length, int divisions, string file_name) {
   get_plane_indexs(length, divisions, triangules_indexs);
 
   Model model(points, triangules_indexs);
-  model.writeToFile(file_name, "plane");
+  model.write_to_file(file_name, "plane");
 
   return 0;
 }

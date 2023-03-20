@@ -7,21 +7,23 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_executable(${PROJECT_NAME}
 								src/generator.cpp
-								src/generator.h
+								src/generator.hpp
 								src/models/box/box.cpp
-								src/models/box/box.h
+								src/models/box/box.hpp
 								src/models/cone/cone.cpp
-								src/models/cone/cone.h
+								src/models/cone/cone.hpp
 								src/models/sphere/sphere.cpp
-								src/models/sphere/sphere.h
+								src/models/sphere/sphere.hpp
 								src/models/plane/plane.cpp
-								src/models/plane/plane.h
+								src/models/plane/plane.hpp
 								src/classes/model/model.cpp
-								src/classes/model/model.h
-								src/classes/point/point.h
-								src/classes/triangle_index/triangle_index.h
-								../utils/generic_functions/generic_functions.h
-								src/config/global.h
+								src/classes/model/model.hpp
+								src/classes/point/point.cpp
+								src/classes/point/point.hpp
+								src/classes/triangle_index/triangle_index.cpp
+								src/classes/triangle_index/triangle_index.hpp
+								../config/global.hpp
+								../utils/generic_functions.hpp
 							)
 
 find_package(OpenGL REQUIRED)

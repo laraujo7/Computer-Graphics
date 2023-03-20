@@ -24,6 +24,22 @@ template <typename T, typename... U> void println(T string, U... u) {
   println(u...);
 }
 
+template <typename T> void perror(T string) { std::cerr << string; }
+
+template <typename T, typename... U> void perror(T string, U... u) {
+  perror(string);
+  perror(u...);
+}
+
+template <typename T> void perrorln(T string) {
+  std::cerr << string << std::endl;
+}
+
+template <typename T, typename... U> void perrorln(T string, U... u) {
+  perror(string);
+  perrorln(u...);
+}
+
 template <typename T>
 bool in_array(const T &value, const std::vector<T> &array) {
   return std::find(array.begin(), array.end(), value) != array.end();
