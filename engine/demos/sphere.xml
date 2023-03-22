@@ -29,7 +29,7 @@
         </transform>
   		<models> <!-- can contain multiple 'model' items. 
                     Each model requires a file. Texture and color are optional -->
-			<model file="models/sphere.3d">
+			<model file="sphere.3d">
                 <!-- if texture is not specified then the model is rendered with color only-->
                 <texture file="earth.jpg"/>
                 <!-- if color is not specified, use the values below as default -->

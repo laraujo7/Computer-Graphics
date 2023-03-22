@@ -23,7 +23,10 @@ void changeSize(int w, int h) {
   glViewport(0, 0, w, h);
 
   // Set perspective
-  gluPerspective(45.0f, ratio, 1.0f, 1000.0f);
+  tuple<float, float, float> camara_projection =
+      world->get_camera()->get_projection();
+  gluPerspective(get<0>(camara_projection), ratio, get<1>(camara_projection),
+                 get<2>(camara_projection));
 
   // return to the model view matrix mode
   glMatrixMode(GL_MODELVIEW);
@@ -48,8 +51,25 @@ void renderScene(void) {
   glRotatef(0, get<0>(camera_poition), get<1>(camera_poition),
             get<2>(camera_poition));
 
-  // glutWireTeapot(5);
-  world->get_model()->draw();
+  world->draw();
+
+  glBegin(GL_LINES);
+
+  glColor3f(1.0f, 0.0f, 0.0f);
+  glVertex3f(-200.0f, 0.0f, 0.0f);
+  glVertex3f(200.0f, 0.0f, 0.0f);
+
+  glColor3f(0.0f, 1.0f, 0.0f);
+  glVertex3f(0.0f, -200.0f, 0.0f);
+  glVertex3f(0.0f, 200.0f, 0.0f);
+
+  glColor3f(0.0f, 0.0f, 1.0f);
+  glVertex3f(0.0f, 0.0f, -200.0f);
+  glVertex3f(0.0f, 0.0f, 200.0f);
+
+  glColor3f(1.0f, 1.0f, 1.0f);
+
+  glEnd();
 
   // End of frame
   glutSwapBuffers();
@@ -58,7 +78,6 @@ void renderScene(void) {
 /*
 // write function to process keyboard events
 void keyboardCtrl(unsigned char key, int x, int y){
-
         switch(key) {
         case 'w':
                         posZ += -10;
@@ -75,7 +94,6 @@ void keyboardCtrl(unsigned char key, int x, int y){
     }
         glutPostRedisplay();
 }
-
 void mouseCtrl(int button, int state, int x, int y){
         if(state == GLUT_DOWN){
                 angleAlpha += (x + y);

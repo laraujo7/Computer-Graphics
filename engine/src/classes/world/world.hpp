@@ -3,13 +3,15 @@
 
 #include "../../../../utils/generic_functions.hpp"
 #include "../../../lib/tinyxml2/tinyxml2.h"
-#include "../../../utils/xml_parser_helpers/xml_parser_helpers.hpp"
 #include "../camera/camera.hpp"
+#include "../group/group.hpp"
 #include "../model3d/model3d.hpp"
 
-#include <list>
+#include <unordered_map>
+#include <vector>
 
 using namespace tinyxml2;
+using namespace std;
 
 class World {
 private:
@@ -17,31 +19,34 @@ private:
   int window_width;
   int window_height;
 
-  list<Model3D *> models;
-  Model3D *model;
+  unordered_map<string, Model3D *> models;
+  vector<Group *> groups;
   Camera *camera = new Camera();
 
   void parse_world(XMLElement *world_element);
   void parse_window(XMLElement *window_element);
   void parse_camera(XMLElement *camera_elem);
   void parse_lights(XMLElement *lights_element);
-  void parse_group(XMLElement *group_element);
-  void load3D_model(XMLElement *model_elem);
-  void load_models(XMLElement *models_elem);
+  Group *parse_group(XMLElement *group_element);
+  void parse_transform(XMLElement *transform_element, Group *group);
+  void parse_models(XMLElement *models_element, Group *group);
 
 public:
   World();
 
-  World(int window_width, int window_height, list<Model3D *> models,
-        Model3D *model, Camera *camera);
+  World(int window_width, int window_height,
+        unordered_map<string, Model3D *> models, vector<Group *> groups,
+        Camera *camera);
 
   int get_window_width();
 
   int get_window_height();
 
-  list<Model3D *> get_models();
+  vector<Group *> get_groups();
 
-  Model3D *get_model();
+  unordered_map<string, Model3D *> get_models();
+
+  Model3D *get_model(string file_path);
 
   Camera *get_camera();
 
@@ -49,10 +54,16 @@ public:
 
   void set_window_height(int window_height);
 
-  void set_models(list<Model3D *> models);
+  void set_groups(vector<Group *> groups);
+
+  void set_models(unordered_map<string, Model3D *> models);
 
   void set_camera(Camera *camera);
 
+  void add_model(string file_path, Model3D *model);
+
   void load_XML(char *file_path);
+
+  void draw();
 };
 #endif

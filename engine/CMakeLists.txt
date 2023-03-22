@@ -11,6 +11,8 @@ add_executable(${PROJECT_NAME}
     src/classes/world/world.hpp
     src/classes/camera/camera.cpp
     src/classes/camera/camera.hpp
+    src/classes/group/group.cpp
+    src/classes/group/group.hpp
     src/classes/model3d/model3d.cpp
     src/classes/model3d/model3d.hpp
     utils/file_helpers/file_helpers.cpp

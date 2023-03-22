@@ -1,5 +1,7 @@
 #include "model3d.hpp"
 
+string DEFAULT_FILE_PATH = "models/";
+
 Model3D::Model3D() {}
 
 Model3D::Model3D(const Model3D &model) {
@@ -110,7 +112,7 @@ void Model3D::read_file(string file_path) {
   vector<float> points;
   vector<unsigned int> indexes;
 
-  ifstream file(file_path);
+  ifstream file(DEFAULT_FILE_PATH + file_path);
 
   if (file.is_open()) {
     string model = get_file_line(file);

@@ -140,3 +140,35 @@ Camera::get_camera_position(float radius, float alpha, float beta) {
 
   return make_tuple(x, y, z);
 }
+
+string Camera::camera_to_string() {
+  return ("position: " + camera_position_to_string() + "\n" + "look_at: " +
+          camera_look_at_to_string() + "\n" + "up: " + camera_up_to_string() +
+          "\n" + "projection: " + camera_projection_to_string() + "\n" +
+          "radius: " + to_string(this->radius) + "\n" +
+          "alpha: " + to_string(this->alpha) + "\n" +
+          "beta: " + to_string(this->beta) + "\n");
+}
+
+string Camera::camera_position_to_string() {
+  return (to_string(get<0>(this->position)) + " " +
+          to_string(get<1>(this->position)) + " " +
+          to_string(get<2>(this->position)));
+}
+
+string Camera::camera_look_at_to_string() {
+  return (to_string(get<0>(this->look_at)) + " " +
+          to_string(get<1>(this->look_at)) + " " +
+          to_string(get<2>(this->look_at)));
+}
+
+string Camera::camera_up_to_string() {
+  return (to_string(get<0>(this->up)) + " " + to_string(get<1>(this->up)) +
+          " " + to_string(get<2>(this->up)));
+}
+
+string Camera::camera_projection_to_string() {
+  return (to_string(get<0>(this->projection)) + " " +
+          to_string(get<1>(this->projection)) + " " +
+          to_string(get<2>(this->projection)));
+}
