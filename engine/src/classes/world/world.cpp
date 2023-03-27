@@ -46,12 +46,10 @@ void World::add_model(string file_path, Model3D *model) {
 
 void World::load_XML(char *file_path) {
   XMLDocument doc;
-
   bool load_ok = doc.LoadFile(file_path);
-  XMLElement *world_element = doc.RootElement();
 
   if (load_ok == XML_SUCCESS) {
-    parse_world(world_element);
+    parse_world(doc.RootElement());
   } else {
     println("Error when reading XML configuration file-> ", file_path);
   }

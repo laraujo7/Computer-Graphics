@@ -1,7 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "../../../../utils/generic_functions.hpp"
+#include "../../../../utils/generic_functions/generic_functions.hpp"
 #include "../../../lib/tinyxml2/tinyxml2.h"
 #include "../camera/camera.hpp"
 #include "../group/group.hpp"

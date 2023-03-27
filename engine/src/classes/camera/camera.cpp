@@ -6,7 +6,7 @@ Camera::Camera(float radius, float alpha, float beta) {
   this->radius = radius;
   this->alpha = alpha;
   this->beta = beta;
-  this->position = get_camera_position(radius, alpha, beta);
+  this->position = get_camera_position();
 }
 
 Camera::Camera(float raio) {
@@ -132,13 +132,33 @@ void Camera::set_projection(vector<float> &arr) {
 }
 
 // coordinates from radius, alpha and beta into array
-tuple<float, float, float>
-Camera::get_camera_position(float radius, float alpha, float beta) {
-  float x = radius * cos(beta) * sin(alpha);
-  float y = radius * sin(beta);
-  float z = radius * cos(beta) * cos(alpha);
+tuple<float, float, float> Camera::get_camera_position() {
+  float x = this->radius * cos(this->beta) * sin(this->alpha);
+  float y = this->radius * sin(this->beta);
+  float z = this->radius * cos(this->beta) * cos(this->alpha);
 
   return make_tuple(x, y, z);
+}
+
+void Camera::move(Direction direction) {
+  tuple<float, float, float> current_position = this->get_camera_position();
+
+  switch (direction) {
+  case FRONT:
+    println("front");
+    break;
+  case BACK:
+    println("back");
+    break;
+  case RIGHT:
+    println("right");
+    break;
+  case LEFT:
+    println("left");
+    break;
+  default:
+    break;
+  }
 }
 
 string Camera::camera_to_string() {

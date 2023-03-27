@@ -8,6 +8,7 @@ static const char USAGE[] =
       generator box <length> <grid> <file>
       generator cone <radius> <height> <slices> <stacks> <file>
       generator plane <length> <divisions> <file>
+      generator patch <file_input> <tessellation> <file_name>
       generator (-h | --help)
       generator (-v | --version)
 
@@ -39,6 +40,11 @@ int main(int argc, char **argv) {
     create_plane(stof(args["<length>"].asString()),
                  stoi(args["<divisions>"].asString()),
                  args["<file>"].asString());
+  } else if (args["patch"].asBool()) {
+    create_patch(args["<file_input>"].asString(),
+                 stoi(args["<tessellation>"].asString()),
+                 args["<file_name>"].asString());
   }
+
   return 0;
 }

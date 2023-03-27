@@ -12,6 +12,7 @@
 #include "docopt.h"
 #include "models/box/box.hpp"
 #include "models/cone/cone.hpp"
+#include "models/patch/patch.hpp"
 #include "models/plane/plane.hpp"
 #include "models/sphere/sphere.hpp"
 

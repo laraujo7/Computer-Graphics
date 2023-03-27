@@ -16,6 +16,8 @@ add_executable(${PROJECT_NAME}
 								src/models/sphere/sphere.hpp
 								src/models/plane/plane.cpp
 								src/models/plane/plane.hpp
+								src/models/patch/patch.cpp
+								src/models/patch/patch.hpp
 								src/classes/model/model.cpp
 								src/classes/model/model.hpp
 								src/classes/point/point.cpp
@@ -23,7 +25,11 @@ add_executable(${PROJECT_NAME}
 								src/classes/triangle_index/triangle_index.cpp
 								src/classes/triangle_index/triangle_index.hpp
 								../config/global.hpp
-								../utils/generic_functions.hpp
+								../utils/file_helpers/file_helpers.cpp
+								../utils/file_helpers/file_helpers.hpp
+								../utils/string_helpers/string_helpers.cpp
+								../utils/string_helpers/string_helpers.hpp
+								../utils/generic_functions/generic_functions.hpp
 							)
 
 find_package(OpenGL REQUIRED)

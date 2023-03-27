@@ -19,56 +19,59 @@ string Model3D::get_model_file_path() { return this->model_file_path; }
 void Model3D::set_model_file_path(string path) { this->model_file_path = path; }
 
 void Model3D::read_file(string file_path) {
+  ifstream file(DEFAULT_FILE_PATH + file_path);
+
+  if (!file.is_open()) {
+    println("Couldn't open the provided file");
+    return;
+  }
+
   float x, y, z;
   int i1, i2, i3;
   vector<float> points;
   vector<unsigned int> indexes;
 
-  ifstream file(DEFAULT_FILE_PATH + file_path);
+  string model_name = get_file_line(file);
 
-  if (file.is_open()) {
-    string model = get_file_line(file);
+  int num_ponts = stoi(get_file_line(file));
 
-    int num_ponts = stoi(get_file_line(file));
-
-    for (int i = 0; i < num_ponts; i++) {
-      string str_points = get_file_line(file);
-      if (sscanf(str_points.c_str(), "%f %f %f", &x, &y, &z) == 3) {
-        points.push_back(x);
-        points.push_back(y);
-        points.push_back(z);
-      } else {
-        perrorln("Invalid input: ", str_points);
-      }
+  for (int i = 0; i < num_ponts; i++) {
+    string str_points = get_file_line(file);
+    if (sscanf(str_points.c_str(), "%f %f %f", &x, &y, &z) == 3) {
+      points.push_back(x);
+      points.push_back(y);
+      points.push_back(z);
+    } else {
+      perrorln("Invalid input: ", str_points);
     }
-
-    int num_triangles = stoi(get_file_line(file));
-
-    for (int i = 0; i < num_triangles; i++) {
-      string str_indexes = get_file_line(file);
-      if (sscanf(str_indexes.c_str(), "%d %d %d", &i1, &i2, &i3) == 3) {
-        indexes.push_back(i1);
-        indexes.push_back(i2);
-        indexes.push_back(i3);
-      } else {
-        perrorln("Invalid input: ", str_indexes);
-      }
-    }
-
-    file.close();
-
-    this->num_indexs = num_triangles * 3;
-
-    glGenBuffers(1, &(this->vertices));
-    glBindBuffer(GL_ARRAY_BUFFER, this->vertices);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * points.size(), points.data(),
-                 GL_STATIC_DRAW);
-
-    glGenBuffers(1, &(this->indices));
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->indices);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indexes.size(),
-                 indexes.data(), GL_STATIC_DRAW);
   }
+
+  int num_triangles = stoi(get_file_line(file));
+
+  for (int i = 0; i < num_triangles; i++) {
+    string str_indexes = get_file_line(file);
+    if (sscanf(str_indexes.c_str(), "%d %d %d", &i1, &i2, &i3) == 3) {
+      indexes.push_back(i1);
+      indexes.push_back(i2);
+      indexes.push_back(i3);
+    } else {
+      perrorln("Invalid input: ", str_indexes);
+    }
+  }
+
+  file.close();
+
+  this->num_indexs = num_triangles * 3;
+
+  glGenBuffers(1, &(this->vertices));
+  glBindBuffer(GL_ARRAY_BUFFER, this->vertices);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * points.size(), points.data(),
+               GL_STATIC_DRAW);
+
+  glGenBuffers(1, &(this->indices));
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->indices);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indexes.size(),
+               indexes.data(), GL_STATIC_DRAW);
 }
 
 void Model3D::draw(ModelConfig *model_config) {
@@ -82,7 +85,4 @@ void Model3D::draw(ModelConfig *model_config) {
 
   // with fill
   glDrawElements(GL_TRIANGLES, this->num_indexs, GL_UNSIGNED_INT, NULL);
-
-  // wireframe
-  // glDrawElements(GL_LINES, index_count, GL_UNSIGNED_INT, NULL);
 }
