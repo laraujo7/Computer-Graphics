@@ -6,6 +6,7 @@
 #include "../camera/camera.hpp"
 #include "../group/group.hpp"
 #include "../model3d/model3d.hpp"
+#include "../modelConfig/modelConfig.hpp"
 
 #include <unordered_map>
 #include <vector>
@@ -30,6 +31,8 @@ private:
   Group *parse_group(XMLElement *group_element);
   void parse_transform(XMLElement *transform_element, Group *group);
   void parse_models(XMLElement *models_element, Group *group);
+  void parse_model(XMLElement *model_element, ModelConfig *model_config);
+  void parse_color(XMLElement *color_element, ModelConfig *model_config);
 
 public:
   World();

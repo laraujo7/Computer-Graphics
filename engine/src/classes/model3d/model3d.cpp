@@ -6,27 +6,7 @@ Model3D::Model3D() {}
 
 Model3D::Model3D(const Model3D &model) {
   this->model_file_path = model.model_file_path;
-  this->texture_file_path = model.texture_file_path;
-  this->diffuse = model.diffuse;
-  this->ambient = model.ambient;
-  this->specular = model.specular;
-  this->emissive = model.emissive;
-  this->shininess = model.shininess;
   read_file(model.model_file_path);
-}
-
-Model3D::Model3D(string model_file_path, string texture_file_path,
-                 tuple<int, int, int> diffuse, tuple<int, int, int> ambient,
-                 tuple<int, int, int> specular, tuple<int, int, int> emissive,
-                 int shininess) {
-  this->model_file_path = model_file_path;
-  this->texture_file_path = texture_file_path;
-  this->diffuse = diffuse;
-  this->ambient = ambient;
-  this->specular = specular;
-  this->emissive = emissive;
-  this->shininess = shininess;
-  read_file(model_file_path);
 }
 
 Model3D::Model3D(string model_file_path) {
@@ -36,75 +16,7 @@ Model3D::Model3D(string model_file_path) {
 
 string Model3D::get_model_file_path() { return this->model_file_path; }
 
-string Model3D::get_texture_filepPath() { return this->texture_file_path; }
-
-tuple<int, int, int> Model3D::get_diffuse() { return this->diffuse; }
-
-tuple<int, int, int> Model3D::get_ambient() { return this->ambient; }
-
-tuple<int, int, int> Model3D::get_specular() { return this->specular; }
-
-tuple<int, int, int> Model3D::get_emissive() { return this->emissive; }
-
-int Model3D::get_shininess() { return this->shininess; }
-
 void Model3D::set_model_file_path(string path) { this->model_file_path = path; }
-
-void Model3D::set_texture_file_path(string path) {
-  this->texture_file_path = path;
-}
-
-void Model3D::set_diffuse(tuple<int, int, int> diffuse) {
-  this->diffuse = diffuse;
-}
-
-void Model3D::set_diffuse(int r, int g, int b) {
-  this->diffuse = make_tuple(r, g, b);
-}
-
-void Model3D::set_ambient(tuple<int, int, int> ambient) {
-  this->ambient = ambient;
-}
-
-void Model3D::set_ambient(int r, int g, int b) {
-  this->ambient = make_tuple(r, g, b);
-}
-
-void Model3D::set_specular(tuple<int, int, int> specular) {
-  this->specular = specular;
-}
-
-void Model3D::set_specular(int r, int g, int b) {
-  this->specular = make_tuple(r, g, b);
-}
-
-void Model3D::set_emissive(tuple<int, int, int> emissive) {
-  this->emissive = emissive;
-}
-
-void Model3D::set_emissive(int r, int g, int b) {
-  this->emissive = make_tuple(r, g, b);
-}
-
-void Model3D::set_shininess(int shininess) { this->shininess = shininess; }
-
-string Model3D::model_to_string() {
-  return "FILEPATH: " + this->model_file_path + "\n" +
-         "TEXTURE: " + this->texture_file_path + "\n" +
-         "DIFFUSE: " + to_string(get<0>(this->diffuse)) + " " +
-         to_string(get<1>(this->diffuse)) + " " +
-         to_string(get<2>(this->diffuse)) + "\n" +
-         "AMBIENT: " + to_string(get<0>(this->ambient)) + " " +
-         to_string(get<1>(this->ambient)) + " " +
-         to_string(get<2>(this->ambient)) + "\n" +
-         "SPECULAR: " + to_string(get<0>(this->specular)) + " " +
-         to_string(get<1>(this->specular)) + " " +
-         to_string(get<2>(this->specular)) + "\n" +
-         "EMISSIVE: " + to_string(get<0>(this->emissive)) + " " +
-         to_string(get<1>(this->emissive)) + " " +
-         to_string(get<2>(this->emissive)) + "\n" +
-         "SHININESS: " + to_string(this->shininess);
-}
 
 void Model3D::read_file(string file_path) {
   float x, y, z;
@@ -159,8 +71,9 @@ void Model3D::read_file(string file_path) {
   }
 }
 
-void Model3D::draw() {
+void Model3D::draw(ModelConfig *model_config) {
 
+  set_glcolor3f(model_config->get_color());
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glBindBuffer(GL_ARRAY_BUFFER, this->vertices);
   glVertexPointer(3, GL_FLOAT, 0, 0);

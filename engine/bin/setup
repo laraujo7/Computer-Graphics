@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+packagesNeeded='curl jq'
+
+if [ -x "$(command -v apt-get)" ]; then
+  sudo apt-get update && sudo apt-get -y install cmake && sudo sudo apt install libglew-dev
+elif [ -x "$(command -v pacman)" ]; then
+  sudo pacman -Syu cmake && pacman -S glew
+elif [ -x "$(command -v brew)" ]; then
+  sudo brew update && sudo brew install cmake && sudo brew install glew
+else
+  echo "FAILED TO INSTALL PACKAGES: Package manager not found or you don't have: $packagesNeeded installed">&2;
+fi

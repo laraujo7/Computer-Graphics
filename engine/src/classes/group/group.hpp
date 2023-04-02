@@ -3,42 +3,44 @@
 
 #include "../../../utils/xml_parser_helpers/xml_parser_helpers.hpp"
 #include "../model3d/model3d.hpp"
+#include "../modelConfig/modelConfig.hpp"
+#include "../transformation/transformation.hpp"
 
 #include <unordered_map>
 #include <vector>
 
 class Group {
 private:
-  vector<string> file_paths;
+  vector<pair<string, ModelConfig *>> file_paths;
   vector<Group *> sub_groups;
-  vector<pair<string, tuple<float, float, float, float>>> transformations;
+  vector<pair<string, Transformation *>> transformations;
 
 public:
   Group();
 
-  Group(
-      vector<string> file_paths, vector<Group *> sub_groups,
-      vector<pair<string, tuple<float, float, float, float>>> transformations);
+  Group(vector<pair<string, ModelConfig *>> file_paths,
+        vector<Group *> sub_groups,
+        vector<pair<string, Transformation *>> transformations);
 
-  vector<string> get_file_paths();
+  vector<pair<string, ModelConfig *>> get_file_paths();
 
   vector<Group *> get_sub_groups();
 
-  vector<pair<string, tuple<float, float, float, float>>> get_transformations();
+  vector<pair<string, Transformation *>> get_transformations();
 
-  void set_file_paths(vector<string> file_paths);
+  void set_file_paths(vector<pair<string, ModelConfig *>> file_paths);
 
   void set_sub_groups(vector<Group *> sub_groups);
 
-  void set_transformations(
-      vector<pair<string, tuple<float, float, float, float>>> transformations);
+  void
+  set_transformations(vector<pair<string, Transformation *>> transformations);
 
-  void add_file_path(string file_path);
+  void add_file_path(string file_path, ModelConfig *model_config);
 
   void add_sub_group(Group *sub_group);
 
   void add_transformation(string transformation_type,
-                          tuple<float, float, float, float> transformation);
+                          Transformation *transformation);
 
   void add_transformation(string transformation_type, float angle, float x,
                           float y, float z);

@@ -1,0 +1,113 @@
+<world>
+    <window width="800" height="800"/>
+
+    <camera>
+	    <position x="0" y="300" z="1200"/>
+	    <lookAt x="0" y="0" z="0"/>
+	    <up x="0" y="1" z="0"/>
+        <projection fov="60" near="1" far="15000"/>
+    </camera>
+    <group>
+        <transform>
+            <translate x="-650"/>
+            <scale x="6" y="6" z="6"/>
+        </transform>
+        <models>
+            <model file="sphere.3d" color="sun"/>
+        </models>
+        <group>
+            <group>
+                <transform>
+                    <translate x="75"/>
+                    <scale x="0.003" y="0.003" z="0.003"/>
+                </transform>
+                <models>
+                    <model file="sphere.3d" color="mercury"/>
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="80"/>
+                    <scale x="0.0087" y="0.0087" z="0.0087"/>
+                </transform>
+                <models>
+                    <model file="sphere.3d" color="venus"/>
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="84"/>
+                    <scale x="0.0091" y="0.0091" z="0.0091"/>
+                </transform>
+                <models>
+                    <model file="sphere.3d" color="earth"/>
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="94"/>
+                    <scale x="0.0049" y="0.0049" z="0.0049"/>
+                </transform>
+                <models>
+                    <model file="sphere.3d" color="mars"/>
+                </models>
+            </group>
+        </group>
+        <group>
+            <transform>
+                <translate x="124"/>
+                <scale x="0.1" y="0.1" z="0.1"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" color="jupiter"/>
+            </models>
+            <group>
+                <transform>
+                    <translate x="50" y="60"/>
+                    <scale x="0.03" y="0.03" z="0.03"/>
+                </transform>
+                <models>
+                    <model file="sphere.3d" color="moon"/>
+                </models>
+            </group>
+        </group>
+        <group>
+            <transform>
+                <translate x="154"/>
+                <scale x="0.084" y="0.084" z="0.084"/>
+                <rotate angle="-25" x="0" y="0" z="-1" />
+            </transform>
+            <models>
+                <model file="sphere.3d" color="saturn"/>
+                <model file="disc.3d"/>
+            </models>
+        </group>
+        <group>
+            <transform>
+                <translate x="210"/>
+                <scale x="0.036" y="0.036" z="0.036"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" color="uranus"/>
+            </models>
+        </group>
+        <group>
+            <transform>
+                <translate x="260"/>
+                <scale x="0.035" y="0.035" z="0.035"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" color="neptune"/>
+            </models>
+        </group>
+        <group>
+            <transform>
+                <translate x="310"/>
+                <scale x="0.0017" y="0.0017" z="0.0017"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" color="pluto"/>
+            </models>
+        </group>
+    </group>
+</world>
