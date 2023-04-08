@@ -1,0 +1,48 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      #Build
+      - name: generator build configure
+        working-directory: ./generator
+        run: bin/setup
+      - name: generator build
+        working-directory: ./generator
+        run: bin/build
+      #Format
+      - name: generator format configure
+        run: sudo apt-get -y install clang-format
+      - name: generator format
+        working-directory: ./generator
+        run: bin/format
+      #Lint
+      - name: generator lint configure
+        run: sudo apt-get -y install shellcheck
+      - name: generator lint
+        working-directory: ./generator
+        run: bin/lint
+      #Build
+      - name: engine build configure
+        working-directory: ./engine
+        run: bin/setup
+      - name: engine build
+        working-directory: ./engine
+        run: bin/build
+      #Format
+      - name: engine format
+        working-directory: ./engine
+        run: bin/format
+      #Lint
+      - name: engine lint
+        working-directory: ./engine
+        run: bin/lint

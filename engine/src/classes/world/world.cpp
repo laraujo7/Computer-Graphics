@@ -74,9 +74,9 @@ void World::parse_world(XMLElement *world_element) {
       parse_lights(world_children);
       break;
 
-    case XMLTags::GROUP: {
+    case XMLTags::GROUP:
       this->groups.push_back(parse_group(world_children));
-    } break;
+      break;
 
     default:
       break;
@@ -185,11 +185,78 @@ void World::parse_models(XMLElement *models_element, Group *group) {
   for (XMLElement *models_children = models_element->FirstChildElement();
        models_children;
        models_children = models_children->NextSiblingElement()) {
+    string str_models = models_children->Name();
 
-    if (!((string)models_children->Name()).compare("model")) {
+    if (!(str_models).compare("model")) {
+      ModelConfig *model_config = new ModelConfig();
       string file_path = models_children->Attribute("file");
+      const char *color = models_children->Attribute("color");
+
+      if (color != NULL)
+        model_config->set_color((string)color);
+
+      parse_model(models_children, model_config);
+
       this->add_model(file_path, new Model3D(file_path));
-      group->add_file_path(file_path);
+      group->add_file_path(file_path, model_config);
+    }
+  }
+}
+
+void World::parse_model(XMLElement *model_element, ModelConfig *model_config) {
+  for (XMLElement *model_children = model_element->FirstChildElement();
+       model_children; model_children = model_children->NextSiblingElement()) {
+    string str_model = model_children->Name();
+
+    switch (get_xml_tag(str_model)) {
+    case XMLTags::COLOR:
+      parse_color(model_children, model_config);
+      break;
+
+    case XMLTags::TEXTURE: {
+      string texture_file_path = model_children->Attribute("file");
+      model_config->set_texture_file_path(texture_file_path);
+    } break;
+
+    default:
+      break;
+    }
+  }
+}
+
+void World::parse_color(XMLElement *color_element, ModelConfig *model_config) {
+  for (XMLElement *color_children = color_element->FirstChildElement();
+       color_children; color_children = color_children->NextSiblingElement()) {
+    string str_color = color_children->Name();
+
+    switch (get_xml_tag(str_color)) {
+    case XMLTags::DIFFUSE:
+    case XMLTags::AMBIENT:
+    case XMLTags::SPECULAR:
+    case XMLTags::EMISSIVE: {
+      float r = color_children->FloatAttribute("R");
+      float g = color_children->FloatAttribute("G");
+      float b = color_children->FloatAttribute("B");
+
+      if (!str_color.compare("diffuse")) {
+        model_config->set_diffuse(r, g, b);
+      } else if (!str_color.compare("ambient")) {
+        model_config->set_ambient(r, g, b);
+      } else if (!str_color.compare("specular")) {
+        model_config->set_specular(r, g, b);
+      } else {
+        model_config->set_emissive(r, g, b);
+      }
+
+    } break;
+
+    case XMLTags::SHININESS: {
+      int shininess = color_children->IntAttribute("value");
+      model_config->set_shininess(shininess);
+    } break;
+
+    default:
+      break;
     }
   }
 }

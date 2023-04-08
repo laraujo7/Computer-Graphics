@@ -7,14 +7,20 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 add_executable(${PROJECT_NAME}
     src/engine.cpp
     src/engine.hpp
-    src/classes/world/world.cpp
-    src/classes/world/world.hpp
     src/classes/camera/camera.cpp
     src/classes/camera/camera.hpp
     src/classes/group/group.cpp
     src/classes/group/group.hpp
     src/classes/model3d/model3d.cpp
     src/classes/model3d/model3d.hpp
+    src/classes/modelConfig/modelConfig.cpp
+    src/classes/modelConfig/modelConfig.hpp
+    src/classes/transformation/transformation.cpp
+    src/classes/transformation/transformation.hpp
+    src/classes/world/world.cpp
+    src/classes/world/world.hpp
+    utils/colors_helpers/colors_helpers.cpp
+    utils/colors_helpers/colors_helpers.hpp
     utils/file_helpers/file_helpers.cpp
     utils/file_helpers/file_helpers.hpp
     utils/xml_parser_helpers/xml_parser_helpers.hpp

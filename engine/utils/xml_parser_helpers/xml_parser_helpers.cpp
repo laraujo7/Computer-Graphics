@@ -18,5 +18,11 @@ enum XMLTags get_xml_tag(string tag) {
   if(!tag.compare("scale")) return SCALE;
   if(!tag.compare("translate")) return TRANSLATE;
   if(!tag.compare("rotate")) return ROTATE;
+  if(!tag.compare("color")) return COLOR;
+  if(!tag.compare("diffuse")) return DIFFUSE;
+  if(!tag.compare("ambient")) return AMBIENT;
+  if(!tag.compare("specular")) return SPECULAR;
+  if(!tag.compare("emissive")) return EMISSIVE;
+  if(!tag.compare("shininess")) return SHININESS;
   return WORLD;
 }

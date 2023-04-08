@@ -53,24 +53,6 @@ void renderScene(void) {
 
   world->draw();
 
-  glBegin(GL_LINES);
-
-  glColor3f(1.0f, 0.0f, 0.0f);
-  glVertex3f(-200.0f, 0.0f, 0.0f);
-  glVertex3f(200.0f, 0.0f, 0.0f);
-
-  glColor3f(0.0f, 1.0f, 0.0f);
-  glVertex3f(0.0f, -200.0f, 0.0f);
-  glVertex3f(0.0f, 200.0f, 0.0f);
-
-  glColor3f(0.0f, 0.0f, 1.0f);
-  glVertex3f(0.0f, 0.0f, -200.0f);
-  glVertex3f(0.0f, 0.0f, 200.0f);
-
-  glColor3f(1.0f, 1.0f, 1.0f);
-
-  glEnd();
-
   // End of frame
   glutSwapBuffers();
 }
