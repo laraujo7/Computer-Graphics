@@ -1,7 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include "../point/point.hpp"
+#include "../../../../utils/point/point.hpp"
 #include "../triangle_index/triangle_index.hpp"
 #include <bits/stdc++.h>
 #include <fstream>
