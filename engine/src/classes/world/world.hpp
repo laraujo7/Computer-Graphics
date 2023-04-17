@@ -67,6 +67,6 @@ public:
 
   void load_XML(char *file_path);
 
-  void draw();
+  void draw(int elapsed_time);
 };
 #endif

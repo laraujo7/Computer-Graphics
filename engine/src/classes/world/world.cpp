@@ -259,8 +259,8 @@ void World::parse_color(XMLElement *color_element, ModelConfig *model_config) {
   }
 }
 
-void World::draw() {
+void World::draw(int elapsed_time) {
   for (Group *group : this->groups) {
-    group->draw(this->get_models());
+    group->draw(this->get_models(), elapsed_time);
   }
 }

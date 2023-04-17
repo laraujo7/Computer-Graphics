@@ -48,6 +48,6 @@ public:
   void add_transformation(string transformation_type, float x, float y,
                           float z);
 
-  void draw(unordered_map<string, Model3D *> models);
+  void draw(unordered_map<string, Model3D *> models, int elapsed_time);
 };
 #endif

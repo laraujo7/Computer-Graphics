@@ -60,7 +60,7 @@ void Group::add_transformation(string transformation_type, float x, float y,
       .push_back(make_pair(transformation_type, new Transformation(x, y, z)));
 }
 
-void Group::draw(unordered_map<string, Model3D *> models) {
+void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time) {
   glPushMatrix();
 
   for (pair<string, Transformation *> transformation :
@@ -94,7 +94,7 @@ void Group::draw(unordered_map<string, Model3D *> models) {
   }
 
   for (Group *sub_group : this->sub_groups) {
-    sub_group->draw(models);
+    sub_group->draw(models, elapsed_time);
   }
 
   glPopMatrix();
