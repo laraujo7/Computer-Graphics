@@ -2,7 +2,8 @@
 
 World *world = new World();
 int timebase, timecount, fps;
-float frames;
+int frame=0;
+char s[30];
 
 void changeSize(int w, int h) {
 
@@ -34,6 +35,8 @@ void changeSize(int w, int h) {
 
 void renderScene(void) {
 
+  int timet;
+
   // clear buffers
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -50,6 +53,15 @@ void renderScene(void) {
             get<1>(camera_look_at), get<2>(camera_look_at), get<0>(camera_up),
             get<1>(camera_up), get<2>(camera_up));
 
+  frame++;
+	timet=glutGet(GLUT_ELAPSED_TIME);
+	if (timet - timebase > 1000) {
+		sprintf(s,"FPS:%4.2f",frame*1000.0/(timet-timebase));
+		timebase = timet;		
+		frame = 0;
+		glutSetWindowTitle(s);
+	}
+  
   world->draw();
 
   // End of frame
