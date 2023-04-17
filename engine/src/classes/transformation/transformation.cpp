@@ -15,8 +15,14 @@ Transformation::Transformation(float angle, float x, float y, float z) {
   this->z = z;
 }
 
-tuple<float, float, float> Transformation::get_translate() {
-  return make_tuple(this->x, this->y, this->z);
+Transformation::Transformation(int time, bool align, Spline spline) {
+  this->time = time;
+  this->align = align;
+  this->spline = spline;
+}
+
+Point Transformation::get_translate(int elapsed_time) {
+  return (this->spline.get_spline_point(elapsed_time));
 }
 
 tuple<float, float, float> Transformation::get_scale() {

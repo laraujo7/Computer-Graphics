@@ -1,6 +1,7 @@
 #ifndef TRANSFORMATION_H
 #define TRANSFORMATION_H
 
+#include "../spline/spline.hpp"
 #include <bits/stdc++.h>
 #include <iostream>
 #include <string>
@@ -14,6 +15,9 @@ private:
   float y;
   float z;
   float angle;
+  int time;
+  bool align;
+  Spline spline;
 
 public:
   Transformation();
@@ -22,7 +26,9 @@ public:
 
   Transformation(float angle, float x, float y, float z);
 
-  tuple<float, float, float> get_translate();
+  Transformation(int time, bool align, Spline spline);
+
+  Point get_translate(int elapsed_time);
 
   tuple<float, float, float> get_scale();
 

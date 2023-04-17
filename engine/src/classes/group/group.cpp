@@ -68,9 +68,9 @@ void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time) {
 
     switch (get_xml_tag(transformation.first)) {
     case XMLTags::TRANSLATE: {
-      tuple<float, float, float> translate =
-          transformation.second->get_translate();
-      glTranslatef(get<0>(translate), get<1>(translate), get<2>(translate));
+      Point translate =
+          transformation.second->get_translate(elapsed_time);
+      glTranslatef(translate.get_x(), translate.get_y(), translate.get_z());
     } break;
 
     case XMLTags::SCALE: {
