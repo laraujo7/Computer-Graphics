@@ -19,7 +19,7 @@ public:
 
     //Spline(Point p0, Point p1, Point p2, Point p3);
 
-    Point get_spline_point(float t);
+    Point get_spline_point(int duration, float t);
 };
 
 #endif

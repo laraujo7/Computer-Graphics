@@ -71,7 +71,7 @@ void World::parse_world(XMLElement *world_element) {
     case XMLTags::LIGHTS:
       parse_lights(world_children);
       break;
-
+    
     case XMLTags::GROUP:
       this->groups.push_back(parse_group(world_children));
       break;
@@ -159,13 +159,40 @@ void World::parse_transform(XMLElement *transform_element, Group *group) {
   for (XMLElement *transform_children = transform_element->FirstChildElement();
        transform_children;
        transform_children = transform_children->NextSiblingElement()) {
+    
     string str_transform = transform_children->Name();
     float x = transform_children->FloatAttribute("x");
     float y = transform_children->FloatAttribute("y");
     float z = transform_children->FloatAttribute("z");
 
     switch (get_xml_tag(str_transform)) {
-    case XMLTags::TRANSLATE:
+    
+    case XMLTags::TRANSLATE: {
+      
+      int time = transform_children->IntAttribute("time");
+      if(time > 0){
+        bool align = transform_children->BoolAttribute("align");
+
+        // cria vetor de 4 pontos
+        vector<Point> control_points;
+        // loop que lê 4 atributos "point"
+        
+        for (XMLElement *translate_point = transform_children->FirstChildElement();
+        translate_point;
+        translate_point = translate_point->NextSiblingElement()) {
+        
+          x = translate_point->FloatAttribute("x");
+          y = translate_point->FloatAttribute("y");
+          z = translate_point->FloatAttribute("z");
+
+          control_points.push_back(Point(x,y,z));
+        }
+        
+        group->add_transformation(str_transform, time, align, control_points);
+      }
+      else {group->add_transformation(str_transform, x,y,z);}
+    }break;
+    
     case XMLTags::SCALE:
       group->add_transformation(str_transform, x, y, z);
       break;

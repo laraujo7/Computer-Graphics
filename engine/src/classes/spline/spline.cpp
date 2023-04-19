@@ -9,9 +9,12 @@ Spline::Spline(vector<Point> points) {
 Point Spline::get_point_by_index(int index) { return (this->points).at(index);}
 
 
-Point Spline::get_spline_point(float t) {
-    
-    t = t - (int)t;
+Point Spline::get_spline_point(int time, float elapsed_time) {
+
+    #TODO: implementar for loop para aplicar múltiplos pontos (e respetivos pontos de controlo)
+
+    float t = ((elapsed_time/1000) / time);
+
     float t_2 = t * t;
     float t_3 = t_2 * t; 
 

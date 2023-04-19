@@ -5,6 +5,8 @@
 #include "../model3d/model3d.hpp"
 #include "../modelConfig/modelConfig.hpp"
 #include "../transformation/transformation.hpp"
+#include "../../../../utils/point/point.hpp"
+#include "../spline/spline.hpp"
 
 #include <unordered_map>
 #include <vector>
@@ -32,8 +34,7 @@ public:
 
   void set_sub_groups(vector<Group *> sub_groups);
 
-  void
-  set_transformations(vector<pair<string, Transformation *>> transformations);
+  void set_transformations(vector<pair<string, Transformation *>> transformations);
 
   void add_file_path(string file_path, ModelConfig *model_config);
 
@@ -41,6 +42,9 @@ public:
 
   void add_transformation(string transformation_type,
                           Transformation *transformation);
+
+  void add_transformation(string transformation_type, int time, bool align,
+                  vector<Point> control_points);                        
 
   void add_transformation(string transformation_type, float angle, float x,
                           float y, float z);

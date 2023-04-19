@@ -2,6 +2,7 @@
 #define TRANSFORMATION_H
 
 #include "../spline/spline.hpp"
+#include "../../../../utils/point/point.hpp"
 #include <bits/stdc++.h>
 #include <iostream>
 #include <string>
@@ -18,6 +19,7 @@ private:
   int time;
   bool align;
   Spline spline;
+  bool animation;
 
 public:
   Transformation();
@@ -29,6 +31,8 @@ public:
   Transformation(int time, bool align, Spline spline);
 
   Point get_translate(int elapsed_time);
+
+  Point get_translate();
 
   tuple<float, float, float> get_scale();
 

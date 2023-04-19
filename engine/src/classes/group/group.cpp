@@ -54,6 +54,12 @@ void Group::add_transformation(string transformation_type, float angle, float x,
           make_pair(transformation_type, new Transformation(angle, x, y, z)));
 }
 
+void Group::add_transformation(string transformation_type, int time, bool align, vector<Point> control_points) {
+  (this->transformations)
+      .push_back(
+          make_pair(transformation_type, new Transformation(time, align, Spline(control_points))));
+}
+
 void Group::add_transformation(string transformation_type, float x, float y,
                                float z) {
   (this->transformations)
@@ -68,8 +74,7 @@ void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time) {
 
     switch (get_xml_tag(transformation.first)) {
     case XMLTags::TRANSLATE: {
-      Point translate =
-          transformation.second->get_translate(elapsed_time);
+      Point translate = transformation.second->get_translate(elapsed_time);
       glTranslatef(translate.get_x(), translate.get_y(), translate.get_z());
     } break;
 

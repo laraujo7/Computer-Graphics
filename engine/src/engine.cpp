@@ -62,7 +62,7 @@ void renderScene(void) {
 		glutSetWindowTitle(s);
 	}
   
-  world->draw(timet/1000);
+  world->draw(timet);
 
   // End of frame
   glutSwapBuffers();
