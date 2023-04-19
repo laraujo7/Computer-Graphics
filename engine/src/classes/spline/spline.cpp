@@ -11,8 +11,6 @@ Point Spline::get_point_by_index(int index) { return (this->points).at(index);}
 
 Point Spline::get_spline_point(int time, float elapsed_time) {
 
-    #TODO: implementar for loop para aplicar múltiplos pontos (e respetivos pontos de controlo)
-
     float t = ((elapsed_time/1000) / time);
 
     float t_2 = t * t;
