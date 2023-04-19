@@ -10,6 +10,8 @@ add_executable(${PROJECT_NAME}
     src/engine.hpp
     src/classes/camera/camera.cpp
     src/classes/camera/camera.hpp
+    src/classes/spline/spline.cpp
+    src/classes/spline/spline.hpp
     src/classes/group/group.cpp
     src/classes/group/group.hpp
     src/classes/model3d/model3d.cpp
@@ -32,6 +34,8 @@ add_executable(${PROJECT_NAME}
     lib/glew/glew.c
     lib/glew/glew.h
     ../config/global.hpp
+    ../utils/point/point.cpp
+    ../utils/point/point.hpp
     ../utils/file_helpers/file_helpers.hpp
     ../utils/file_helpers/file_helpers.cpp
     ../utils/generic_functions/generic_functions.hpp
