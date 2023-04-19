@@ -20,10 +20,10 @@ add_executable(${PROJECT_NAME}
 								src/models/patch/patch.hpp
 								src/classes/model/model.cpp
 								src/classes/model/model.hpp
-								src/classes/point/point.cpp
-								src/classes/point/point.hpp
 								src/classes/triangle_index/triangle_index.cpp
 								src/classes/triangle_index/triangle_index.hpp
+								../utils/point/point.cpp
+    							../utils/point/point.hpp
 								../config/global.hpp
 								../utils/file_helpers/file_helpers.cpp
 								../utils/file_helpers/file_helpers.hpp
