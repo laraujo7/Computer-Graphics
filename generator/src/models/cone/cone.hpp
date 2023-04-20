@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "../../classes/model/model.hpp"
-#include "../../classes/point/point.hpp"
+#include "../../../../utils/point/point.hpp"
 
 int create_cone(float radius, float height, int slices, int stacks,
                 string file_name);

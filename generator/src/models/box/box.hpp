@@ -7,7 +7,7 @@
 
 #include "../../../../utils/generic_functions/generic_functions.hpp"
 #include "../../classes/model/model.hpp"
-#include "../../classes/point/point.hpp"
+#include "../../../../utils/point/point.hpp"
 #include "../../classes/triangle_index/triangle_index.hpp"
 
 int create_box(float length, int divisions, string file_name);
