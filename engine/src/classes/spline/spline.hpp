@@ -9,6 +9,7 @@ using namespace std;
 class Spline {
 private:
     vector<Point> points;
+    int index;
 
 public:
     Spline();
@@ -16,6 +17,8 @@ public:
     Spline(vector<Point> points);
 
     Point get_point_by_index(int index);
+
+    int get_index(int t, int point_no);
 
     //Spline(Point p0, Point p1, Point p2, Point p3);
 
