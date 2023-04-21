@@ -9,7 +9,9 @@ Spline::Spline(vector<Point> points) {
 
 Point Spline::get_point_by_index(int index) { return (this->points).at(index);}
 
-int Spline::get_index(int t, int point_no){ return ((t + point_no) % (this->points.size()));}
+int Spline::get_index(int t, int point_no){ return ((0 + point_no) % (this->points.size()));}
+
+int Spline::get_number_of_points(){ return this->points.size();}
 
 Point Spline::get_spline_point(int time, float elapsed_time) {
 
@@ -17,6 +19,9 @@ Point Spline::get_spline_point(int time, float elapsed_time) {
 
     //if(t > 1){ (this->index)++;}
 
+    int r = (int)t;
+
+    t = t - r;
     float t_2 = t * t;
     float t_3 = t_2 * t; 
 
@@ -25,15 +30,14 @@ Point Spline::get_spline_point(int time, float elapsed_time) {
     float q3 = -3.0f * t_3 + 4.0f * t_2 + t;
     float q4 = t_3 - t_2;
 
-    int v = (int)t;
 
     int i0, i1, i2, i3;
-    i0 = get_index(v,0);
-    i1 = get_index(v,1);
-    i2 = get_index(v,2);
-    i3 = get_index(v,3);
+    i0 = get_index(r,0);
+    i1 = get_index(r,1);
+    i2 = get_index(r,2);
+    i3 = get_index(r,3);
 
-    cout << i0 << "," << i1 << "," << i2 << "," << i3 << "," << endl;
+    //cout << i0 << "," << i1 << "," << i2 << "," << i3 << "," << endl;
 
     Point p0 = get_point_by_index(i0);
     Point p1 = get_point_by_index(i1);

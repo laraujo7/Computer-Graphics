@@ -286,8 +286,8 @@ void World::parse_color(XMLElement *color_element, ModelConfig *model_config) {
   }
 }
 
-void World::draw(int elapsed_time) {
+void World::draw(int elapsed_time, bool trajectory) {
   for (Group *group : this->groups) {
-    group->draw(this->get_models(), elapsed_time);
+    group->draw(this->get_models(), elapsed_time, trajectory);
   }
 }

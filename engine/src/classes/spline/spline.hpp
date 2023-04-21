@@ -20,6 +20,8 @@ public:
 
     int get_index(int t, int point_no);
 
+    int get_number_of_points();
+
     //Spline(Point p0, Point p1, Point p2, Point p3);
 
     Point get_spline_point(int duration, float t);

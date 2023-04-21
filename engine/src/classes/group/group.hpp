@@ -52,6 +52,8 @@ public:
   void add_transformation(string transformation_type, float x, float y,
                           float z);
 
-  void draw(unordered_map<string, Model3D *> models, int elapsed_time);
+  void draw_trajectory();
+
+  void draw(unordered_map<string, Model3D *> models, int elapsed_time, bool trajectory);
 };
 #endif

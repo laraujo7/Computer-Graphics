@@ -51,6 +51,11 @@ tuple<float, float, float, float> Transformation::get_rotate() {
   return make_tuple(this->angle, this->x, this->y, this->z);
 }
 
+int Transformation::get_spline_size() { 
+  if(!(this->animation)) return 0;
+  return this->spline.get_number_of_points();
+}
+
 void Transformation::set_translate(float x, float y, float z) {
   this->x = x;
   this->y = y;

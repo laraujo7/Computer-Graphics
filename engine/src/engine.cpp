@@ -3,6 +3,7 @@
 World *world = new World();
 int timebase, timecount, fps;
 int frame=0;
+bool trajectory, opacity;
 char s[30];
 
 void changeSize(int w, int h) {
@@ -62,7 +63,7 @@ void renderScene(void) {
 		glutSetWindowTitle(s);
 	}
   
-  world->draw(timet);
+  world->draw(timet, trajectory);
 
   // End of frame
   glutSwapBuffers();
@@ -83,6 +84,11 @@ void keyboardCtrl(unsigned char key, int x, int y) {
   case 'd':
     world->get_camera()->move(get_direction("right"));
     break;
+  case 't':
+    trajectory = !trajectory;
+    break;
+  case 'o':
+    opacity = !opacity;
   default:
     break;
     // case 'q':
