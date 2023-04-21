@@ -9,7 +9,7 @@ Spline::Spline(vector<Point> points) {
 
 Point Spline::get_point_by_index(int index) { return (this->points).at(index);}
 
-int Spline::get_index(int t, int point_no){ return ((0 + point_no) % (this->points.size()));}
+int Spline::get_index(int t, int point_no){ return ((t + point_no) % (this->points.size()));}
 
 int Spline::get_number_of_points(){ return this->points.size();}
 

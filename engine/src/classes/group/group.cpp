@@ -71,17 +71,19 @@ void Group::draw_trajectory() {
   for (pair<string, Transformation *> transformation : this->get_transformations()) {
         switch (get_xml_tag(transformation.first)) {
           case XMLTags::TRANSLATE: {
+            int no_points = transformation.second->get_spline_size();
             int t = 0;
-
-            
-
             glBegin(GL_LINES);
               		glColor3f(0.0f, 1.0f, 0.0f);
-                  for(int i=1; i<100; ++i, t+=100){
+                  for(int i=0; i<(100*no_points); ++i, t+=100){
                     Point p1 = transformation.second->get_translate(t);
                     Point p2 = transformation.second->get_translate(t+100);
+                    std::cout << t << endl;
+                    std::cout << p1.point_to_string() << endl;
+                    std::cout << p2.point_to_string() << endl;
                     glVertex3f(p1.get_x(), p1.get_y(), p1.get_z());
                     glVertex3f(p2.get_x(), p2.get_y(), p2.get_z());
+
                   }
             glEnd();
 
