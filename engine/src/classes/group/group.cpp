@@ -78,12 +78,8 @@ void Group::draw_trajectory() {
                   for(int i=0; i<(100*no_points); ++i, t+=100){
                     Point p1 = transformation.second->get_translate(t);
                     Point p2 = transformation.second->get_translate(t+100);
-                    std::cout << t << endl;
-                    std::cout << p1.point_to_string() << endl;
-                    std::cout << p2.point_to_string() << endl;
                     glVertex3f(p1.get_x(), p1.get_y(), p1.get_z());
                     glVertex3f(p2.get_x(), p2.get_y(), p2.get_z());
-
                   }
             glEnd();
 
