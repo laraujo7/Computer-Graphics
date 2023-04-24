@@ -20,6 +20,7 @@ private:
   bool align;
   Spline spline;
   bool animation;
+  Point yAxis;
 
 public:
   Transformation();
@@ -33,6 +34,8 @@ public:
   int get_spline_size();
 
   Point get_translate(int elapsed_time);
+
+  void alignment(int elapsed_time);
 
   Point get_translate();
 

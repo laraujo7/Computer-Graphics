@@ -1,9 +1,13 @@
 #include "transformation.hpp"
 
-Transformation::Transformation() {}
+Transformation::Transformation() {
+  Point yAxis = Point(0,1,0); 
+
+}
 
 Transformation::Transformation(float x, float y, float z) {
   this->animation = false;
+  Point yAxis = Point(0,1,0); 
   this->x = x;
   this->y = y;
   this->z = z;
@@ -11,6 +15,7 @@ Transformation::Transformation(float x, float y, float z) {
 
 Transformation::Transformation(float angle, float x, float y, float z) {
   this->animation = false;
+  Point yAxis = Point(0,1,0); 
   this->angle = angle;
   this->x = x;
   this->y = y;
@@ -19,6 +24,7 @@ Transformation::Transformation(float angle, float x, float y, float z) {
 
 Transformation::Transformation(int time, bool align, Spline spline) {
   this->animation = true;
+  Point yAxis = Point(0,1,0);
   this->time = time;
   this->align = align;
   this->spline = spline;
@@ -37,6 +43,12 @@ Point Transformation::get_translate(int elapsed_time) {
   }
   //return (this->spline.get_spline_point(elapsed_time/1000));
   return make_tuple(this->x, this->y, this->z);
+}
+
+void Transformation::alignment(int elapsed_time) {
+  if(this->animation)
+    this->spline.get_spline_derivate(time, elapsed_time, this->yAxis);
+
 }
 
 Point Transformation::get_translate() {

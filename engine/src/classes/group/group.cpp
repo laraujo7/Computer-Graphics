@@ -103,6 +103,7 @@ void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time, bool
     case XMLTags::TRANSLATE: {
       Point translate = transformation.second->get_translate(elapsed_time);
       glTranslatef(translate.get_x(), translate.get_y(), translate.get_z());
+      transformation.second->alignment(elapsed_time);
     } break;
 
     case XMLTags::SCALE: {
