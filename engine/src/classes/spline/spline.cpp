@@ -1,4 +1,5 @@
 #include "spline.hpp"
+#include <GL/gl.h>
 #include <iterator>
 
 Spline::Spline(){}
@@ -45,37 +46,37 @@ Point Spline::get_spline_point(int time, float elapsed_time) {
     return Point(tx,ty,tz);
 }
 
-void normalize(Point a) {
+void normalize(Point *a) {
 
-	float l = sqrt(a.get_x()*a.get_x() + a.get_y() * a.get_y() + a.get_z() * a.get_z());
-	a.set_x(a.get_x()/l);
-	a.set_y(a.get_y()/l);
-	a.set_z(a.get_z()/l);
-
-    cout << a.point_to_string() << endl;
+	float l = sqrt(a->get_x()*a->get_x() + a->get_y() * a->get_y() + a->get_z() * a->get_z());
+	a->set_x(a->get_x()/l);
+	a->set_y(a->get_y()/l);
+	a->set_z(a->get_z()/l);
 
 }
 
 void Spline::buildRotMatrix(Point x, Point y, Point z, float *m) {
 
-	m[0] = x.get_x(); m[1] = x.get_y(); m[2] = x.get_z(); m[3] = 0;
-	m[4] = y.get_x(); m[5] = y.get_y(); m[6] = y.get_z(); m[7] = 0;
+	m[0] = x.get_x(); m[1] = x.get_y(); m[2] = x.get_z();  m[3] = 0;
+	m[4] = y.get_x(); m[5] = y.get_y(); m[6] = y.get_z();  m[7] = 0;
 	m[8] = z.get_x(); m[9] = z.get_y(); m[10] = z.get_z(); m[11] = 0;
-	m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
+	m[12] = 0;        m[13] = 0;        m[14] = 0;         m[15] = 1;
+
 }
 
-void cross(Point a, Point b, Point res) {
+Point cross(Point a, Point b) {
+    Point res;
 
-    res.set_x((float)(a.get_y()*b.get_z() - a.get_z()*b.get_y()));
-    res.set_y((float)(a.get_z()*b.get_x() - a.get_x()*b.get_z()));
-    res.set_z((float)(a.get_x()*b.get_y() - a.get_y()*b.get_x()));
+    res.set_x((a.get_y()*b.get_z() - a.get_z()*b.get_y()));
+    res.set_y((a.get_z()*b.get_x() - a.get_x()*b.get_z()));
+    res.set_z((a.get_x()*b.get_y() - a.get_y()*b.get_x()));
+
+    return res;
 }
 
-void Spline::get_spline_derivate(int time, float elapsed_time, Point yAxis) {
+void Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis, float* m) {
 
     float t = ((elapsed_time/1000) / time);
-
-    //if(t > 1){ (this->index)++;}
 
     int r = (int)t;
 
@@ -98,23 +99,27 @@ void Spline::get_spline_derivate(int time, float elapsed_time, Point yAxis) {
     float ty = 0.5f * (p0.get_y() * q1 + p1.get_y() * q2 + p2.get_y() * q3 + p3.get_y() * q4);
     float tz = 0.5f * (p0.get_z() * q1 + p1.get_z() * q2 + p2.get_z() * q3 + p3.get_z() * q4);
 
+
     Point x = Point(tx,ty,tz);
-    Point z = Point(0,0,0);
+    
+    Point z = cross(x, *yAxis);
 
-    cout << "y" << yAxis.point_to_string() << endl;
-    cout << "z" << z.point_to_string() << endl;
-
-    // Z
-    cross(x, yAxis, z);
     // Y
-    cross(z, x, yAxis);
+    *yAxis = cross(z, x);
 
-    normalize(x);
+    normalize(&x);
+    normalize(&z);
     normalize(yAxis);
-    normalize(z);
 
+    buildRotMatrix(x,*yAxis,z,m);
+}
+
+void Spline::aligned_translation(int time, float elapsed_time, Point *yAxis) {
     float m[16];
-    buildRotMatrix(x,yAxis,z,m);
+    get_spline_derivate(time, elapsed_time, yAxis, m);
+    Point translate = get_spline_point(time, elapsed_time);
 
+    glTranslatef(translate.get_x(), translate.get_y(), translate.get_z());
     glMultMatrixf(m);
+
 }
