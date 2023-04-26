@@ -1,8 +1,0 @@
-void normalize(Point *a) {
-
-	float l = sqrt(a->get_x()*a->get_x() + a->get_y() * a->get_y() + a->get_z() * a->get_z());
-	a->set_x(a->get_x()/l);
-	a->set_y(a->get_y()/l);
-	a->set_z(a->get_z()/l);
-
-}
