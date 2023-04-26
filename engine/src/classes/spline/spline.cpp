@@ -19,8 +19,6 @@ Point Spline::get_spline_point(int time, float elapsed_time) {
 
     float t = ((elapsed_time/1000) / time);
 
-    //if(t > 1){ (this->index)++;}
-
     int r = (int)t;
 
     t = t - r;
@@ -31,8 +29,6 @@ Point Spline::get_spline_point(int time, float elapsed_time) {
     float q2 = 3.0f * t_3 - 5.0f * t_2 + 2.0f;
     float q3 = -3.0f * t_3 + 4.0f * t_2 + t;
     float q4 = t_3 - t_2;
-
-    //cout << i0 << "," << i1 << "," << i2 << "," << i3 << "," << endl;
 
     Point p0 = get_point_by_index(get_index(r,0));
     Point p1 = get_point_by_index(get_index(r,1));
