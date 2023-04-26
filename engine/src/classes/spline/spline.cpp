@@ -110,11 +110,13 @@ void Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis, flo
     buildRotMatrix(x,*yAxis,z,m);
 }
 
-void Spline::aligned_translation(int time, float elapsed_time, Point *yAxis, bool align) {
+Point Spline::aligned_translation(int time, float elapsed_time, Point *yAxis, bool align) {
     float m[16];
     get_spline_derivate(time, elapsed_time, yAxis, m);
     Point translate = get_spline_point(time, elapsed_time);
 
     glTranslatef(translate.get_x(), translate.get_y(), translate.get_z());
     if(align) glMultMatrixf(m);
+
+    return translate;
 }

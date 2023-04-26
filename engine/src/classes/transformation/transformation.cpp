@@ -35,9 +35,11 @@ Transformation::Transformation(int time, bool align, Spline spline) {
 
 Point Transformation::get_translate(int elapsed_time) {
   if(this->animation) {
-    this->spline.aligned_translation(time, elapsed_time, &this->yAxis, this->align);
+    Point pos = this->spline.aligned_translation(time, elapsed_time, &this->yAxis, this->align);
+    this->x = pos.get_x();
+    this->y = pos.get_y();
+    this->z = pos.get_z();
   }
-  //return (this->spline.get_spline_point(elapsed_time/1000));
   return make_tuple(this->x, this->y, this->z);
 }
 
@@ -54,13 +56,7 @@ void Transformation::get_catmullrom_curve() {
     }
   }
 }
-/*
-void Transformation::alignment(int elapsed_time) {
-  if(this->animation)
-    this->spline.get_spline_derivate(time, elapsed_time, &(this->yAxis));
 
-}
-*/
 Point Transformation::get_translate() {
   return make_tuple(this->x, this->y, this->z);
 }
