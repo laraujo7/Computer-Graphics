@@ -35,6 +35,8 @@ public:
 
   Point get_translate(int elapsed_time);
 
+  void get_catmullrom_curve();
+
   void alignment(int elapsed_time);
 
   Point get_translate();

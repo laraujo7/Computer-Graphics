@@ -35,16 +35,24 @@ Transformation::Transformation(int time, bool align, Spline spline) {
 
 Point Transformation::get_translate(int elapsed_time) {
   if(this->animation) {
-    //Point point = this->spline.get_spline_point(time, elapsed_time);
-
-    //this->x = point.get_x();
-    //this->y = point.get_y();
-    //this->z = point.get_z();
-
-    this->spline.aligned_translation(time, elapsed_time, &this->yAxis);
+    this->spline.aligned_translation(time, elapsed_time, &this->yAxis, this->align);
   }
   //return (this->spline.get_spline_point(elapsed_time/1000));
   return make_tuple(this->x, this->y, this->z);
+}
+
+void Transformation::get_catmullrom_curve() {
+  if(this->animation) {
+    int t = 0;
+    int no_points = spline.get_number_of_points();
+
+    for(int i=0; i<(100*no_points); ++i, t+=100){
+      Point p1 = this->spline.get_spline_point(time, t);
+      Point p2 = this->spline.get_spline_point(time, t+100);
+      glVertex3f(p1.get_x(), p1.get_y(), p1.get_z());
+      glVertex3f(p2.get_x(), p2.get_y(), p2.get_z());
+    }
+  }
 }
 /*
 void Transformation::alignment(int elapsed_time) {
