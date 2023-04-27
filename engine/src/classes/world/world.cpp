@@ -198,7 +198,9 @@ void World::parse_transform(XMLElement *transform_element, Group *group) {
       break;
     case XMLTags::ROTATE: {
       float angle = transform_children->FloatAttribute("angle");
-      group->add_transformation(str_transform, angle, x, y, z);
+      int time = transform_children->IntAttribute("time");
+      if(time != 0) group->add_transformation(str_transform, time, x, y, z);
+      else group->add_transformation(str_transform, angle, x, y, z);
     } break;
     default:
       break;

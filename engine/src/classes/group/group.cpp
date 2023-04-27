@@ -54,6 +54,13 @@ void Group::add_transformation(string transformation_type, float angle, float x,
           make_pair(transformation_type, new Transformation(angle, x, y, z)));
 }
 
+void Group::add_transformation(string transformation_type, int time, float x,
+                               float y, float z) {
+  (this->transformations)
+      .push_back(
+          make_pair(transformation_type, new Transformation(time, x, y, z)));
+}
+
 void Group::add_transformation(string transformation_type, int time, bool align, vector<Point> control_points) {
   (this->transformations)
       .push_back(

@@ -1,4 +1,5 @@
 #include "transformation.hpp"
+#include <GL/freeglut_std.h>
 
 Transformation::Transformation() {
   this->yAxis = Point(0,1,0); 
@@ -17,6 +18,14 @@ Transformation::Transformation(float angle, float x, float y, float z) {
   this->animation = false;
   this->yAxis = Point(0,1,0); 
   this->angle = angle;
+  this->x = x;
+  this->y = y;
+  this->z = z;
+}
+
+Transformation::Transformation(int time, float x, float y, float z) {
+  this->animation = true;
+  this->time = time;
   this->x = x;
   this->y = y;
   this->z = z;
@@ -65,7 +74,15 @@ tuple<float, float, float> Transformation::get_scale() {
   return make_tuple(this->x, this->y, this->z);
 }
 
+void Transformation::get_time_based_rotation() {
+  int elapsed_time = glutGet(GLUT_ELAPSED_TIME);
+  float seg = 360.0f / this->time;
+  float r = elapsed_time/1000.0f - (int)(elapsed_time/1000.0f);
+  this->angle = (((int)(elapsed_time/1000.0f) % this->time) + r) * seg;
+}
+
 tuple<float, float, float, float> Transformation::get_rotate() {
+  if(this->animation) get_time_based_rotation();
   return make_tuple(this->angle, this->x, this->y, this->z);
 }
 

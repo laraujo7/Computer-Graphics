@@ -29,6 +29,8 @@ public:
 
   Transformation(float angle, float x, float y, float z);
 
+  Transformation(int time, float x, float y, float z);
+
   Transformation(int time, bool align, Spline spline);
 
   int get_spline_size();
@@ -43,6 +45,8 @@ public:
 
   tuple<float, float, float> get_scale();
 
+  void get_time_based_rotation();
+
   tuple<float, float, float, float> get_rotate();
 
   void set_translate(float x, float y, float z);
@@ -50,5 +54,8 @@ public:
   void set_scale(float x, float y, float z);
 
   void set_rotate(float angle, float x, float y, float z);
+
+  void set_rotate(int time, float x, float y, float z);
+
 };
 #endif

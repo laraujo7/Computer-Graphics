@@ -49,6 +49,9 @@ public:
   void add_transformation(string transformation_type, float angle, float x,
                           float y, float z);
 
+  void add_transformation(string transformation_type, int time, float x,
+                               float y, float z);
+
   void add_transformation(string transformation_type, float x, float y,
                           float z);
 
