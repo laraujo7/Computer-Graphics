@@ -24,5 +24,6 @@ enum XMLTags get_xml_tag(string tag) {
   if(!tag.compare("specular")) return SPECULAR;
   if(!tag.compare("emissive")) return EMISSIVE;
   if(!tag.compare("shininess")) return SHININESS;
+  println("XMLtag not found, default tag: world");
   return WORLD;
 }

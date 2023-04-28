@@ -39,17 +39,16 @@ void renderScene(void) {
 
   // set the camera
   glLoadIdentity();
-  tuple<float, float, float> camera_poition =
-      world->get_camera()->get_position();
-  tuple<float, float, float> camera_look_at =
-      world->get_camera()->get_look_at();
 
-  gluLookAt(get<0>(camera_poition), get<1>(camera_poition),
-            get<2>(camera_poition), get<0>(camera_look_at),
-            get<1>(camera_look_at), get<2>(camera_look_at), 0.0f, 1.0f, 0.0f);
+  Camera *camera = world->get_camera();
+  tuple<float, float, float> camera_position = camera->get_position();
+  tuple<float, float, float> camera_look_at = camera->get_look_at();
+  tuple<float, float, float> camera_up = camera->get_up();
 
-  glRotatef(0, get<0>(camera_poition), get<1>(camera_poition),
-            get<2>(camera_poition));
+  gluLookAt(get<0>(camera_position), get<1>(camera_position),
+            get<2>(camera_position), get<0>(camera_look_at),
+            get<1>(camera_look_at), get<2>(camera_look_at), get<0>(camera_up),
+            get<1>(camera_up), get<2>(camera_up));
 
   world->draw();
 
@@ -57,25 +56,31 @@ void renderScene(void) {
   glutSwapBuffers();
 }
 
-/*
 // write function to process keyboard events
-void keyboardCtrl(unsigned char key, int x, int y){
-        switch(key) {
-        case 'w':
-                        posZ += -10;
-        case 's':
-                        posZ += 10;
-        case 'a':
-                        posX += -10;
-        case 'd':
-                        posX += 10;
-        case 'q':
-                        angleAlpha += -50;
-        case 'e':
-                        angleAlpha += 50;
-    }
-        glutPostRedisplay();
+void keyboardCtrl(unsigned char key, int x, int y) {
+  switch (key) {
+  case 'w':
+    world->get_camera()->move(get_direction("front"));
+    break;
+  case 's':
+    world->get_camera()->move(get_direction("back"));
+    break;
+  case 'a':
+    world->get_camera()->move(get_direction("left"));
+    break;
+  case 'd':
+    world->get_camera()->move(get_direction("right"));
+    break;
+  default:
+    break;
+    // case 'q':
+    //                 angleAlpha += -50;
+    // case 'e':
+    //                 angleAlpha += 50;
+  }
+  glutPostRedisplay();
 }
+/*
 void mouseCtrl(int button, int state, int x, int y){
         if(state == GLUT_DOWN){
                 angleAlpha += (x + y);
@@ -105,8 +110,8 @@ int main(int argc, char **argv) {
   glutIdleFunc(renderScene);
   glutReshapeFunc(changeSize);
 
-// put here the registration of the keyboard callbacks
-// glutKeyboardFunc(keyboardCtrl);
+  // put here the registration of the keyboard callbacks
+  glutKeyboardFunc(keyboardCtrl);
 // glutMouseFunc(mouseCtrl);
 #ifndef __APPLE__
   glewInit();

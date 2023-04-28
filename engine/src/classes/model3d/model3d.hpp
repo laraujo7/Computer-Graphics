@@ -1,10 +1,10 @@
 #ifndef MODEL3D_H
 #define MODEL3D_H
 
-#include "../../../../utils/generic_functions.hpp"
+#include "../../../../utils/file_helpers/file_helpers.hpp"
+#include "../../../../utils/generic_functions/generic_functions.hpp"
 #include "../../../lib/glew/glew.h"
 #include "../../../utils/colors_helpers/colors_helpers.hpp"
-#include "../../../utils/file_helpers/file_helpers.hpp"
 #include "../modelConfig/modelConfig.hpp"
 
 #include <GL/glut.h>

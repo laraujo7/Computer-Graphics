@@ -1,16 +1,19 @@
-#ifndef BOX_H
-#define BOX_H
+#ifndef PATCH_H
+#define PATCH_H
 
 #include <bits/stdc++.h>
+#include <fstream>
 #include <iostream>
 #include <vector>
 
+#include "../../../../utils/file_helpers/file_helpers.hpp"
 #include "../../../../utils/generic_functions/generic_functions.hpp"
+#include "../../../../utils/string_helpers/string_helpers.hpp"
 #include "../../classes/model/model.hpp"
 #include "../../classes/point/point.hpp"
 #include "../../classes/triangle_index/triangle_index.hpp"
 
-int create_box(float length, int divisions, string file_name);
+int create_patch(string file_input, int tessellation, string file_output);
 
 using namespace std;
 

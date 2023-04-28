@@ -1,6 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "../../../utils/direction_helpers/direction_helpers.hpp"
+
 #include <bits/stdc++.h>
 #include <iostream>
 #include <vector>
@@ -11,7 +13,7 @@ class Camera {
 private:
   tuple<float, float, float> position;
   tuple<float, float, float> look_at;
-  tuple<float, float, float> up;
+  tuple<float, float, float> up = {0.0f, 1.0f, 0.0f};
   tuple<float, float, float> projection;
 
   float radius;
@@ -74,8 +76,9 @@ public:
   void set_projection(vector<float> &arr);
 
   // coordinates from radius, alpha and beta into array
-  tuple<float, float, float> get_camera_position(float radius, float alpha,
-                                                 float beta);
+  tuple<float, float, float> get_camera_position();
+
+  void move(Direction direction);
 
   string camera_to_string();
 

@@ -1,5 +1,7 @@
-#ifndef UTILS_XML_PARSER_HELPER_H
-#define UTILS_XML_PARPER_HELPER_H
+#ifndef UTILS_XML_PARSER_HELPERS_H
+#define UTILS_XML_PARSER_HELPERS_H
+
+#include "../../../utils/generic_functions/generic_functions.hpp"
 
 #include <iostream>
 #include <string>
