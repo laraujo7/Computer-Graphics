@@ -1,5 +1,5 @@
 <world>
-    <window width="800" height="800"/>
+    <window width="1300" height="900"/>
 
     <camera>
 	    <position x="0" y="300" z="1200"/>
@@ -9,21 +9,27 @@
     </camera>
     <group>
         <transform>
-            <translate x="-650"/>
-            <scale x="6" y="6" z="6"/>
+            <translate x="-400"/>
+            <scale x="4" y="4" z="4"/>
         </transform>
-        <models>
-            <model file="sphere.3d" color="sun"/>
-        </models>
         <group>
             <group>
                 <transform>
-                    <translate time = "10" align="true">
-					<point x = "0" y = "0" z = "-75" />
-					<point x = "75" y = "0" z = "0" />
-					<point x = "0" y = "0" z = "75" />
-					<point x = "-75" y = "10" z = "0" />
+                    <rotate time="120" y="1"/>
+                </transform>
+                <models>
+                    <model file="sphere.3d" color="sun"/>
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate time = "2" align="true">
+                        <point x = "0" y = "0" z = "-75" />
+                        <point x = "75" y = "0" z = "0" />
+                        <point x = "0" y = "0" z = "75" />
+                        <point x = "-75" y = "10" z = "0" />
 				    </translate>
+                    <rotate time="2" y="1"/>
                     <scale x="0.003" y="0.003" z="0.003"/>
                 </transform>
                 <models>
@@ -32,12 +38,13 @@
             </group>
             <group>
                 <transform>
-                    <translate time = "10" align="true">
-					<point x = "0" y = "0" z = "-80" />
-					<point x = "80" y = "0" z = "0" />
-					<point x = "0" y = "0" z = "80" />
-					<point x = "-80" y = "10" z = "0" />
+                    <translate time = "3" align="true">
+                        <point x = "0" y = "0" z = "-80" />
+                        <point x = "80" y = "0" z = "0" />
+                        <point x = "0" y = "0" z = "80" />
+                        <point x = "-80" y = "10" z = "0" />
 				    </translate>
+                    <rotate time="3" y="1"/>
                     <scale x="0.0087" y="0.0087" z="0.0087"/>
                 </transform>
                 <models>
@@ -46,12 +53,13 @@
             </group>
             <group>
                 <transform>
-                    <translate time = "10" align="true">
-					<point x = "0" y = "0" z = "-84" />
-					<point x = "84" y = "0" z = "0" />
-					<point x = "0" y = "0" z = "84" />
-					<point x = "-84" y = "10" z = "0" />
+                    <translate time = "4" align="true">
+                        <point x = "0" y = "0" z = "-84" />
+                        <point x = "84" y = "0" z = "0" />
+                        <point x = "0" y = "0" z = "84" />
+                        <point x = "-84" y = "10" z = "0" />
 				    </translate>
+                    <rotate time="4" y="1"/>
                     <scale x="0.0091" y="0.0091" z="0.0091"/>
                 </transform>
                 <models>
@@ -60,12 +68,13 @@
             </group>
             <group>
                 <transform>
-                    <translate time = "10" align="true">
-					<point x = "0" y = "0" z = "-94" />
-					<point x = "94" y = "0" z = "0" />
-					<point x = "0" y = "0" z = "94" />
-					<point x = "-94" y = "10" z = "0" />
+                    <translate time = "6" align="true">
+                        <point x = "0" y = "0" z = "-94" />
+                        <point x = "94" y = "0" z = "0" />
+                        <point x = "0" y = "0" z = "94" />
+                        <point x = "-94" y = "10" z = "0" />
 				    </translate>
+                    <rotate time="4" y="1"/>
                     <scale x="0.0049" y="0.0049" z="0.0049"/>
                 </transform>
                 <models>
@@ -75,12 +84,13 @@
         </group>
         <group>
             <transform>
-                <translate time = "10" align="true">
+                <translate time = "7" align="true">
 					<point x = "0" y = "0" z = "-124" />
 					<point x = "124" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "124" />
 					<point x = "-124" y = "10" z = "0" />
-				    </translate>
+				</translate>
+                <rotate time="6" y="1"/>
                 <scale x="0.1" y="0.1" z="0.1"/>
             </transform>
             <models>
@@ -89,6 +99,7 @@
             <group>
                 <transform>
                     <translate x="50" y="60"/>
+                    <rotate time="4" y="1"/>
                     <scale x="0.03" y="0.03" z="0.03"/>
                 </transform>
                 <models>
@@ -103,7 +114,7 @@
 					<point x = "154" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "154" />
 					<point x = "-154" y = "10" z = "0" />
-				    </translate>
+				</translate>
                 <scale x="0.084" y="0.084" z="0.084"/>
                 <rotate angle="-25" x="0" y="0" z="-1" />
             </transform>
@@ -111,15 +122,24 @@
                 <model file="sphere.3d" color="saturn"/>
                 <model file="disc.3d"/>
             </models>
+            <group>
+                <transform>
+                    <rotate time="20" y="1"/>
+                </transform>
+                <models>
+                    <model file="disc.3d"/>
+                </models>
+            </group>
         </group>
         <group>
             <transform>
-                <translate time = "10" align="true">
+                <translate time = "12" align="true">
 					<point x = "0" y = "0" z = "-210" />
 					<point x = "210" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "210" />
 					<point x = "-210" y = "10" z = "0" />
-				    </translate>
+                </translate>
+                <rotate time="5" y="1"/>
                 <scale x="0.036" y="0.036" z="0.036"/>
             </transform>
             <models>
@@ -128,12 +148,13 @@
         </group>
         <group>
             <transform>
-                <translate time = "10" align="true">
+                <translate time = "14" align="true">
 					<point x = "0" y = "0" z = "-260" />
 					<point x = "260" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "260" />
 					<point x = "-260" y = "10" z = "0" />
-				    </translate>
+                </translate>
+                <rotate time="10" y="1"/>
                 <scale x="0.035" y="0.035" z="0.035"/>
             </transform>
             <models>
@@ -142,12 +163,13 @@
         </group>
         <group>
             <transform>
-                <translate time = "10" align="true">
+                <translate time = "19" align="true">
 					<point x = "0" y = "0" z = "-310" />
 					<point x = "310" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "310" />
 					<point x = "-310" y = "10" z = "0" />
-				    </translate>
+                </translate>
+                <rotate time="6" y="1"/>
                 <scale x="0.0017" y="0.0017" z="0.0017"/>
             </transform>
             <models>

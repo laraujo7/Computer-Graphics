@@ -170,9 +170,8 @@ void World::parse_transform(XMLElement *transform_element, Group *group) {
     case XMLTags::TRANSLATE: {
       
       int time = transform_children->IntAttribute("time");
-      if(time > 0){
+      if(time != 0){
         bool align = transform_children->BoolAttribute("align");
-
         // cria vetor de 4 pontos
         vector<Point> control_points;
         // loop que lê 4 atributos "point"
@@ -190,7 +189,8 @@ void World::parse_transform(XMLElement *transform_element, Group *group) {
         
         group->add_transformation(str_transform, time, align, control_points);
       }
-      else {group->add_transformation(str_transform, x,y,z);}
+      else {
+        group->add_transformation(str_transform, x,y,z);}
     }break;
     
     case XMLTags::SCALE:
