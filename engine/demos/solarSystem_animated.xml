@@ -9,12 +9,13 @@
     </camera>
     <group>
         <transform>
-            <translate x="-400"/>
+            <translate x="-200"/>
             <scale x="4" y="4" z="4"/>
         </transform>
         <group>
             <group>
                 <transform>
+                    <scale x="0.5" y="0.5" z="0.5"/>
                     <rotate time="120" y="1"/>
                 </transform>
                 <models>
@@ -24,10 +25,10 @@
             <group>
                 <transform>
                     <translate time = "2" align="true">
-                        <point x = "0" y = "0" z = "-75" />
+                        <point x = "0" y = "0" z = "-100" />
                         <point x = "75" y = "0" z = "0" />
                         <point x = "0" y = "0" z = "75" />
-                        <point x = "-75" y = "10" z = "0" />
+                        <point x = "-100" y = "10" z = "0" />
 				    </translate>
                     <rotate time="2" y="1"/>
                     <scale x="0.003" y="0.003" z="0.003"/>
@@ -39,10 +40,10 @@
             <group>
                 <transform>
                     <translate time = "3" align="true">
-                        <point x = "0" y = "0" z = "-80" />
+                        <point x = "0" y = "0" z = "-115" />
                         <point x = "80" y = "0" z = "0" />
                         <point x = "0" y = "0" z = "80" />
-                        <point x = "-80" y = "10" z = "0" />
+                        <point x = "-115" y = "10" z = "0" />
 				    </translate>
                     <rotate time="3" y="1"/>
                     <scale x="0.0087" y="0.0087" z="0.0087"/>
@@ -54,10 +55,10 @@
             <group>
                 <transform>
                     <translate time = "4" align="true">
-                        <point x = "0" y = "0" z = "-84" />
+                        <point x = "0" y = "0" z = "-120" />
                         <point x = "84" y = "0" z = "0" />
                         <point x = "0" y = "0" z = "84" />
-                        <point x = "-84" y = "10" z = "0" />
+                        <point x = "-120" y = "10" z = "0" />
 				    </translate>
                     <rotate time="4" y="1"/>
                     <scale x="0.0091" y="0.0091" z="0.0091"/>
@@ -69,10 +70,10 @@
             <group>
                 <transform>
                     <translate time = "6" align="true">
-                        <point x = "0" y = "0" z = "-94" />
+                        <point x = "0" y = "0" z = "-130" />
                         <point x = "94" y = "0" z = "0" />
                         <point x = "0" y = "0" z = "94" />
-                        <point x = "-94" y = "10" z = "0" />
+                        <point x = "-130" y = "10" z = "0" />
 				    </translate>
                     <rotate time="4" y="1"/>
                     <scale x="0.0049" y="0.0049" z="0.0049"/>
@@ -85,10 +86,10 @@
         <group>
             <transform>
                 <translate time = "7" align="true">
-					<point x = "0" y = "0" z = "-124" />
+					<point x = "0" y = "0" z = "-230" />
 					<point x = "124" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "124" />
-					<point x = "-124" y = "10" z = "0" />
+					<point x = "-230" y = "10" z = "0" />
 				</translate>
                 <rotate time="6" y="1"/>
                 <scale x="0.1" y="0.1" z="0.1"/>
@@ -110,10 +111,10 @@
         <group>
             <transform>
                 <translate time = "10" align="true">
-					<point x = "0" y = "0" z = "-154" />
+					<point x = "0" y = "0" z = "-254" />
 					<point x = "154" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "154" />
-					<point x = "-154" y = "10" z = "0" />
+					<point x = "-254" y = "10" z = "0" />
 				</translate>
                 <scale x="0.084" y="0.084" z="0.084"/>
                 <rotate angle="-25" x="0" y="0" z="-1" />
@@ -134,10 +135,10 @@
         <group>
             <transform>
                 <translate time = "12" align="true">
-					<point x = "0" y = "0" z = "-210" />
+					<point x = "0" y = "0" z = "-310" />
 					<point x = "210" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "210" />
-					<point x = "-210" y = "10" z = "0" />
+					<point x = "-310" y = "10" z = "0" />
                 </translate>
                 <rotate time="5" y="1"/>
                 <scale x="0.036" y="0.036" z="0.036"/>
@@ -149,10 +150,10 @@
         <group>
             <transform>
                 <translate time = "14" align="true">
-					<point x = "0" y = "0" z = "-260" />
+					<point x = "0" y = "0" z = "-360" />
 					<point x = "260" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "260" />
-					<point x = "-260" y = "10" z = "0" />
+					<point x = "-360" y = "10" z = "0" />
                 </translate>
                 <rotate time="10" y="1"/>
                 <scale x="0.035" y="0.035" z="0.035"/>
@@ -164,10 +165,10 @@
         <group>
             <transform>
                 <translate time = "19" align="true">
-					<point x = "0" y = "0" z = "-310" />
+					<point x = "0" y = "0" z = "-410" />
 					<point x = "310" y = "0" z = "0" />
 					<point x = "0" y = "0" z = "310" />
-					<point x = "-310" y = "10" z = "0" />
+					<point x = "-410" y = "10" z = "0" />
                 </translate>
                 <rotate time="6" y="1"/>
                 <scale x="0.0017" y="0.0017" z="0.0017"/>
