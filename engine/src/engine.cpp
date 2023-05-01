@@ -51,8 +51,7 @@ void renderScene(void) {
 
   gluLookAt(get<0>(camera_position), get<1>(camera_position),
             get<2>(camera_position), get<0>(camera_look_at),
-            get<1>(camera_look_at), get<2>(camera_look_at), get<0>(camera_up),
-            get<1>(camera_up), get<2>(camera_up));
+            get<1>(camera_look_at), get<2>(camera_look_at), 0.0f, 1.0f, 0.0f);
 
   frame++;
   timet = glutGet(GLUT_ELAPSED_TIME);
@@ -98,6 +97,7 @@ void keyboardCtrl(unsigned char key, int x, int y) {
   }
   glutPostRedisplay();
 }
+/*
 /*
 void mouseCtrl(int button, int state, int x, int y){
         if(state == GLUT_DOWN){
