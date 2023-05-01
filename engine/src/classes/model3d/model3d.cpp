@@ -1,7 +1,5 @@
 #include "model3d.hpp"
 
-string DEFAULT_FILE_PATH = "models/";
-
 Model3D::Model3D() {}
 
 Model3D::Model3D(const Model3D &model) {
@@ -19,6 +17,8 @@ string Model3D::get_model_file_path() { return this->model_file_path; }
 void Model3D::set_model_file_path(string path) { this->model_file_path = path; }
 
 void Model3D::read_file(string file_path) {
+  string DEFAULT_FILE_PATH = "models/";
+
   ifstream file(DEFAULT_FILE_PATH + file_path);
 
   if (!file.is_open()) {
@@ -28,7 +28,7 @@ void Model3D::read_file(string file_path) {
 
   float x, y, z;
   int i1, i2, i3;
-  vector<float> points;
+  vector<float> vertices;
   vector<unsigned int> indexes;
 
   string model_name = get_file_line(file);
@@ -36,13 +36,13 @@ void Model3D::read_file(string file_path) {
   int num_ponts = stoi(get_file_line(file));
 
   for (int i = 0; i < num_ponts; i++) {
-    string str_points = get_file_line(file);
-    if (sscanf(str_points.c_str(), "%f %f %f", &x, &y, &z) == 3) {
-      points.push_back(x);
-      points.push_back(y);
-      points.push_back(z);
+    string str_vertices = get_file_line(file);
+    if (sscanf(str_vertices.c_str(), "%f %f %f", &x, &y, &z) == 3) {
+      vertices.push_back(x);
+      vertices.push_back(y);
+      vertices.push_back(z);
     } else {
-      perrorln("Invalid input: ", str_points);
+      perrorln("Invalid input: ", str_vertices);
     }
   }
 
@@ -61,12 +61,12 @@ void Model3D::read_file(string file_path) {
 
   file.close();
 
-  this->num_indexs = num_triangles * 3;
+  this->num_indexs = indexes.size();
 
   glGenBuffers(1, &(this->vertices));
   glBindBuffer(GL_ARRAY_BUFFER, this->vertices);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * points.size(), points.data(),
-               GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(),
+               vertices.data(), GL_STATIC_DRAW);
 
   glGenBuffers(1, &(this->indices));
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->indices);
@@ -75,7 +75,6 @@ void Model3D::read_file(string file_path) {
 }
 
 void Model3D::draw(ModelConfig *model_config) {
-
   set_glcolor3f(model_config->get_color());
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glBindBuffer(GL_ARRAY_BUFFER, this->vertices);
@@ -83,6 +82,5 @@ void Model3D::draw(ModelConfig *model_config) {
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->indices);
 
-  // with fill
   glDrawElements(GL_TRIANGLES, this->num_indexs, GL_UNSIGNED_INT, NULL);
 }

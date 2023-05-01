@@ -5,6 +5,7 @@
 #include "../../../utils/xml_parser_helpers/xml_parser_helpers.hpp"
 #include "../model3d/model3d.hpp"
 #include "../modelConfig/modelConfig.hpp"
+#include "../modelObj/modelObj.hpp"
 #include "../spline/spline.hpp"
 #include "../transformation/transformation.hpp"
 
@@ -56,9 +57,10 @@ public:
   void add_transformation(string transformation_type, float x, float y,
                           float z);
 
-  void draw_trajectory();
+  void draw_trajectory(Transformation *transformation);
 
-  void draw(unordered_map<string, Model3D *> models, int elapsed_time,
+  void draw(unordered_map<string, Model3D *> models_3d,
+            unordered_map<string, ModelObj *> models_obj, int elapsed_time,
             bool trajectory);
 };
 #endif

@@ -1,0 +1,20 @@
+<world>
+  <window width="800" height="800"/>
+
+    <!-- camera definition -->
+  <camera>
+	  <position x="5" y="5" z="5"/>
+	  <lookAt x="0" y="0" z="0"/>
+	  <up x="0" y="1" z="0"/> <!-- optional, use these values as default-->
+    <projection fov="60" near="1" far="1000"/> <!-- optional, use these values as default-->
+  </camera>
+	<group>
+		<transform>
+      <rotate angle="-90" x="1" y="0" z="0"/>
+      <rotate angle="40" x="0" y="0" z="1"/>
+    </transform>
+		<models>
+			<model file="heart.3d"/>
+		</models>
+	</group>
+</world>

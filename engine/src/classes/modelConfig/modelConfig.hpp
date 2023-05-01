@@ -14,10 +14,10 @@ private:
   string color;
 
   // default color attributes
-  tuple<int, int, int> diffuse = make_tuple(200, 200, 200);
-  tuple<int, int, int> ambient = make_tuple(50, 50, 50);
-  tuple<int, int, int> specular = make_tuple(0, 0, 0);
-  tuple<int, int, int> emissive = make_tuple(0, 0, 0);
+  tuple<int, int, int> diffuse = {200, 200, 200};
+  tuple<int, int, int> ambient = {50, 50, 50};
+  tuple<int, int, int> specular = {0, 0, 0};
+  tuple<int, int, int> emissive = {0, 0, 0};
   int shininess = 0;
 
 public:

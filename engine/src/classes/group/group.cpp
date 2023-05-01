@@ -75,30 +75,16 @@ void Group::add_transformation(string transformation_type, float x, float y,
       .push_back(make_pair(transformation_type, new Transformation(x, y, z)));
 }
 
-void Group::draw_trajectory() {
-
-  for (pair<string, Transformation *> transformation :
-       this->get_transformations()) {
-    switch (get_xml_tag(transformation.first)) {
-    case XMLTags::TRANSLATE: {
-      glBegin(GL_LINES);
-      set_glcolor3f("white");
-      transformation.second->get_catmullrom_curve();
-      glEnd();
-
-    } break;
-
-    default:
-      break;
-    }
-  }
+void Group::draw_trajectory(Transformation *transformation) {
+  glBegin(GL_LINES);
+  set_glcolor3f("white");
+  transformation->get_catmullrom_curve();
+  glEnd();
 }
 
-void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time,
+void Group::draw(unordered_map<string, Model3D *> models_3d,
+                 unordered_map<string, ModelObj *> models_obj, int elapsed_time,
                  bool trajectory) {
-  if (trajectory)
-    draw_trajectory();
-
   glPushMatrix();
 
   for (pair<string, Transformation *> transformation :
@@ -106,6 +92,8 @@ void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time,
 
     switch (get_xml_tag(transformation.first)) {
     case XMLTags::TRANSLATE: {
+      if (trajectory)
+        draw_trajectory(transformation.second);
       transformation.second->get_translate(elapsed_time);
     } break;
 
@@ -126,11 +114,19 @@ void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time,
   }
 
   for (pair<string, ModelConfig *> file_path : this->file_paths) {
-    models[file_path.first]->draw(file_path.second);
+    string file_extension = tokenize(file_path.first, '.')[1];
+
+    if (!file_extension.compare("3d")) {
+      models_3d[file_path.first]->draw(file_path.second);
+    }
+
+    if (!file_extension.compare("obj")) {
+      models_obj[file_path.first]->draw(file_path.second);
+    }
   }
 
   for (Group *sub_group : this->sub_groups) {
-    sub_group->draw(models, elapsed_time, trajectory);
+    sub_group->draw(models_3d, models_obj, elapsed_time, trajectory);
   }
 
   glPopMatrix();

@@ -3,6 +3,7 @@
 
 #include "../../../../utils/file_helpers/file_helpers.hpp"
 #include "../../../../utils/generic_functions/generic_functions.hpp"
+#include "../../../../utils/string_helpers/string_helpers.hpp"
 #include "../../../lib/glew/glew.h"
 #include "../../../utils/colors_helpers/colors_helpers.hpp"
 #include "../modelConfig/modelConfig.hpp"
