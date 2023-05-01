@@ -98,7 +98,6 @@ void keyboardCtrl(unsigned char key, int x, int y) {
   glutPostRedisplay();
 }
 /*
-/*
 void mouseCtrl(int button, int state, int x, int y){
         if(state == GLUT_DOWN){
                 angleAlpha += (x + y);
