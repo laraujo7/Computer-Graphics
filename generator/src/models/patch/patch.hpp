@@ -8,9 +8,9 @@
 
 #include "../../../../utils/file_helpers/file_helpers.hpp"
 #include "../../../../utils/generic_functions/generic_functions.hpp"
+#include "../../../../utils/point/point.hpp"
 #include "../../../../utils/string_helpers/string_helpers.hpp"
 #include "../../classes/model/model.hpp"
-#include "../../../../utils/point/point.hpp"
 #include "../../classes/triangle_index/triangle_index.hpp"
 
 int create_patch(string file_input, int tessellation, string file_output);

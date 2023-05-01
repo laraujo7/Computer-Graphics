@@ -61,10 +61,12 @@ void Group::add_transformation(string transformation_type, int time, float x,
           make_pair(transformation_type, new Transformation(time, x, y, z)));
 }
 
-void Group::add_transformation(string transformation_type, int time, bool align, vector<Point> control_points) {
+void Group::add_transformation(string transformation_type, int time, bool align,
+                               vector<Point> control_points) {
   (this->transformations)
       .push_back(
-          make_pair(transformation_type, new Transformation(time, align, Spline(control_points))));
+          make_pair(transformation_type,
+                    new Transformation(time, align, Spline(control_points))));
 }
 
 void Group::add_transformation(string transformation_type, float x, float y,
@@ -75,24 +77,27 @@ void Group::add_transformation(string transformation_type, float x, float y,
 
 void Group::draw_trajectory() {
 
-  for (pair<string, Transformation *> transformation : this->get_transformations()) {
-        switch (get_xml_tag(transformation.first)) {
-          case XMLTags::TRANSLATE: {
-            glBegin(GL_LINES);
-              		glColor3f(1.0f, 1.0f, 1.0f);
-                  transformation.second->get_catmullrom_curve();
-            glEnd();
+  for (pair<string, Transformation *> transformation :
+       this->get_transformations()) {
+    switch (get_xml_tag(transformation.first)) {
+    case XMLTags::TRANSLATE: {
+      glBegin(GL_LINES);
+      glColor3f(1.0f, 1.0f, 1.0f);
+      transformation.second->get_catmullrom_curve();
+      glEnd();
 
-          } break;
+    } break;
 
-          default:
-            break;
+    default:
+      break;
     }
   }
 }
 
-void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time, bool trajectory) {
-  if(trajectory) draw_trajectory();
+void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time,
+                 bool trajectory) {
+  if (trajectory)
+    draw_trajectory();
 
   glPushMatrix();
 

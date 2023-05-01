@@ -1,12 +1,12 @@
 #ifndef GROUP_H
 #define GROUP_H
 
+#include "../../../../utils/point/point.hpp"
 #include "../../../utils/xml_parser_helpers/xml_parser_helpers.hpp"
 #include "../model3d/model3d.hpp"
 #include "../modelConfig/modelConfig.hpp"
-#include "../transformation/transformation.hpp"
-#include "../../../../utils/point/point.hpp"
 #include "../spline/spline.hpp"
+#include "../transformation/transformation.hpp"
 
 #include <unordered_map>
 #include <vector>
@@ -34,7 +34,8 @@ public:
 
   void set_sub_groups(vector<Group *> sub_groups);
 
-  void set_transformations(vector<pair<string, Transformation *>> transformations);
+  void
+  set_transformations(vector<pair<string, Transformation *>> transformations);
 
   void add_file_path(string file_path, ModelConfig *model_config);
 
@@ -44,19 +45,20 @@ public:
                           Transformation *transformation);
 
   void add_transformation(string transformation_type, int time, bool align,
-                  vector<Point> control_points);                        
+                          vector<Point> control_points);
 
   void add_transformation(string transformation_type, float angle, float x,
                           float y, float z);
 
   void add_transformation(string transformation_type, int time, float x,
-                               float y, float z);
+                          float y, float z);
 
   void add_transformation(string transformation_type, float x, float y,
                           float z);
 
   void draw_trajectory();
 
-  void draw(unordered_map<string, Model3D *> models, int elapsed_time, bool trajectory);
+  void draw(unordered_map<string, Model3D *> models, int elapsed_time,
+            bool trajectory);
 };
 #endif

@@ -2,7 +2,7 @@
 
 World *world = new World();
 int timebase, timecount, fps;
-int frame=0;
+int frame = 0;
 bool trajectory, opacity;
 char s[30];
 
@@ -55,14 +55,14 @@ void renderScene(void) {
             get<1>(camera_up), get<2>(camera_up));
 
   frame++;
-	timet=glutGet(GLUT_ELAPSED_TIME);
-	if (timet - timebase > 1000) {
-		sprintf(s,"FPS:%4.2f",frame*1000.0/(timet-timebase));
-		timebase = timet;		
-		frame = 0;
-		glutSetWindowTitle(s);
-	}
-  
+  timet = glutGet(GLUT_ELAPSED_TIME);
+  if (timet - timebase > 1000) {
+    sprintf(s, "FPS:%4.2f", frame * 1000.0 / (timet - timebase));
+    timebase = timet;
+    frame = 0;
+    glutSetWindowTitle(s);
+  }
+
   world->draw(timet, trajectory);
 
   // End of frame

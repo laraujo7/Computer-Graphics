@@ -1,8 +1,8 @@
 #ifndef TRANSFORMATION_H
 #define TRANSFORMATION_H
 
-#include "../spline/spline.hpp"
 #include "../../../../utils/point/point.hpp"
+#include "../spline/spline.hpp"
 #include <bits/stdc++.h>
 #include <iostream>
 #include <string>
@@ -56,6 +56,5 @@ public:
   void set_rotate(float angle, float x, float y, float z);
 
   void set_rotate(int time, float x, float y, float z);
-
 };
 #endif
