@@ -78,7 +78,8 @@ void Transformation::get_time_based_rotation() {
   int elapsed_time = glutGet(GLUT_ELAPSED_TIME);
   float seg = 360.0f / this->time;
   float milliseconds = elapsed_time / 1000.0f - (int)(elapsed_time / 1000.0f);
-  this->angle = (((int)(elapsed_time / 1000.0f) % this->time) + milliseconds) * seg;
+  this->angle =
+      (((int)(elapsed_time / 1000.0f) % this->time) + milliseconds) * seg;
 }
 
 tuple<float, float, float, float> Transformation::get_rotate() {

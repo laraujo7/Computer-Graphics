@@ -19,7 +19,8 @@ int Spline::get_number_of_points() { return this->points.size(); }
 
 Point Spline::get_spline_point(int time, float elapsed_time) {
 
-  float animation_state = ((elapsed_time / 1000) / time) * this->get_number_of_points();
+  float animation_state =
+      ((elapsed_time / 1000) / time) * this->get_number_of_points();
 
   int current_segment = (int)animation_state;
 
@@ -89,7 +90,8 @@ Point cross(Point a, Point b) {
 void Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis,
                                  float *m) {
 
-  float animation_state = ((elapsed_time / 1000) / time) * this->get_number_of_points();
+  float animation_state =
+      ((elapsed_time / 1000) / time) * this->get_number_of_points();
 
   int current_segment = (int)animation_state;
 
