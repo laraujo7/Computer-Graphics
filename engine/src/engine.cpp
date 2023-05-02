@@ -3,7 +3,7 @@
 World *world = new World();
 int timebase, timecount, fps;
 int frame = 0;
-bool trajectory, opacity;
+bool trajectory;
 char s[30];
 
 void changeSize(int w, int h) {
@@ -51,7 +51,8 @@ void renderScene(void) {
 
   gluLookAt(get<0>(camera_position), get<1>(camera_position),
             get<2>(camera_position), get<0>(camera_look_at),
-            get<1>(camera_look_at), get<2>(camera_look_at), 0.0f, 1.0f, 0.0f);
+            get<1>(camera_look_at), get<2>(camera_look_at), get<0>(camera_up),
+            get<1>(camera_up), get<2>(camera_up));
 
   frame++;
   timet = glutGet(GLUT_ELAPSED_TIME);
@@ -86,8 +87,6 @@ void keyboardCtrl(unsigned char key, int x, int y) {
   case 't':
     trajectory = !trajectory;
     break;
-  case 'o':
-    opacity = !opacity;
   default:
     break;
     // case 'q':

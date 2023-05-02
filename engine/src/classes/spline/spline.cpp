@@ -9,21 +9,21 @@ Spline::Spline(vector<Point> points) {
   this->index = 0;
 }
 
-Point Spline::get_point_by_index(int index) { return (this->points).at(index); }
+Point Spline::get_point_by_index(int index) { return (this->points)[index]; }
 
-int Spline::get_index(int t, int point_no) {
-  return ((t + point_no) % (this->points.size()));
+int Spline::get_index(int segment_no, int point_no) {
+  return ((segment_no + point_no) % (this->points.size()));
 }
 
 int Spline::get_number_of_points() { return this->points.size(); }
 
 Point Spline::get_spline_point(int time, float elapsed_time) {
 
-  float t = ((elapsed_time / 1000) / time);
+  float animation_state = ((elapsed_time / 1000) / time) * this->get_number_of_points();
 
-  int r = (int)t;
+  int current_segment = (int)animation_state;
 
-  t = t - r;
+  float t = animation_state - current_segment;
   float t_2 = t * t;
   float t_3 = t_2 * t;
 
@@ -32,10 +32,10 @@ Point Spline::get_spline_point(int time, float elapsed_time) {
   float q3 = -3.0f * t_3 + 4.0f * t_2 + t;
   float q4 = t_3 - t_2;
 
-  Point p0 = get_point_by_index(get_index(r, 0));
-  Point p1 = get_point_by_index(get_index(r, 1));
-  Point p2 = get_point_by_index(get_index(r, 2));
-  Point p3 = get_point_by_index(get_index(r, 3));
+  Point p0 = get_point_by_index(get_index(current_segment, 0));
+  Point p1 = get_point_by_index(get_index(current_segment, 1));
+  Point p2 = get_point_by_index(get_index(current_segment, 2));
+  Point p3 = get_point_by_index(get_index(current_segment, 3));
 
   float tx = 0.5f * (p0.get_x() * q1 + p1.get_x() * q2 + p2.get_x() * q3 +
                      p3.get_x() * q4);
@@ -89,18 +89,18 @@ Point cross(Point a, Point b) {
 void Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis,
                                  float *m) {
 
-  float t = ((elapsed_time / 1000) / time);
+  float animation_state = ((elapsed_time / 1000) / time) * this->get_number_of_points();
 
-  int r = (int)t;
+  int current_segment = (int)animation_state;
 
-  t = t - r;
+  float t = animation_state - current_segment;
   float t_2 = t * t;
   float t_3 = t_2 * t;
 
-  Point p0 = get_point_by_index(get_index(r, 0));
-  Point p1 = get_point_by_index(get_index(r, 1));
-  Point p2 = get_point_by_index(get_index(r, 2));
-  Point p3 = get_point_by_index(get_index(r, 3));
+  Point p0 = get_point_by_index(get_index(current_segment, 0));
+  Point p1 = get_point_by_index(get_index(current_segment, 1));
+  Point p2 = get_point_by_index(get_index(current_segment, 2));
+  Point p3 = get_point_by_index(get_index(current_segment, 3));
 
   // X = P'(t)
   float q1 = -3.0f * t_2 + 4.0f * t - 1.0f;
@@ -131,13 +131,13 @@ void Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis,
 
 Point Spline::aligned_translation(int time, float elapsed_time, Point *yAxis,
                                   bool align) {
-  float m[16];
-  get_spline_derivate(time, elapsed_time, yAxis, m);
+  float matrix[16];
+  get_spline_derivate(time, elapsed_time, yAxis, matrix);
   Point translate = get_spline_point(time, elapsed_time);
 
   glTranslatef(translate.get_x(), translate.get_y(), translate.get_z());
   if (align)
-    glMultMatrixf(m);
+    glMultMatrixf(matrix);
 
   return translate;
 }

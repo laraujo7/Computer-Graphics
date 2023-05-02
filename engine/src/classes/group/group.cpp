@@ -82,7 +82,7 @@ void Group::draw_trajectory() {
     switch (get_xml_tag(transformation.first)) {
     case XMLTags::TRANSLATE: {
       glBegin(GL_LINES);
-      glColor3f(1.0f, 1.0f, 1.0f);
+      set_glcolor3f("white");
       transformation.second->get_catmullrom_curve();
       glEnd();
 
