@@ -57,38 +57,20 @@ void normalize(Point *a) {
   a->set_z(a->get_z() / l);
 }
 
-void Spline::buildRotMatrix(Point x, Point y, Point z, float *m) {
-
-  m[0] = x.get_x();
-  m[1] = x.get_y();
-  m[2] = x.get_z();
-  m[3] = 0;
-  m[4] = y.get_x();
-  m[5] = y.get_y();
-  m[6] = y.get_z();
-  m[7] = 0;
-  m[8] = z.get_x();
-  m[9] = z.get_y();
-  m[10] = z.get_z();
-  m[11] = 0;
-  m[12] = 0;
-  m[13] = 0;
-  m[14] = 0;
-  m[15] = 1;
+float *Spline::buildRotMatrix(Point x, Point y, Point z) {
+  static float m[16] = {
+      x.get_x(), x.get_y(), x.get_z(), 0, y.get_x(), y.get_y(), y.get_z(), 0,
+      z.get_x(), z.get_y(), z.get_z(), 0, 0,         0,         0,         1};
+  return m;
 }
 
 Point cross(Point a, Point b) {
-  Point res;
-
-  res.set_x((a.get_y() * b.get_z() - a.get_z() * b.get_y()));
-  res.set_y((a.get_z() * b.get_x() - a.get_x() * b.get_z()));
-  res.set_z((a.get_x() * b.get_y() - a.get_y() * b.get_x()));
-
-  return res;
+  return Point(a.get_y() * b.get_z() - a.get_z() * b.get_y(),
+               a.get_z() * b.get_x() - a.get_x() * b.get_z(),
+               a.get_x() * b.get_y() - a.get_y() * b.get_x());
 }
 
-void Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis,
-                                 float *m) {
+float *Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis) {
 
   float animation_state =
       ((elapsed_time / 1000) / time) * this->get_number_of_points();
@@ -128,13 +110,12 @@ void Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis,
   normalize(&z);
   normalize(yAxis);
 
-  buildRotMatrix(x, *yAxis, z, m);
+  return buildRotMatrix(x, *yAxis, z);
 }
 
 Point Spline::aligned_translation(int time, float elapsed_time, Point *yAxis,
                                   bool align) {
-  float matrix[16];
-  get_spline_derivate(time, elapsed_time, yAxis, matrix);
+  float *matrix = get_spline_derivate(time, elapsed_time, yAxis);
   Point translate = get_spline_point(time, elapsed_time);
 
   glTranslatef(translate.get_x(), translate.get_y(), translate.get_z());

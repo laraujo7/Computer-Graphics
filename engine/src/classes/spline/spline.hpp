@@ -25,10 +25,9 @@ public:
 
   Point get_spline_point(int duration, float t);
 
-  void buildRotMatrix(Point x, Point y, Point z, float *m);
+  float *buildRotMatrix(Point x, Point y, Point z);
 
-  void get_spline_derivate(int time, float elapsed_time, Point *yAxis,
-                           float *m);
+  float *get_spline_derivate(int time, float elapsed_time, Point *yAxis);
 
   Point aligned_translation(int time, float elapsed_time, Point *yAxis,
                             bool align);
