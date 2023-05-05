@@ -133,10 +133,10 @@ Point Spline::aligned_translation(int time, float elapsed_time, Point *yAxis,
   Point translate = get_spline_point(time, elapsed_time);
 
   glTranslatef(translate.get_x(), translate.get_y(), translate.get_z());
-  if (align){
+  if (align) {
     get_spline_derivate(time, elapsed_time, yAxis, matrix);
     glMultMatrixf(matrix);
   }
-  
+
   return translate;
 }
