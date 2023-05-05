@@ -54,13 +54,51 @@ void Group::add_transformation(string transformation_type, float angle, float x,
           make_pair(transformation_type, new Transformation(angle, x, y, z)));
 }
 
+void Group::add_transformation(string transformation_type, int time, float x,
+                               float y, float z) {
+  (this->transformations)
+      .push_back(
+          make_pair(transformation_type, new Transformation(time, x, y, z)));
+}
+
+void Group::add_transformation(string transformation_type, int time, bool align,
+                               vector<Point> control_points) {
+  (this->transformations)
+      .push_back(
+          make_pair(transformation_type,
+                    new Transformation(time, align, Spline(control_points))));
+}
+
 void Group::add_transformation(string transformation_type, float x, float y,
                                float z) {
   (this->transformations)
       .push_back(make_pair(transformation_type, new Transformation(x, y, z)));
 }
 
-void Group::draw(unordered_map<string, Model3D *> models) {
+void Group::draw_trajectory() {
+
+  for (pair<string, Transformation *> transformation :
+       this->get_transformations()) {
+    switch (get_xml_tag(transformation.first)) {
+    case XMLTags::TRANSLATE: {
+      glBegin(GL_LINES);
+      set_glcolor3f("white");
+      transformation.second->get_catmullrom_curve();
+      glEnd();
+
+    } break;
+
+    default:
+      break;
+    }
+  }
+}
+
+void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time,
+                 bool trajectory) {
+  if (trajectory)
+    draw_trajectory();
+
   glPushMatrix();
 
   for (pair<string, Transformation *> transformation :
@@ -68,9 +106,7 @@ void Group::draw(unordered_map<string, Model3D *> models) {
 
     switch (get_xml_tag(transformation.first)) {
     case XMLTags::TRANSLATE: {
-      tuple<float, float, float> translate =
-          transformation.second->get_translate();
-      glTranslatef(get<0>(translate), get<1>(translate), get<2>(translate));
+      transformation.second->get_translate(elapsed_time);
     } break;
 
     case XMLTags::SCALE: {
@@ -94,7 +130,7 @@ void Group::draw(unordered_map<string, Model3D *> models) {
   }
 
   for (Group *sub_group : this->sub_groups) {
-    sub_group->draw(models);
+    sub_group->draw(models, elapsed_time, trajectory);
   }
 
   glPopMatrix();

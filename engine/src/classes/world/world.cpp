@@ -159,19 +159,51 @@ void World::parse_transform(XMLElement *transform_element, Group *group) {
   for (XMLElement *transform_children = transform_element->FirstChildElement();
        transform_children;
        transform_children = transform_children->NextSiblingElement()) {
+
     string str_transform = transform_children->Name();
     float x = transform_children->FloatAttribute("x");
     float y = transform_children->FloatAttribute("y");
     float z = transform_children->FloatAttribute("z");
 
     switch (get_xml_tag(str_transform)) {
-    case XMLTags::TRANSLATE:
+
+    case XMLTags::TRANSLATE: {
+
+      int time = transform_children->IntAttribute("time");
+      if (time != 0) {
+        bool align = transform_children->BoolAttribute("align");
+        // cria vetor de 4 pontos
+        vector<Point> control_points;
+        // loop que lê 4 atributos "point"
+
+        for (XMLElement *translate_point =
+                 transform_children->FirstChildElement();
+             translate_point;
+             translate_point = translate_point->NextSiblingElement()) {
+
+          x = translate_point->FloatAttribute("x");
+          y = translate_point->FloatAttribute("y");
+          z = translate_point->FloatAttribute("z");
+
+          control_points.push_back(Point(x, y, z));
+        }
+
+        group->add_transformation(str_transform, time, align, control_points);
+      } else {
+        group->add_transformation(str_transform, x, y, z);
+      }
+    } break;
+
     case XMLTags::SCALE:
       group->add_transformation(str_transform, x, y, z);
       break;
     case XMLTags::ROTATE: {
       float angle = transform_children->FloatAttribute("angle");
-      group->add_transformation(str_transform, angle, x, y, z);
+      int time = transform_children->IntAttribute("time");
+      if (time != 0)
+        group->add_transformation(str_transform, time, x, y, z);
+      else
+        group->add_transformation(str_transform, angle, x, y, z);
     } break;
     default:
       break;
@@ -259,8 +291,8 @@ void World::parse_color(XMLElement *color_element, ModelConfig *model_config) {
   }
 }
 
-void World::draw() {
+void World::draw(int elapsed_time, bool trajectory) {
   for (Group *group : this->groups) {
-    group->draw(this->get_models());
+    group->draw(this->get_models(), elapsed_time, trajectory);
   }
 }

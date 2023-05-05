@@ -1,9 +1,11 @@
 #ifndef GROUP_H
 #define GROUP_H
 
+#include "../../../../utils/point/point.hpp"
 #include "../../../utils/xml_parser_helpers/xml_parser_helpers.hpp"
 #include "../model3d/model3d.hpp"
 #include "../modelConfig/modelConfig.hpp"
+#include "../spline/spline.hpp"
 #include "../transformation/transformation.hpp"
 
 #include <unordered_map>
@@ -42,12 +44,21 @@ public:
   void add_transformation(string transformation_type,
                           Transformation *transformation);
 
+  void add_transformation(string transformation_type, int time, bool align,
+                          vector<Point> control_points);
+
   void add_transformation(string transformation_type, float angle, float x,
+                          float y, float z);
+
+  void add_transformation(string transformation_type, int time, float x,
                           float y, float z);
 
   void add_transformation(string transformation_type, float x, float y,
                           float z);
 
-  void draw(unordered_map<string, Model3D *> models);
+  void draw_trajectory();
+
+  void draw(unordered_map<string, Model3D *> models, int elapsed_time,
+            bool trajectory);
 };
 #endif
