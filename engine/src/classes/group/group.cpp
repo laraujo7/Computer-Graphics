@@ -94,8 +94,7 @@ void Group::draw_trajectory() {
   }
 }
 
-void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time,
-                 bool trajectory) {
+void Group::draw(unordered_map<string, Model3D *> models, bool trajectory) {
   if (trajectory)
     draw_trajectory();
 
@@ -106,7 +105,7 @@ void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time,
 
     switch (get_xml_tag(transformation.first)) {
     case XMLTags::TRANSLATE: {
-      transformation.second->get_translate(elapsed_time);
+      transformation.second->get_translation();
     } break;
 
     case XMLTags::SCALE: {
@@ -130,7 +129,7 @@ void Group::draw(unordered_map<string, Model3D *> models, int elapsed_time,
   }
 
   for (Group *sub_group : this->sub_groups) {
-    sub_group->draw(models, elapsed_time, trajectory);
+    sub_group->draw(models, trajectory);
   }
 
   glPopMatrix();

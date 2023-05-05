@@ -1,4 +1,5 @@
 #include "spline.hpp"
+#include <GL/freeglut_std.h>
 #include <GL/gl.h>
 #include <iterator>
 
@@ -57,11 +58,24 @@ void normalize(Point *a) {
   a->set_z(a->get_z() / l);
 }
 
-float *Spline::buildRotMatrix(Point x, Point y, Point z) {
-  static float m[16] = {
-      x.get_x(), x.get_y(), x.get_z(), 0, y.get_x(), y.get_y(), y.get_z(), 0,
-      z.get_x(), z.get_y(), z.get_z(), 0, 0,         0,         0,         1};
-  return m;
+void Spline::buildRotMatrix(Point x, Point y, Point z, float *m) {
+
+  m[0] = x.get_x();
+  m[1] = x.get_y();
+  m[2] = x.get_z();
+  m[3] = 0;
+  m[4] = y.get_x();
+  m[5] = y.get_y();
+  m[6] = y.get_z();
+  m[7] = 0;
+  m[8] = z.get_x();
+  m[9] = z.get_y();
+  m[10] = z.get_z();
+  m[11] = 0;
+  m[12] = 0;
+  m[13] = 0;
+  m[14] = 0;
+  m[15] = 1;
 }
 
 Point cross(Point a, Point b) {
@@ -70,7 +84,8 @@ Point cross(Point a, Point b) {
                a.get_x() * b.get_y() - a.get_y() * b.get_x());
 }
 
-float *Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis) {
+void Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis,
+                                 float *m) {
 
   float animation_state =
       ((elapsed_time / 1000) / time) * this->get_number_of_points();
@@ -110,17 +125,20 @@ float *Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis) {
   normalize(&z);
   normalize(yAxis);
 
-  return buildRotMatrix(x, *yAxis, z);
+  buildRotMatrix(x, *yAxis, z, m);
 }
 
-Point Spline::aligned_translation(int time, float elapsed_time, Point *yAxis,
-                                  bool align) {
-  float *matrix = get_spline_derivate(time, elapsed_time, yAxis);
+Point Spline::aligned_translation(int time, Point *yAxis, bool align) {
+
+  int elapsed_time = glutGet(GLUT_ELAPSED_TIME);
+  float matrix[16];
   Point translate = get_spline_point(time, elapsed_time);
 
   glTranslatef(translate.get_x(), translate.get_y(), translate.get_z());
-  if (align)
+  if (align) {
+    get_spline_derivate(time, elapsed_time, yAxis, matrix);
     glMultMatrixf(matrix);
+  }
 
   return translate;
 }

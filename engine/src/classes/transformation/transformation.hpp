@@ -35,7 +35,7 @@ public:
 
   int get_spline_size();
 
-  void get_translate(int elapsed_time);
+  void get_translation();
 
   void get_catmullrom_curve();
 

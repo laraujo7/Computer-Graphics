@@ -58,7 +58,6 @@ public:
 
   void draw_trajectory();
 
-  void draw(unordered_map<string, Model3D *> models, int elapsed_time,
-            bool trajectory);
+  void draw(unordered_map<string, Model3D *> models, bool trajectory);
 };
 #endif

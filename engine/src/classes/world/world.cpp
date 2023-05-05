@@ -10,6 +10,7 @@ World::World(int window_width, int window_height,
   this->models = models;
   this->groups = groups;
   this->camera = camera;
+  this->trajectory = false;
 }
 
 int World::get_window_width() { return this->window_width; };
@@ -39,6 +40,8 @@ void World::set_models(unordered_map<string, Model3D *> models) {
 }
 
 void World::set_camera(Camera *camera) { this->camera = camera; }
+
+void World::set_trajectory() { this->trajectory = !trajectory; }
 
 void World::add_model(string file_path, Model3D *model) {
   this->models[file_path] = model;
@@ -175,6 +178,7 @@ void World::parse_transform(XMLElement *transform_element, Group *group) {
         // cria vetor de 4 pontos
         vector<Point> control_points;
         // loop que lê 4 atributos "point"
+        int control_points_count = 0;
 
         for (XMLElement *translate_point =
                  transform_children->FirstChildElement();
@@ -186,9 +190,13 @@ void World::parse_transform(XMLElement *transform_element, Group *group) {
           z = translate_point->FloatAttribute("z");
 
           control_points.push_back(Point(x, y, z));
+          control_points_count++;
         }
 
-        group->add_transformation(str_transform, time, align, control_points);
+        if (control_points_count >= 4)
+          group->add_transformation(str_transform, time, align, control_points);
+        else
+          cout << "At least 4 points needed for translation" << endl;
       } else {
         group->add_transformation(str_transform, x, y, z);
       }
@@ -291,8 +299,8 @@ void World::parse_color(XMLElement *color_element, ModelConfig *model_config) {
   }
 }
 
-void World::draw(int elapsed_time, bool trajectory) {
+void World::draw() {
   for (Group *group : this->groups) {
-    group->draw(this->get_models(), elapsed_time, trajectory);
+    group->draw(this->get_models(), this->trajectory);
   }
 }

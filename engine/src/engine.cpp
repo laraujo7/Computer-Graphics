@@ -63,7 +63,7 @@ void renderScene(void) {
     glutSetWindowTitle(s);
   }
 
-  world->draw(timet, trajectory);
+  world->draw();
 
   // End of frame
   glutSwapBuffers();
@@ -85,7 +85,7 @@ void keyboardCtrl(unsigned char key, int x, int y) {
     world->get_camera()->move(get_direction("right"));
     break;
   case 't':
-    trajectory = !trajectory;
+    world->set_trajectory();
     break;
   default:
     break;
