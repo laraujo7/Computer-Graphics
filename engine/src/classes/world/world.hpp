@@ -19,6 +19,7 @@ private:
   // window
   int window_width;
   int window_height;
+  bool trajectory;
 
   unordered_map<string, Model3D *> models;
   vector<Group *> groups;
@@ -63,10 +64,12 @@ public:
 
   void set_camera(Camera *camera);
 
+  void set_trajectory();
+
   void add_model(string file_path, Model3D *model);
 
   void load_XML(char *file_path);
 
-  void draw(int elapsed_time, bool trajectory);
+  void draw();
 };
 #endif

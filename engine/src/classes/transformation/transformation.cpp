@@ -40,10 +40,10 @@ Transformation::Transformation(int time, bool align, Spline spline) {
   this->z = spline.get_point_by_index(1).get_z();
 }
 
-void Transformation::get_translate(int elapsed_time) {
+void Transformation::get_translation() {
   if (this->animation) {
-    Point pos = this->spline.aligned_translation(time, elapsed_time,
-                                                 &this->yAxis, this->align);
+    Point pos =
+        this->spline.aligned_translation(time, &this->yAxis, this->align);
     this->x = pos.get_x();
     this->y = pos.get_y();
     this->z = pos.get_z();

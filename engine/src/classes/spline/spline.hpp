@@ -30,8 +30,7 @@ public:
   void get_spline_derivate(int time, float elapsed_time, Point *yAxis,
                            float *m);
 
-  Point aligned_translation(int time, float elapsed_time, Point *yAxis,
-                            bool align);
+  Point aligned_translation(int time, Point *yAxis, bool align);
 };
 
 #endif

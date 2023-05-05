@@ -1,4 +1,5 @@
 #include "spline.hpp"
+#include <GL/freeglut_std.h>
 #include <GL/gl.h>
 #include <iterator>
 
@@ -127,8 +128,9 @@ void Spline::get_spline_derivate(int time, float elapsed_time, Point *yAxis,
   buildRotMatrix(x, *yAxis, z, m);
 }
 
-Point Spline::aligned_translation(int time, float elapsed_time, Point *yAxis,
-                                  bool align) {
+Point Spline::aligned_translation(int time, Point *yAxis, bool align) {
+
+  int elapsed_time = glutGet(GLUT_ELAPSED_TIME);
   float matrix[16];
   Point translate = get_spline_point(time, elapsed_time);
 
