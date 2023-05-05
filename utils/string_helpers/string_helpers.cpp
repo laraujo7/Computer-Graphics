@@ -35,3 +35,13 @@ vector<float> tokenize_to_float(string const &str, const char delim) {
 
     return out;
 }
+
+int count_char(string &str, char ch) {
+    int c = 0;
+    int length = str.length() - 1;
+    for (int i = 0; i < length; i++) {
+        if (str[i] == ch)
+            c++;
+    }
+    return c;
+}

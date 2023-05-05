@@ -7,6 +7,7 @@
 #include "../group/group.hpp"
 #include "../model3d/model3d.hpp"
 #include "../modelConfig/modelConfig.hpp"
+#include "../modelObj/modelObj.hpp"
 
 #include <unordered_map>
 #include <vector>
@@ -20,7 +21,8 @@ private:
   int window_width;
   int window_height;
 
-  unordered_map<string, Model3D *> models;
+  unordered_map<string, ModelObj *> models_obj;
+  unordered_map<string, Model3D *> models_3d;
   vector<Group *> groups;
   Camera *camera = new Camera();
 
@@ -38,7 +40,8 @@ public:
   World();
 
   World(int window_width, int window_height,
-        unordered_map<string, Model3D *> models, vector<Group *> groups,
+        unordered_map<string, ModelObj *> models_obj,
+        unordered_map<string, Model3D *> models_3d, vector<Group *> groups,
         Camera *camera);
 
   int get_window_width();
@@ -47,9 +50,13 @@ public:
 
   vector<Group *> get_groups();
 
-  unordered_map<string, Model3D *> get_models();
+  unordered_map<string, Model3D *> get_models_3d();
 
-  Model3D *get_model(string file_path);
+  unordered_map<string, ModelObj *> get_models_obj();
+
+  Model3D *get_model_3d(string file_path);
+
+  ModelObj *get_model_obj(string file_path);
 
   Camera *get_camera();
 
@@ -61,9 +68,13 @@ public:
 
   void set_models(unordered_map<string, Model3D *> models);
 
+  void set_models(unordered_map<string, ModelObj *> models_obj);
+
   void set_camera(Camera *camera);
 
   void add_model(string file_path, Model3D *model);
+
+  void add_model(string file_path, ModelObj *model);
 
   void load_XML(char *file_path);
 

@@ -3,11 +3,13 @@
 World::World() {}
 
 World::World(int window_width, int window_height,
-             unordered_map<string, Model3D *> models, vector<Group *> groups,
+             unordered_map<string, ModelObj *> models_obj,
+             unordered_map<string, Model3D *> models_3d, vector<Group *> groups,
              Camera *camera) {
   this->window_width = window_width;
   this->window_height = window_height;
-  this->models = models;
+  this->models_obj = models_obj;
+  this->models_3d = models_3d;
   this->groups = groups;
   this->camera = camera;
 }
@@ -18,9 +20,21 @@ int World::get_window_height() { return this->window_height; };
 
 vector<Group *> World::get_groups() { return this->groups; }
 
-unordered_map<string, Model3D *> World::get_models() { return this->models; }
+unordered_map<string, Model3D *> World::get_models_3d() {
+  return this->models_3d;
+}
 
-Model3D *World::get_model(string file_path) { return this->models[file_path]; }
+unordered_map<string, ModelObj *> World::get_models_obj() {
+  return this->models_obj;
+}
+
+Model3D *World::get_model_3d(string file_path) {
+  return this->models_3d[file_path];
+}
+
+ModelObj *World::get_model_obj(string file_path) {
+  return this->models_obj[file_path];
+}
 
 Camera *World::get_camera() { return this->camera; }
 
@@ -34,14 +48,22 @@ void World::set_window_height(int window_height) {
 
 void World::set_groups(vector<Group *> groups) { this->groups = groups; }
 
-void World::set_models(unordered_map<string, Model3D *> models) {
-  this->models = models;
+void World::set_models(unordered_map<string, Model3D *> models_3d) {
+  this->models_3d = models_3d;
+}
+
+void World::set_models(unordered_map<string, ModelObj *> models_obj) {
+  this->models_obj = models_obj;
 }
 
 void World::set_camera(Camera *camera) { this->camera = camera; }
 
 void World::add_model(string file_path, Model3D *model) {
-  this->models[file_path] = model;
+  this->models_3d[file_path] = model;
+}
+
+void World::add_model(string file_path, ModelObj *model) {
+  this->models_obj[file_path] = model;
 }
 
 void World::load_XML(char *file_path) {
@@ -220,14 +242,23 @@ void World::parse_models(XMLElement *models_element, Group *group) {
     if (!(str_models).compare("model")) {
       ModelConfig *model_config = new ModelConfig();
       string file_path = models_children->Attribute("file");
+      string file_extension = tokenize(file_path, '.')[1];
+
       const char *color = models_children->Attribute("color");
 
       if (color != NULL)
         model_config->set_color((string)color);
 
-      parse_model(models_children, model_config);
+      if (!file_extension.compare("3d")) {
+        parse_model(models_children, model_config);
 
-      this->add_model(file_path, new Model3D(file_path));
+        this->add_model(file_path, new Model3D(file_path));
+      }
+
+      if (!file_extension.compare("obj")) {
+        this->add_model(file_path, new ModelObj(file_path));
+      }
+
       group->add_file_path(file_path, model_config);
     }
   }
@@ -293,6 +324,7 @@ void World::parse_color(XMLElement *color_element, ModelConfig *model_config) {
 
 void World::draw(int elapsed_time, bool trajectory) {
   for (Group *group : this->groups) {
-    group->draw(this->get_models(), elapsed_time, trajectory);
+    group->draw(this->get_models_3d(), this->get_models_obj(), elapsed_time,
+                trajectory);
   }
 }

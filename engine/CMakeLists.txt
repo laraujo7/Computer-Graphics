@@ -18,15 +18,20 @@ add_executable(${PROJECT_NAME}
     src/classes/model3d/model3d.hpp
     src/classes/modelConfig/modelConfig.cpp
     src/classes/modelConfig/modelConfig.hpp
+    src/classes/modelObj/modelObj.cpp
+    src/classes/modelObj/modelObj.hpp
+    src/classes/face/face.cpp
+    src/classes/face/face.hpp
     src/classes/transformation/transformation.cpp
     src/classes/transformation/transformation.hpp
     src/classes/world/world.cpp
     src/classes/world/world.hpp
     utils/colors_helpers/colors_helpers.cpp
     utils/colors_helpers/colors_helpers.hpp
-    utils/xml_parser_helpers/xml_parser_helpers.hpp
     utils/xml_parser_helpers/xml_parser_helpers.cpp
     utils/xml_parser_helpers/xml_parser_helpers.hpp
+    utils/obj_parser_helpers/obj_parser_helpers.cpp
+    utils/obj_parser_helpers/obj_parser_helpers.hpp
     utils/direction_helpers/direction_helpers.cpp
     utils/direction_helpers/direction_helpers.hpp
     lib/tinyxml2/tinyxml2.h
@@ -39,6 +44,8 @@ add_executable(${PROJECT_NAME}
     ../utils/file_helpers/file_helpers.hpp
     ../utils/file_helpers/file_helpers.cpp
     ../utils/generic_functions/generic_functions.hpp
+    ../utils/string_helpers/string_helpers.cpp
+    ../utils/string_helpers/string_helpers.hpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE)

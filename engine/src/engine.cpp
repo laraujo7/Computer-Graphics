@@ -139,6 +139,7 @@ int main(int argc, char **argv) {
   glEnable(GL_CULL_FACE);
 
   world->load_XML(argv[1]);
+
   // enter GLUT's main cycle
   glutMainLoop();
 
