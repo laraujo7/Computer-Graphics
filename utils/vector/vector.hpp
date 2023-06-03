@@ -30,6 +30,10 @@ public:
 
   void set_z(float z);
 
+  Vector normalize_vector();
+
+  static Vector cross(Vector a, Vector b);
+
   string vector_to_string();
 };
 

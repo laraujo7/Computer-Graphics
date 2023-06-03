@@ -24,6 +24,22 @@ void Vector::set_y(float y) { get<1>(this->vector) = y; }
 
 void Vector::set_z(float z) { get<2>(this->vector) = z; }
 
+Vector Vector::normalize_vector() {
+  float l = sqrt(this->get_x() * this->get_x() + this->get_y() * this->get_y() +
+                 this->get_z() * this->get_z());
+  this->set_x(this->get_x() / l);
+  this->set_y(this->get_y() / l);
+  this->set_z(this->get_z() / l);
+
+  return this->vector;
+}
+
+static Vector cross(Vector a, Vector b) {
+  return Vector(a.get_y() * b.get_z() - a.get_z() * b.get_y(),
+               a.get_z() * b.get_x() - a.get_x() * b.get_z(),
+               a.get_x() * b.get_y() - a.get_y() * b.get_x());
+}
+
 string Vector::vector_to_string() {
   return to_string(this->get_x()) + " " + to_string(this->get_y()) + " " +
          to_string(this->get_z());
