@@ -7,8 +7,8 @@ vector<vector<float>> bezier_matrix = {{-1.0f, 3.0f, -3.0f, 1.0f},
 
 Vector cross(Vector a, Vector b) {
   return Vector(a.get_y() * b.get_z() - a.get_z() * b.get_y(),
-               a.get_z() * b.get_x() - a.get_x() * b.get_z(),
-               a.get_x() * b.get_y() - a.get_y() * b.get_x());
+                a.get_z() * b.get_x() - a.get_x() * b.get_z(),
+                a.get_x() * b.get_y() - a.get_y() * b.get_x());
 }
 
 void get_control_points_patches(
@@ -98,7 +98,7 @@ Point getBezier(float u, float t,
 }
 
 Vector get_u_tangent(float u, float t,
-                vector<vector<vector<float>>> control_points) {
+                     vector<vector<vector<float>>> control_points) {
   // tangent u
   vector<float> vector_u = {3 * (u * u * u), 2 * (u * u), 1, 0};
   vector<vector<float>> vector_t = {{t * t * t}, {t * t}, {t}, {1}};
@@ -128,10 +128,10 @@ Vector get_u_tangent(float u, float t,
 }
 
 Vector get_v_tangent(float u, float t,
-                vector<vector<vector<float>>> control_points) {
+                     vector<vector<vector<float>>> control_points) {
   // tangent v
   vector<float> vector_u = {3 * (u * u * u), 2 * (u * u), 1, 0};
-  vector<vector<float>> vector_t = {{3 * t * t * t},{2 * t * t}, {1}, {0}};
+  vector<vector<float>> vector_t = {{3 * t * t * t}, {2 * t * t}, {1}, {0}};
 
   vector<vector<float>> pre_calculated_matrix_u =
       multiple_matrices(vector_u, bezier_matrix);
@@ -158,18 +158,18 @@ Vector get_v_tangent(float u, float t,
 }
 
 Vector get_normal(float u, float t,
-                vector<vector<vector<float>>> control_points) {
+                  vector<vector<vector<float>>> control_points) {
   // tangent v
   Vector tangent_u = get_u_tangent(u, t, control_points);
   Vector tangent_v = get_v_tangent(u, t, control_points);
-  
-  return cross(tangent_v,tangent_u).normalize_vector();
+
+  return cross(tangent_v, tangent_u).normalize_vector();
 }
 
 void get_patch_points(
     int tessellation,
     vector<vector<vector<vector<float>>>> control_points_patches,
-    vector<Point> &points,vector<Vector> &normals) {
+    vector<Point> &points, vector<Vector> &normals) {
   for (vector<vector<vector<float>>> control_points_patch :
        control_points_patches) {
     for (int i = 0; i <= tessellation; i++) {

@@ -25,7 +25,7 @@ void get_cone_points(float radius, float height, int slices, int stacks,
 }
 
 void get_cone_normals(float radius, float height, int slices, int stacks,
-                     vector<Vector> &normals) {
+                      vector<Vector> &normals) {
   float heightRatio = static_cast<float>(height / stacks);
   float sliceAng = static_cast<float>((2 * M_PI) / slices);
 
@@ -41,7 +41,7 @@ void get_cone_normals(float radius, float height, int slices, int stacks,
       float py = stack_height;
       float pz = stack_radius * cos(alpha);
 
-      normals.push_back(Vector(px , py - height, pz).normalize_vector());
+      normals.push_back(Vector(px, py - height, pz).normalize_vector());
     }
   }
 

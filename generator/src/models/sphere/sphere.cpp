@@ -34,7 +34,7 @@ void get_sphere_points(float radius, int stacks, int slices,
 }
 
 void get_sphere_normals(float radius, int stacks, int slices,
-                       vector<Vector> &normals) {
+                        vector<Vector> &normals) {
   float stackAng = static_cast<float>((M_PI) / stacks);
   float sliceAng = static_cast<float>((2 * M_PI) / slices);
 
