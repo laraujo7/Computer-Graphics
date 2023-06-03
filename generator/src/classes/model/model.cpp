@@ -4,7 +4,8 @@ string DEFAULT_SAVE_FILE_PATH = "../engine/models/";
 
 Model ::Model() {}
 
-Model ::Model(vector<Point> points, vector<TriangleIndex> triangles_indexs, vector<Vector> normals) {
+Model ::Model(vector<Point> points, vector<TriangleIndex> triangles_indexs,
+              vector<Vector> normals) {
   this->points = points;
   this->triangles_indexs = triangles_indexs;
   this->normals = normals;

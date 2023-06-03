@@ -21,7 +21,8 @@ private:
 public:
   Model();
 
-  Model(vector<Point> points, vector<TriangleIndex> triangles_indexs, vector<Vector> normals);
+  Model(vector<Point> points, vector<TriangleIndex> triangles_indexs,
+        vector<Vector> normals);
 
   void write_to_file(string filename, char const *tag);
 };

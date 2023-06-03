@@ -20,7 +20,6 @@ void get_plane_normals(float length, int divisions, vector<Vector> &normals) {
   }
 }
 
-
 void get_plane_indexs(float length, int divisions,
                       vector<TriangleIndex> &triangules_indexs) {
 

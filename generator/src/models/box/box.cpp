@@ -144,8 +144,8 @@ int create_box(float length, int divisions, string file_name) {
   get_box_indexs(length, divisions, triangles_indexs);
 
   get_box_normals(length, divisions, normals);
-  
-  Model model(points, triangles_indexs,normals);
+
+  Model model(points, triangles_indexs, normals);
   model.write_to_file(file_name, "box");
 
   return 0;
