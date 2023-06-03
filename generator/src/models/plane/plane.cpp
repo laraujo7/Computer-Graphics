@@ -31,11 +31,12 @@ void get_plane_indexs(float length, int divisions,
 int create_plane(float length, int divisions, string file_name) {
   vector<Point> points;
   vector<TriangleIndex> triangules_indexs;
+  vector<Vector> normals;
 
   get_plane_points(length, divisions, points);
   get_plane_indexs(length, divisions, triangules_indexs);
 
-  Model model(points, triangules_indexs);
+  Model model(points, triangules_indexs, normals);
   model.write_to_file(file_name, "plane");
 
   return 0;

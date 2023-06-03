@@ -59,11 +59,12 @@ int create_cone(float radius, float height, int slices, int stacks,
 
   vector<Point> points;
   vector<TriangleIndex> triangules_indexs;
+  vector<Vector> normals;
 
   get_cone_points(radius, height, slices, stacks, points);
   get_cone_indexs(slices, stacks, points.size() - 1, triangules_indexs);
 
-  Model model(points, triangules_indexs);
+  Model model(points, triangules_indexs, normals);
   model.write_to_file(file_name, "cone");
 
   return 0;
