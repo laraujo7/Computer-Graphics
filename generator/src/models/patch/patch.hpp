@@ -9,6 +9,7 @@
 #include "../../../../utils/file_helpers/file_helpers.hpp"
 #include "../../../../utils/generic_functions/generic_functions.hpp"
 #include "../../../../utils/point/point.hpp"
+#include "../../../../utils/vector/vector.hpp"
 #include "../../../../utils/string_helpers/string_helpers.hpp"
 #include "../../classes/model/model.hpp"
 #include "../../classes/triangle_index/triangle_index.hpp"
