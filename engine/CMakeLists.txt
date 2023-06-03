@@ -36,6 +36,8 @@ add_executable(${PROJECT_NAME}
     ../config/global.hpp
     ../utils/point/point.cpp
     ../utils/point/point.hpp
+    ../utils/vector/vector.cpp
+    ../utils/vector/vector.hpp
     ../utils/file_helpers/file_helpers.hpp
     ../utils/file_helpers/file_helpers.cpp
     ../utils/generic_functions/generic_functions.hpp
