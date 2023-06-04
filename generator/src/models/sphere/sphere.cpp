@@ -33,6 +33,29 @@ void get_sphere_points(float radius, int stacks, int slices,
   points.push_back(Point(0, radius, 0));
 }
 
+void get_sphere_normals(float radius, int stacks, int slices,
+                        vector<Normal> &normals) {
+  float stackAng = static_cast<float>((M_PI) / stacks);
+  float sliceAng = static_cast<float>((2 * M_PI) / slices);
+
+  normals.push_back(Normal(0, -radius, 0).normalize_normal());
+
+  for (int i = 1; i < stacks; i++) {
+    float alpha = (i * stackAng) - (M_PI / 2);
+    for (int j = 0; j < slices; j++) {
+      float beta = j * sliceAng;
+
+      float px = calcX(radius, alpha, beta);
+      float py = calcY(radius, alpha);
+      float pz = calcZ(radius, alpha, beta);
+
+      normals.push_back(Normal(px, py, pz).normalize_normal());
+    }
+  }
+
+  normals.push_back(Normal(0, radius, 0).normalize_normal());
+}
+
 void get_sphere_indexs(int slices, int stacks, int nPoints,
                        vector<TriangleIndex> &triangules_indexs) {
   for (int i = 1; i <= slices; i++) {
@@ -66,10 +89,11 @@ int create_sphere(float radius, int slices, int stacks, string file_name) {
 
   vector<Point> points;
   vector<TriangleIndex> triangules_indexs;
-  vector<Vector> normals;
+  vector<Normal> normals;
 
   get_sphere_points(radius, stacks, slices, points);
   get_sphere_indexs(slices, stacks, points.size() - 1, triangules_indexs);
+  get_sphere_normals(radius, stacks, slices, normals);
 
   Model model(points, triangules_indexs, normals);
   model.write_to_file(file_name, "sphere");

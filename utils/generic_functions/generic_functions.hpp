@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <array>
+#include <tuple>
 #include <type_traits>
 
 using namespace std;
@@ -100,5 +102,27 @@ vector<vector<T>> multiple_matrices(vector<T> vector_one, vector<T> vector_two) 
   vector<vector<T>> matrix_two(1, vector_two);
   return multiple_matrices(matrix_one, matrix_two);
 }
+
+template <typename Tuple, std::size_t... Indices>
+constexpr auto tupleToArrayHelper(const Tuple& tuple, std::index_sequence<Indices...>)
+{
+    constexpr std::size_t Size = sizeof...(Indices);
+    using ElementType = std::tuple_element_t<0, Tuple>;
+
+    std::array<ElementType, Size> arr{static_cast<ElementType>(std::get<Indices>(tuple))...};
+
+    auto* ptr = new ElementType[Size];
+    std::copy(arr.begin(), arr.end(), ptr);
+
+    return ptr;
+}
+
+template <typename... Args>
+constexpr auto tupleToArray(const std::tuple<Args...>& tuple)
+{
+    return tupleToArrayHelper(tuple, std::index_sequence_for<Args...>{});
+}
+
+
 
 #endif

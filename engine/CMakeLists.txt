@@ -14,6 +14,8 @@ add_executable(${PROJECT_NAME}
     src/classes/spline/spline.hpp
     src/classes/group/group.cpp
     src/classes/group/group.hpp
+    src/classes/light/light.cpp
+    src/classes/light/light.hpp
     src/classes/model3d/model3d.cpp
     src/classes/model3d/model3d.hpp
     src/classes/modelConfig/modelConfig.cpp
@@ -26,7 +28,8 @@ add_executable(${PROJECT_NAME}
     utils/colors_helpers/colors_helpers.hpp
     utils/xml_parser_helpers/xml_parser_helpers.hpp
     utils/xml_parser_helpers/xml_parser_helpers.cpp
-    utils/xml_parser_helpers/xml_parser_helpers.hpp
+    utils/light_type_helpers/light_type_helpers.cpp
+    utils/light_type_helpers/light_type_helpers.hpp
     utils/direction_helpers/direction_helpers.cpp
     utils/direction_helpers/direction_helpers.hpp
     lib/tinyxml2/tinyxml2.h
@@ -36,8 +39,8 @@ add_executable(${PROJECT_NAME}
     ../config/global.hpp
     ../utils/point/point.cpp
     ../utils/point/point.hpp
-    ../utils/vector/vector.cpp
-    ../utils/vector/vector.hpp
+    ../utils/normal/normal.cpp
+    ../utils/normal/normal.hpp
     ../utils/file_helpers/file_helpers.hpp
     ../utils/file_helpers/file_helpers.cpp
     ../utils/generic_functions/generic_functions.hpp

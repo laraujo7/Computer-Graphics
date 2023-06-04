@@ -3,11 +3,14 @@
 
 #include "../../../../utils/generic_functions/generic_functions.hpp"
 #include "../../../lib/tinyxml2/tinyxml2.h"
+#include "../../../utils/light_type_helpers/light_type_helpers.hpp"
 #include "../camera/camera.hpp"
 #include "../group/group.hpp"
 #include "../model3d/model3d.hpp"
 #include "../modelConfig/modelConfig.hpp"
 
+#include "../light/light.hpp"
+#include <GL/glut.h>
 #include <unordered_map>
 #include <vector>
 
@@ -24,6 +27,7 @@ private:
   unordered_map<string, Model3D *> models;
   vector<Group *> groups;
   Camera *camera = new Camera();
+  vector<Light *> lights;
 
   void parse_world(XMLElement *world_element);
   void parse_window(XMLElement *window_element);

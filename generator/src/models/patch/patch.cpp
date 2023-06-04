@@ -5,6 +5,12 @@ vector<vector<float>> bezier_matrix = {{-1.0f, 3.0f, -3.0f, 1.0f},
                                        {-3.0f, 3.0f, 0.0f, 0.0f},
                                        {1.0f, 0.0f, 0.0f, 0.0f}};
 
+Normal cross(Normal a, Normal b) {
+  return Normal(a.get_y() * b.get_z() - a.get_z() * b.get_y(),
+                a.get_z() * b.get_x() - a.get_x() * b.get_z(),
+                a.get_x() * b.get_y() - a.get_y() * b.get_x());
+}
+
 void get_control_points_patches(
     vector<vector<int>> patches, vector<Point> control_points,
     vector<vector<vector<vector<float>>>> &control_points_patches) {
@@ -91,10 +97,79 @@ Point getBezier(float u, float t,
   return Point(x, y, z);
 }
 
+Normal get_u_tangent(float u, float t,
+                     vector<vector<vector<float>>> control_points) {
+  // tangent u
+  vector<float> vector_u = {3 * (u * u * u), 2 * (u * u), 1, 0};
+  vector<vector<float>> vector_t = {{t * t * t}, {t * t}, {t}, {1}};
+
+  vector<vector<float>> pre_calculated_matrix_u =
+      multiple_matrices(vector_u, bezier_matrix);
+
+  vector<vector<float>> bezier_matrix_points_x =
+      multiple_matrices(pre_calculated_matrix_u, control_points[0]);
+  vector<vector<float>> bezier_matrix_points_y =
+      multiple_matrices(pre_calculated_matrix_u, control_points[1]);
+  vector<vector<float>> bezier_matrix_points_z =
+      multiple_matrices(pre_calculated_matrix_u, control_points[2]);
+
+  bezier_matrix_points_x =
+      multiple_matrices(bezier_matrix_points_x, bezier_matrix);
+  bezier_matrix_points_y =
+      multiple_matrices(bezier_matrix_points_y, bezier_matrix);
+  bezier_matrix_points_z =
+      multiple_matrices(bezier_matrix_points_z, bezier_matrix);
+
+  float u_x = multiple_matrices(bezier_matrix_points_x, vector_t).at(0).at(0);
+  float u_y = multiple_matrices(bezier_matrix_points_y, vector_t).at(0).at(0);
+  float u_z = multiple_matrices(bezier_matrix_points_z, vector_t).at(0).at(0);
+
+  return Normal(u_x, u_y, u_z).normalize_normal();
+}
+
+Normal get_v_tangent(float u, float t,
+                     vector<vector<vector<float>>> control_points) {
+  // tangent v
+  vector<float> vector_u = {3 * (u * u * u), 2 * (u * u), 1, 0};
+  vector<vector<float>> vector_t = {{3 * t * t * t}, {2 * t * t}, {1}, {0}};
+
+  vector<vector<float>> pre_calculated_matrix_u =
+      multiple_matrices(vector_u, bezier_matrix);
+
+  vector<vector<float>> bezier_matrix_points_x =
+      multiple_matrices(pre_calculated_matrix_u, control_points[0]);
+  vector<vector<float>> bezier_matrix_points_y =
+      multiple_matrices(pre_calculated_matrix_u, control_points[1]);
+  vector<vector<float>> bezier_matrix_points_z =
+      multiple_matrices(pre_calculated_matrix_u, control_points[2]);
+
+  bezier_matrix_points_x =
+      multiple_matrices(bezier_matrix_points_x, bezier_matrix);
+  bezier_matrix_points_y =
+      multiple_matrices(bezier_matrix_points_y, bezier_matrix);
+  bezier_matrix_points_z =
+      multiple_matrices(bezier_matrix_points_z, bezier_matrix);
+
+  float v_x = multiple_matrices(bezier_matrix_points_x, vector_t).at(0).at(0);
+  float v_y = multiple_matrices(bezier_matrix_points_y, vector_t).at(0).at(0);
+  float v_z = multiple_matrices(bezier_matrix_points_z, vector_t).at(0).at(0);
+
+  return Normal(v_x, v_y, v_z).normalize_normal();
+}
+
+Normal get_normal(float u, float t,
+                  vector<vector<vector<float>>> control_points) {
+  // tangent v
+  Normal tangent_u = get_u_tangent(u, t, control_points);
+  Normal tangent_v = get_v_tangent(u, t, control_points);
+
+  return cross(tangent_v, tangent_u).normalize_normal();
+}
+
 void get_patch_points(
     int tessellation,
     vector<vector<vector<vector<float>>>> control_points_patches,
-    vector<Point> &points) {
+    vector<Point> &points, vector<Normal> &normals) {
   for (vector<vector<vector<float>>> control_points_patch :
        control_points_patches) {
     for (int i = 0; i <= tessellation; i++) {
@@ -103,6 +178,7 @@ void get_patch_points(
         float t = j / (float)tessellation;
 
         points.push_back(getBezier(u, t, control_points_patch));
+        normals.push_back(get_normal(u, t, control_points_patch));
       }
     }
   }
@@ -132,10 +208,10 @@ int create_patch(string file_input, int tessellation, string file_name) {
   vector<vector<vector<vector<float>>>> control_points_patches;
   vector<Point> points;
   vector<TriangleIndex> triangules_indexs;
-  vector<Vector> normals;
+  vector<Normal> normals;
 
   read_patch_file(file_input, control_points_patches);
-  get_patch_points(tessellation, control_points_patches, points);
+  get_patch_points(tessellation, control_points_patches, points, normals);
   get_patch_indexes(tessellation, points.size(), triangules_indexs);
 
   Model model(points, triangules_indexs, normals);

@@ -5,7 +5,7 @@ string DEFAULT_SAVE_FILE_PATH = "../engine/models/";
 Model ::Model() {}
 
 Model ::Model(vector<Point> points, vector<TriangleIndex> triangles_indexs,
-              vector<Vector> normals) {
+              vector<Normal> normals) {
   this->points = points;
   this->triangles_indexs = triangles_indexs;
   this->normals = normals;
@@ -18,7 +18,6 @@ void Model ::write_to_file(string filename, char const *tag) {
   file << tag << "\n";
 
   file << to_string(this->points.size()) + "\n";
-
   for (Point point : this->points) {
     file << point.point_to_string() + "\n";
   }
@@ -28,8 +27,9 @@ void Model ::write_to_file(string filename, char const *tag) {
     file << triangule_indexs.triangle_indexs_to_string() + "\n";
   }
 
-  for (Vector normal : this->normals) {
-    file << normal.vector_to_string() + "\n";
+  file << to_string(this->normals.size()) + "\n";
+  for (Normal normal : this->normals) {
+    file << normal.normal_to_string() + "\n";
   }
 
   file.close();
