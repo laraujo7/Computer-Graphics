@@ -24,6 +24,8 @@ add_executable(${PROJECT_NAME}
 								src/classes/triangle_index/triangle_index.hpp
 								../utils/point/point.cpp
     						../utils/point/point.hpp
+								../utils/point2d/point2d.cpp
+    						../utils/point2d/point2d.hpp
 								../utils/vector/vector.cpp
     						../utils/vector/vector.hpp
 								../config/global.hpp
