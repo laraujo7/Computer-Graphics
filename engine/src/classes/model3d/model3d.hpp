@@ -20,7 +20,7 @@ class Model3D {
 private:
   string model_file_path;
 
-  GLuint vertices, indices;
+  GLuint vertices, indices, normals, texture_coordinates;
   unsigned int num_indexs;
 
   void read_file(string file_path);

@@ -1,8 +1,8 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include "../../../../utils/normal/normal.hpp"
 #include "../../../../utils/point/point.hpp"
-#include "../../../../utils/vector/vector.hpp"
 #include "../triangle_index/triangle_index.hpp"
 #include <bits/stdc++.h>
 #include <fstream>
@@ -16,13 +16,13 @@ class Model {
 private:
   vector<Point> points;
   vector<TriangleIndex> triangles_indexs;
-  vector<Vector> normals;
+  vector<Normal> normals;
 
 public:
   Model();
 
   Model(vector<Point> points, vector<TriangleIndex> triangles_indexs,
-        vector<Vector> normals);
+        vector<Normal> normals);
 
   void write_to_file(string filename, char const *tag);
 };

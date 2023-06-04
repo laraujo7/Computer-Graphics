@@ -38,6 +38,7 @@ void renderScene(void) {
 
   int timet;
 
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   // clear buffers
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -128,7 +129,7 @@ int main(int argc, char **argv) {
 
   // put here the registration of the keyboard callbacks
   glutKeyboardFunc(keyboardCtrl);
-// glutMouseFunc(mouseCtrl);
+  // glutMouseFunc(mouseCtrl);
 #ifndef __APPLE__
   glewInit();
 #endif

@@ -5,8 +5,8 @@ vector<vector<float>> bezier_matrix = {{-1.0f, 3.0f, -3.0f, 1.0f},
                                        {-3.0f, 3.0f, 0.0f, 0.0f},
                                        {1.0f, 0.0f, 0.0f, 0.0f}};
 
-Vector cross(Vector a, Vector b) {
-  return Vector(a.get_y() * b.get_z() - a.get_z() * b.get_y(),
+Normal cross(Normal a, Normal b) {
+  return Normal(a.get_y() * b.get_z() - a.get_z() * b.get_y(),
                 a.get_z() * b.get_x() - a.get_x() * b.get_z(),
                 a.get_x() * b.get_y() - a.get_y() * b.get_x());
 }
@@ -97,7 +97,7 @@ Point getBezier(float u, float t,
   return Point(x, y, z);
 }
 
-Vector get_u_tangent(float u, float t,
+Normal get_u_tangent(float u, float t,
                      vector<vector<vector<float>>> control_points) {
   // tangent u
   vector<float> vector_u = {3 * (u * u * u), 2 * (u * u), 1, 0};
@@ -124,10 +124,10 @@ Vector get_u_tangent(float u, float t,
   float u_y = multiple_matrices(bezier_matrix_points_y, vector_t).at(0).at(0);
   float u_z = multiple_matrices(bezier_matrix_points_z, vector_t).at(0).at(0);
 
-  return Vector(u_x, u_y, u_z).normalize_vector();
+  return Normal(u_x, u_y, u_z).normalize_normal();
 }
 
-Vector get_v_tangent(float u, float t,
+Normal get_v_tangent(float u, float t,
                      vector<vector<vector<float>>> control_points) {
   // tangent v
   vector<float> vector_u = {3 * (u * u * u), 2 * (u * u), 1, 0};
@@ -154,22 +154,22 @@ Vector get_v_tangent(float u, float t,
   float v_y = multiple_matrices(bezier_matrix_points_y, vector_t).at(0).at(0);
   float v_z = multiple_matrices(bezier_matrix_points_z, vector_t).at(0).at(0);
 
-  return Vector(v_x, v_y, v_z).normalize_vector();
+  return Normal(v_x, v_y, v_z).normalize_normal();
 }
 
-Vector get_normal(float u, float t,
+Normal get_normal(float u, float t,
                   vector<vector<vector<float>>> control_points) {
   // tangent v
-  Vector tangent_u = get_u_tangent(u, t, control_points);
-  Vector tangent_v = get_v_tangent(u, t, control_points);
+  Normal tangent_u = get_u_tangent(u, t, control_points);
+  Normal tangent_v = get_v_tangent(u, t, control_points);
 
-  return cross(tangent_v, tangent_u).normalize_vector();
+  return cross(tangent_v, tangent_u).normalize_normal();
 }
 
 void get_patch_points(
     int tessellation,
     vector<vector<vector<vector<float>>>> control_points_patches,
-    vector<Point> &points, vector<Vector> &normals) {
+    vector<Point> &points, vector<Normal> &normals) {
   for (vector<vector<vector<float>>> control_points_patch :
        control_points_patches) {
     for (int i = 0; i <= tessellation; i++) {
@@ -208,7 +208,7 @@ int create_patch(string file_input, int tessellation, string file_name) {
   vector<vector<vector<vector<float>>>> control_points_patches;
   vector<Point> points;
   vector<TriangleIndex> triangules_indexs;
-  vector<Vector> normals;
+  vector<Normal> normals;
 
   read_patch_file(file_input, control_points_patches);
   get_patch_points(tessellation, control_points_patches, points, normals);

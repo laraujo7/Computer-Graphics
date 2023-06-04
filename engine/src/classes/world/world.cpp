@@ -131,7 +131,57 @@ void World::parse_camera(XMLElement *camera_element) {
   }
 }
 
-void World::parse_lights(XMLElement *lights_element) {}
+void World::parse_lights(XMLElement *lights_element) {
+  glEnable(GL_LIGHTING);
+  glEnable(GL_RESCALE_NORMAL);
+  int index = 0;
+
+  for (XMLElement *light_children = lights_element->FirstChildElement();
+       light_children;
+       light_children = light_children->NextSiblingElement(), index++) {
+    string str_light = light_children->Name();
+
+    if (!(str_light).compare("light")) {
+      string light_type = light_children->Attribute("type");
+
+      switch (get_light_type(light_type)) {
+      case LightType::POINT: {
+        float x = light_children->FloatAttribute("posx");
+        float y = light_children->FloatAttribute("posy");
+        float z = light_children->FloatAttribute("posz");
+
+        this->lights.push_back(new Light(index, light_type, x, y, z));
+      } break;
+
+      case LightType::DIRECTIONAL: {
+        float x = light_children->FloatAttribute("dirx");
+        float y = light_children->FloatAttribute("diry");
+        float z = light_children->FloatAttribute("dirz");
+
+        this->lights.push_back(new Light(index, light_type, x, y, z));
+      } break;
+
+      case LightType::SPOTLIGHT: {
+        float posX = light_children->FloatAttribute("posx");
+        float posY = light_children->FloatAttribute("posy");
+        float posZ = light_children->FloatAttribute("posz");
+
+        float dirX = light_children->FloatAttribute("dirx");
+        float dirY = light_children->FloatAttribute("diry");
+        float dirZ = light_children->FloatAttribute("dirz");
+
+        float cutoff = light_children->FloatAttribute("cutoff");
+
+        this->lights.push_back(new Light(index, light_type, posX, posY, posZ,
+                                         dirX, dirY, dirZ, cutoff));
+      } break;
+
+      default:
+        break;
+      }
+    }
+  }
+}
 
 Group *World::parse_group(XMLElement *group_element) {
   Group *group = new Group();
@@ -300,6 +350,10 @@ void World::parse_color(XMLElement *color_element, ModelConfig *model_config) {
 }
 
 void World::draw() {
+  for (Light *light : this->lights) {
+    light->draw();
+  }
+
   for (Group *group : this->groups) {
     group->draw(this->get_models(), this->trajectory);
   }

@@ -25,11 +25,11 @@ void get_cone_points(float radius, float height, int slices, int stacks,
 }
 
 void get_cone_normals(float radius, float height, int slices, int stacks,
-                      vector<Vector> &normals) {
+                      vector<Normal> &normals) {
   float heightRatio = static_cast<float>(height / stacks);
   float sliceAng = static_cast<float>((2 * M_PI) / slices);
 
-  normals.push_back(Vector(0, height, 0).normalize_vector());
+  normals.push_back(Normal(0, height, 0).normalize_normal());
 
   for (int i = 1; i <= stacks; i++) {
     float stack_height = height - (i * heightRatio);
@@ -41,11 +41,11 @@ void get_cone_normals(float radius, float height, int slices, int stacks,
       float py = stack_height;
       float pz = stack_radius * cos(alpha);
 
-      normals.push_back(Vector(px, py - height, pz).normalize_vector());
+      normals.push_back(Normal(px, py - height, pz).normalize_normal());
     }
   }
 
-  normals.push_back(Vector(0, -height, 0).normalize_vector());
+  normals.push_back(Normal(0, -height, 0).normalize_normal());
 }
 
 void get_cone_indexs(int slices, int stacks, int nPoints,
@@ -83,7 +83,7 @@ int create_cone(float radius, float height, int slices, int stacks,
 
   vector<Point> points;
   vector<TriangleIndex> triangules_indexs;
-  vector<Vector> normals;
+  vector<Normal> normals;
 
   get_cone_points(radius, height, slices, stacks, points);
   get_cone_indexs(slices, stacks, points.size() - 1, triangules_indexs);
