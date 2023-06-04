@@ -131,6 +131,7 @@ void get_patch_indexes(int tessellation, int num_points,
 int create_patch(string file_input, int tessellation, string file_name) {
   vector<vector<vector<vector<float>>>> control_points_patches;
   vector<Point> points;
+  vector<Point2D> texture_points;
   vector<TriangleIndex> triangules_indexs;
   vector<Vector> normals;
 
@@ -138,7 +139,7 @@ int create_patch(string file_input, int tessellation, string file_name) {
   get_patch_points(tessellation, control_points_patches, points);
   get_patch_indexes(tessellation, points.size(), triangules_indexs);
 
-  Model model(points, triangules_indexs, normals);
+  Model model(points, triangules_indexs, normals, texture_points);
   model.write_to_file(file_name, "patch");
 
   return 0;

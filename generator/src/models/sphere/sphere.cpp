@@ -65,13 +65,14 @@ int create_sphere(float radius, int slices, int stacks, string file_name) {
     return 1;
 
   vector<Point> points;
+  vector<Point2D> texture_points;
   vector<TriangleIndex> triangules_indexs;
   vector<Vector> normals;
 
   get_sphere_points(radius, stacks, slices, points);
   get_sphere_indexs(slices, stacks, points.size() - 1, triangules_indexs);
 
-  Model model(points, triangules_indexs, normals);
+  Model model(points, triangules_indexs, normals, texture_points);
   model.write_to_file(file_name, "sphere");
 
   return 0;

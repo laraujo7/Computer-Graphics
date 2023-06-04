@@ -38,6 +38,7 @@ void get_plane_indexs(float length, int divisions,
 
 int create_plane(float length, int divisions, string file_name) {
   vector<Point> points;
+  vector<Point2D> texture_points;
   vector<TriangleIndex> triangules_indexs;
   vector<Vector> normals;
 
@@ -45,7 +46,7 @@ int create_plane(float length, int divisions, string file_name) {
   get_plane_indexs(length, divisions, triangules_indexs);
   get_plane_normals(length, divisions, normals);
 
-  Model model(points, triangules_indexs, normals);
+  Model model(points, triangules_indexs, normals, texture_points);
   model.write_to_file(file_name, "plane");
 
   return 0;

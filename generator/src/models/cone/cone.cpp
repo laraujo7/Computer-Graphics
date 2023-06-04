@@ -58,13 +58,14 @@ int create_cone(float radius, float height, int slices, int stacks,
     return 1;
 
   vector<Point> points;
+  vector<Point2D> texture_points;
   vector<TriangleIndex> triangules_indexs;
   vector<Vector> normals;
 
   get_cone_points(radius, height, slices, stacks, points);
   get_cone_indexs(slices, stacks, points.size() - 1, triangules_indexs);
 
-  Model model(points, triangules_indexs, normals);
+  Model model(points, triangules_indexs, normals, texture_points);
   model.write_to_file(file_name, "cone");
 
   return 0;

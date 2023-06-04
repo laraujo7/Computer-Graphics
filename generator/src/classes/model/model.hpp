@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include "../../../../utils/point/point.hpp"
+#include "../../../../utils/point2d/point2d.hpp"
 #include "../../../../utils/vector/vector.hpp"
 #include "../triangle_index/triangle_index.hpp"
 #include <bits/stdc++.h>
@@ -15,6 +16,7 @@ using namespace std;
 class Model {
 private:
   vector<Point> points;
+  vector<Point2D> texture_points;
   vector<TriangleIndex> triangles_indexs;
   vector<Vector> normals;
 
@@ -22,7 +24,7 @@ public:
   Model();
 
   Model(vector<Point> points, vector<TriangleIndex> triangles_indexs,
-        vector<Vector> normals);
+        vector<Vector> normals, vector<Point2D> texture_points);
 
   void write_to_file(string filename, char const *tag);
 };

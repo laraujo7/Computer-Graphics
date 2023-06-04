@@ -7,6 +7,7 @@
 
 #include "../../../../utils/generic_functions/generic_functions.hpp"
 #include "../../../../utils/point/point.hpp"
+#include "../../../../utils/point2d/point2d.hpp"
 #include "../../classes/model/model.hpp"
 #include "../../classes/triangle_index/triangle_index.hpp"
 
