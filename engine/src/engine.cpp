@@ -130,12 +130,12 @@ int main(int argc, char **argv) {
   // put here the registration of the keyboard callbacks
   glutKeyboardFunc(keyboardCtrl);
   // glutMouseFunc(mouseCtrl);
-#ifndef __APPLE__
+
   glewInit();
-#endif
 
   //  OpenGL settings
   glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
 

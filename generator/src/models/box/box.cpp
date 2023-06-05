@@ -1,7 +1,8 @@
 #include "box.hpp"
 int nFace = static_cast<int>(6);
 
-void get_box_points(float length, int divisions, vector<Point> &points) {
+void get_box_points_normals(float length, int divisions, vector<Point> &points,
+                            vector<Normal> &normals) {
 
   float half_length = static_cast<float>(length / 2);
   float length_step = static_cast<float>(length / divisions);
@@ -16,38 +17,38 @@ void get_box_points(float length, int divisions, vector<Point> &points) {
         switch (face) {
         case 0:
           // Bottom
-          point = Point(pj, -half_length, pi);
-          points.push_back(point);
+          points.push_back(Point(pj, -half_length, pi));
+          normals.push_back(Normal(0, -1, 0));
           break;
 
         case 1:
           // Front
-          point = Point(pj, pi, half_length);
-          points.push_back(point);
+          points.push_back(Point(pj, pi, half_length));
+          normals.push_back(Normal(0, 0, 1));
           break;
 
         case 2:
           // Left
-          point = Point(half_length, pj, pi);
-          points.push_back(point);
+          points.push_back(Point(half_length, pj, pi));
+          normals.push_back(Normal(1, 0, 0));
           break;
 
         case 3:
           // Top
-          point = Point(pj, half_length, pi);
-          points.push_back(point);
+          points.push_back(Point(pj, half_length, pi));
+          normals.push_back(Normal(0, 1, 0));
           break;
 
         case 4:
           // Back
-          point = Point(pj, pi, -half_length);
-          points.push_back(point);
+          points.push_back(Point(pj, pi, -half_length));
+          normals.push_back(Normal(0, 0, -1));
           break;
 
         case 5:
           // Right
-          point = Point(-half_length, pj, pi);
-          points.push_back(point);
+          points.push_back(Point(-half_length, pj, pi));
+          normals.push_back(Normal(-1, 0, 0));
           break;
 
         default:
@@ -58,9 +59,8 @@ void get_box_points(float length, int divisions, vector<Point> &points) {
   }
 }
 
-void get_box_indexs_normals(float length, int divisions,
-                            vector<TriangleIndex> &triangules_indexs,
-                            vector<Normal> &normals) {
+void get_box_indexs(float length, int divisions,
+                            vector<TriangleIndex> &triangules_indexs) {
 
   int face_points = pow(divisions + 1, 2);
 
@@ -71,19 +71,6 @@ void get_box_indexs_normals(float length, int divisions,
         int index2 = j + i + divisions + 1 + (face * face_points);
         int index3 = j + i + divisions + 2 + (face * face_points);
         int index4 = j + i + 1 + (face * face_points);
-
-        if (face == 0)
-          normals.push_back(Normal(0, -1, 0));
-        if (face == 1)
-          normals.push_back(Normal(0, 0, -1));
-        if (face == 2)
-          normals.push_back(Normal(-1, 0, 0));
-        if (face == 3)
-          normals.push_back(Normal(0, 1, 0));
-        if (face == 4)
-          normals.push_back(Normal(0, 0, 1));
-        if (face == 5)
-          normals.push_back(Normal(1, 0, 0));
 
         if (face < 3) {
           triangules_indexs.push_back(TriangleIndex(index1, index3, index2));
@@ -102,9 +89,9 @@ int create_box(float length, int divisions, string file_name) {
   vector<TriangleIndex> triangles_indexs;
   vector<Normal> normals;
 
-  get_box_points(length, divisions, points);
+  get_box_points_normals(length, divisions, points, normals);
 
-  get_box_indexs_normals(length, divisions, triangles_indexs, normals);
+  get_box_indexs(length, divisions, triangles_indexs);
 
   Model model(points, triangles_indexs, normals);
   model.write_to_file(file_name, "box");
