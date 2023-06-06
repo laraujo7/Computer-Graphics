@@ -11,11 +11,10 @@
 #include "../../classes/model/model.hpp"
 #include "../../classes/triangle_index/triangle_index.hpp"
 
-void get_box_points(float length, int divisions, vector<Point> &points);
-void get_box_indexs_normals(float length, int divisions,
-                            vector<TriangleIndex> &triangules_indexs,
+void get_box_points_normals(float length, int divisions, vector<Point> &points,
                             vector<Normal> &normals);
-// void get_box_normals(float length, int divisions, vector<Point> &normals);
+void get_box_indexs(float length, int divisions,
+                            vector<TriangleIndex> &triangules_indexs);
 int create_box(float length, int divisions, string file_name);
 
 using namespace std;

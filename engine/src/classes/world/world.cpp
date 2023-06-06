@@ -322,9 +322,9 @@ void World::parse_color(XMLElement *color_element, ModelConfig *model_config) {
     case XMLTags::AMBIENT:
     case XMLTags::SPECULAR:
     case XMLTags::EMISSIVE: {
-      float r = color_children->FloatAttribute("R");
-      float g = color_children->FloatAttribute("G");
-      float b = color_children->FloatAttribute("B");
+      float r = color_children->FloatAttribute("R") / 255;
+      float g = color_children->FloatAttribute("G") / 255;
+      float b = color_children->FloatAttribute("B") / 255;
 
       if (!str_color.compare("diffuse")) {
         model_config->set_diffuse(r, g, b);

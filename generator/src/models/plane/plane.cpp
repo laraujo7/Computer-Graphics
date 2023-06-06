@@ -1,6 +1,6 @@
 #include "plane.hpp"
 
-void get_plane_points(float length, int divisions, vector<Point> &points) {
+void get_plane_points_normals(float length, int divisions, vector<Point> &points, vector<Normal> &normals) {
 
   for (int i = 0; i <= divisions; i++) {
     for (int j = 0; j <= divisions; j++) {
@@ -8,13 +8,6 @@ void get_plane_points(float length, int divisions, vector<Point> &points) {
       float pz = (length / 2) - ((i * length) / divisions);
 
       points.push_back(Point(px, 0, pz));
-    }
-  }
-}
-
-void get_plane_normals(float length, int divisions, vector<Normal> &normals) {
-  for (int i = 0; i <= divisions; i++) {
-    for (int j = 0; j <= divisions; j++) {
       normals.push_back(Normal(0, 1, 0));
     }
   }
@@ -41,9 +34,8 @@ int create_plane(float length, int divisions, string file_name) {
   vector<TriangleIndex> triangules_indexs;
   vector<Normal> normals;
 
-  get_plane_points(length, divisions, points);
+  get_plane_points_normals(length, divisions, points, normals);
   get_plane_indexs(length, divisions, triangules_indexs);
-  get_plane_normals(length, divisions, normals);
 
   Model model(points, triangules_indexs, normals);
   model.write_to_file(file_name, "plane");

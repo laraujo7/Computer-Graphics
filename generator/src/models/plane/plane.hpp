@@ -10,7 +10,7 @@
 #include "../../classes/model/model.hpp"
 #include "../../classes/triangle_index/triangle_index.hpp"
 
-void get_plane_normals(float length, int divisions, vector<Normal> &normals);
+void get_plane_points_normals(float length, int divisions, vector<Point> &points, vector<Normal> &normals);
 int create_plane(float length, int divisions, string file_name);
 
 using namespace std;
